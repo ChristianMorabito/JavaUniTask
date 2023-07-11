@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
 public class ExtractData {
-    private ArrayList<Integer> buildingHeight;
-    private ArrayList<Boolean> exitPortal;
-    private ArrayList<Boolean> fuelCell;
-    private ArrayList<Boolean> web;
-    private ArrayList<Boolean> freeze;
+    private final ArrayList<Integer> buildingHeight;
+    private final ArrayList<Boolean> exitPortal;
+    private final ArrayList<Boolean> fuelCell;
+    private final ArrayList<Boolean> web;
+    private final ArrayList<Boolean> freeze;
 
     public ExtractData(){
         this.buildingHeight = new ArrayList<>();
@@ -29,6 +29,21 @@ public class ExtractData {
         return buildingHeight;
     }
 
+    public ArrayList<Boolean> getFuelCell() {
+        return fuelCell;
+    }
+
+    public ArrayList<Boolean> getFreeze() {
+        return freeze;
+    }
+
+    public ArrayList<Boolean> getWeb() {
+        return web;
+    }
+
+    public ArrayList<Boolean> getExitPortal() {
+        return exitPortal;
+    }
 }
 
 
