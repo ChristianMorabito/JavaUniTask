@@ -17,13 +17,14 @@ public class InputData {
             scanner.close();
         }
         catch (FileNotFoundException exception) {
-            System.out.println("Reading file error");
+            System.out.println("Reading file error!! Exiting...");
             System.exit(-1);
         }
     }
     public ArrayList<String[]> getData(){
-        Collections.shuffle(this.data);
-        return this.data;
+        int subListLength = data.size()-1;
+        Collections.shuffle(data.subList(0, subListLength));
+        return data;
 
     }
 

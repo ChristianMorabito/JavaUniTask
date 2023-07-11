@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ExtractData {
     private ArrayList<Integer> buildingHeight;
@@ -26,14 +25,10 @@ public class ExtractData {
         }
     }
 
-    public void random() {
-        String[][] str = new String[15][5];
-        for (int i = 0; i < 15; i++){
-            for (int j = 0; j < 5; j++){
-                str[i][j] = "X";
-            }
-        }
-        System.out.println(Arrays.deepToString(str));
+    public ArrayList<Integer> getBuildingHeight() {
+        return buildingHeight;
     }
+
 }
+
 

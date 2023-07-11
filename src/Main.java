@@ -6,7 +6,8 @@ public class Main {
         InputData inputData = new InputData();
         ArrayList<String[]> data = inputData.getData();
         ExtractData ed = new ExtractData();
-        ed.random();
+        ed.defineProperties(data);
+        new Graphic().buildingPrint(ed);
 
     }
 }
