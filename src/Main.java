@@ -1,13 +1,19 @@
-import java.util.ArrayList;
-
 public class Main {
 
     public static void main(String[] args) {
-        InputData inputData = new InputData();
-        ArrayList<String[]> data = inputData.getData();
-        ExtractData ed = new ExtractData();
-        ed.defineProperties(data);
-        new Graphic().buildingPrint(ed);
+        Organise organise = new Organise();
+        UserInput userInput = new UserInput();
+        Conditions conditions = new Conditions();
+        organise.define();
+        organise.shuffleData();
+        new Graphics().buildingPrint(organise, conditions.getCurrentPosition());
+
+        int i = 0;
+        while (i < 3){
+            int result = conditions.move(organise, userInput.getAction());
+            new Graphics().buildingPrint(organise, result);
+            i++;
+        }
 
     }
 }

@@ -2,11 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Collections;
-public class InputData {
+
+public class ReadFile {
     private ArrayList<String[]> data = new ArrayList<>();
 
-    InputData(){
+    ReadFile(){
 
         try {
             File textFile = new File("buildings.txt");
@@ -22,8 +22,6 @@ public class InputData {
         }
     }
     public ArrayList<String[]> getData(){
-        int subListLength = data.size()-1;
-        Collections.shuffle(data.subList(0, subListLength));
         return data;
 
     }
