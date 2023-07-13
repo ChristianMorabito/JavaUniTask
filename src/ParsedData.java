@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Organise {
+public class ParsedData {
 
     private int fuelShuffleCount = 0;
     private ArrayList<Integer> buildingHeights;
@@ -10,7 +10,7 @@ public class Organise {
     private ArrayList<Boolean> web;
     private ArrayList<Boolean> freeze;
 
-    public Organise(){
+    public ParsedData(){
         this.buildingHeights = new ArrayList<>();
         this.exitPortals = new ArrayList<>();
         this.fuelCells = new ArrayList<>();

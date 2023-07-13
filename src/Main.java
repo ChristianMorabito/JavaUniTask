@@ -1,19 +1,27 @@
 public class Main {
 
     public static void main(String[] args) {
-        Organise organise = new Organise();
+        ParsedData parsedData = new ParsedData();
         UserInput userInput = new UserInput();
-        Conditions conditions = new Conditions();
-        organise.define();
-        organise.shuffleData();
-        new Graphics().buildingPrint(organise, conditions.getCurrentPosition());
-
-        int i = 0;
-        while (i < 3){
-            int result = conditions.move(organise, userInput.getAction());
-            new Graphics().buildingPrint(organise, result);
-            i++;
+        CharacterPosition characterPosition = new CharacterPosition();
+        Fuel fuel = new Fuel();
+        parsedData.define();
+        boolean gameLoop = true;
+        int exit = 100; // TODO: Make magic numbers in a shared class
+        while (gameLoop){
+            parsedData.shuffleData();
+            int result = -1;
+            while (result < 0){
+                new Graphics().createGraphic(parsedData, result);
+                userInput.optionInput();
+                result = characterPosition.move(parsedData, userInput.getAction());
+            }
+            if (result == exit) {
+                gameLoop = false;
+            }
         }
+        System.out.println("Exiting...");
+        //TODO: ORGANISE WRITE RESULTS
 
     }
 }

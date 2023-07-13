@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class UserInput {
 
     private String userName;
+
     private int action;
 
     UserInput(){
@@ -21,7 +22,7 @@ public class UserInput {
         }
     }
 
-    public int getAction() {
+    public void optionInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("""
                 Enter a number between 1 & 4.
@@ -30,6 +31,7 @@ public class UserInput {
                 3) Skip Turn
                 4) Exit
                 """);
+
         while (true){
             try {
                 action = scanner.nextInt();
@@ -42,11 +44,13 @@ public class UserInput {
                 scanner.next();
             }
         }
-        return action;
     }
 
     public String getUserName() {
         return userName;
     }
 
+    public int getAction() {
+        return action;
+    }
 }
