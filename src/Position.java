@@ -1,49 +1,61 @@
-public class CharacterPosition {
+public class Position
+{
 
     private Integer currentPosition = 0;
 
-    public int move(ParsedData data, int input){
+    public int move(Data data, int input)
+    {
         int endIndex = data.getBuildingHeights().size() - 1;
         int startIndex = 0;
         int temp = currentPosition;
 
-        if (input == 1){
+        if (input == 1)
+        {
             temp += data.getBuildingHeights().get(currentPosition);
-            if (temp < endIndex){
+            if (temp < endIndex)
+            {
                 currentPosition = temp;
             }
-            else if (temp == endIndex){
+            else if (temp == endIndex)
+            {
                 System.out.println("On last index!!"); // TODO: consider if character lands on FROZEN exit portal
             }
-            else{
-                System.out.println("Out of range!!");
+            else
+            {
+                System.out.println("Out of range!! Try again.");
                 return -1;
             }
         }
 
-        else if (input == 2){
+        else if (input == 2)
+        {
             temp -= data.getBuildingHeights().get(currentPosition);
-            if (temp >= startIndex){
+            if (temp >= startIndex)
+            {
                 currentPosition = temp;
             }
-            else{
+            else
+            {
                 System.out.println("Out of range!!");
                 return -1;
             }
         }
 
-        else if (input == 4){
+        else if (input == 4)
+        {
             return 100;
         }
 
         return getCurrentPosition();
     }
 
-    public int getCurrentPosition() {
+    public int getCurrentPosition()
+    {
         return currentPosition;
     }
 
-    public void setCurrentPosition(int currentPosition) {
+    public void setCurrentPosition(int currentPosition)
+    {
         this.currentPosition = currentPosition;
     }
 }

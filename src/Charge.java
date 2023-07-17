@@ -1,10 +1,12 @@
 import java.util.ArrayList;
 
-public class Fuel {
+public class Charge
+{
 
     private int chargeAmount = 10;
     private final int MAX_CHARGE = 20;
-    private void jumpDeplete(int building1, int building2){
+    private void jumpDeplete(int building1, int building2)
+    {
         this.chargeAmount -= Math.abs((building1 - building2)) + 1;
     }
 
@@ -13,22 +15,28 @@ public class Fuel {
 
     private boolean firstMove = false;
 
-    private void fuelCharge(){
-        if (this.chargeAmount + 5 > MAX_CHARGE){
+    private void fuelCharge()
+    {
+        if (this.chargeAmount + 5 > MAX_CHARGE)
+        {
             this.chargeAmount = MAX_CHARGE;
         }
-        else {
+        else
+        {
             chargeAmount += 5;
         }
     }
-    public void update(ParsedData data){
+    public void update(Data data)
+    {
 
-        if (!firstMove){
+        if (!firstMove)
+        {
             firstMove = true;
             return;
         }
 
-        if (currIndex == prevIndex){
+        if (currIndex == prevIndex)
+        {
             this.chargeAmount -= 1;
         }
 
@@ -36,7 +44,8 @@ public class Fuel {
         jumpDeplete(buildingHeights.get(currIndex), buildingHeights.get(prevIndex));
 
         ArrayList<Boolean> fuelCell = data.getFuelCells();
-        if (fuelCell.get(currIndex)){
+        if (fuelCell.get(currIndex))
+        {
             fuelCharge();
         }
 
@@ -45,21 +54,26 @@ public class Fuel {
 //        ArrayList<Boolean> freeze = data.getFreeze();
 
     }
-    public void print(){
+    public void print()
+    {
         System.out.println("Current charge = " + this.chargeAmount);
     }
-    public int getCurrIndex() {
+    public int getCurrIndex()
+    {
         return currIndex;
     }
-    public int getPrevIndex() {
+    public int getPrevIndex()
+    {
         return prevIndex;
     }
 
-    public void setCurrIndex(int currIndex) {
+    public void setCurrIndex(int currIndex)
+    {
         this.currIndex = currIndex;
     }
 
-    public void setPrevIndex(int prevIndex) {
+    public void setPrevIndex(int prevIndex)
+    {
         this.prevIndex = prevIndex;
     }
 }

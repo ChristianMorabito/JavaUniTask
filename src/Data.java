@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ParsedData {
+public class Data
+{
 
     private int fuelShuffleCount = 0;
     private ArrayList<Integer> buildingHeights;
@@ -10,7 +11,8 @@ public class ParsedData {
     private ArrayList<Boolean> web;
     private ArrayList<Boolean> freeze;
 
-    public ParsedData(){
+    public Data()
+    {
         this.buildingHeights = new ArrayList<>();
         this.exitPortals = new ArrayList<>();
         this.fuelCells = new ArrayList<>();
@@ -18,7 +20,8 @@ public class ParsedData {
         this.freeze = new ArrayList<>();
     }
 
-    public void shuffleData(){
+    public void shuffleData()
+    {
         Collections.shuffle(this.buildingHeights);
         Collections.shuffle(this.web.subList(1, 15));
         Collections.shuffle(this.freeze.subList(1, 15));
@@ -29,10 +32,11 @@ public class ParsedData {
 
     }
 
-    public void define(){
-        ReadFile readFile = new ReadFile();
+    public void define(ArrayList<String[]> data)
+    {
 
-        for (String[] datum : readFile.getData()) {
+        for (String[] datum : data)
+        {
             this.buildingHeights.add(Integer.parseInt(datum[0]));
             this.exitPortals.add(Boolean.parseBoolean(datum[1]));
             this.fuelCells.add(Boolean.parseBoolean(datum[2]));
@@ -41,19 +45,24 @@ public class ParsedData {
         }
     }
 
-    public ArrayList<Integer> getBuildingHeights() {
+    public ArrayList<Integer> getBuildingHeights()
+    {
         return buildingHeights;
     }
-    public ArrayList<Boolean> getFuelCells() {
+    public ArrayList<Boolean> getFuelCells()
+    {
         return fuelCells;
     }
-    public ArrayList<Boolean> getFreeze() {
+    public ArrayList<Boolean> getFreeze()
+    {
         return freeze;
     }
-    public ArrayList<Boolean> getWeb() {
+    public ArrayList<Boolean> getWeb()
+    {
         return web;
     }
-    public ArrayList<Boolean> getExitPortals() {
+    public ArrayList<Boolean> getExitPortals()
+    {
         return exitPortals;
     }
 }

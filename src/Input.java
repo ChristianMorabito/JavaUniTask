@@ -1,28 +1,34 @@
 import java.util.Scanner;
 
-public class UserInput {
+public class Input
+{
 
     private String userName;
 
     private int action;
 
-    UserInput(){
+    Input()
+    {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your username. Must be between 3 to 12 characters long.");
-        while (true){
+        while (true)
+        {
             System.out.print("Username: ");
             userName = scanner.nextLine();
-            if (userName.length() > 2 && userName.length() < 13 && userName.matches("[a-zA-Z]+")){
+            if (userName.length() > 2 && userName.length() < 13 && userName.matches("[a-zA-Z]+"))
+            {
                 break;
             }
-            else{
+            else
+            {
                 System.out.println("Invalid input! Please try again.");
             }
 
         }
     }
 
-    public void optionInput() {
+    public void optionInput()
+    {
         Scanner scanner = new Scanner(System.in);
         System.out.print("""
                 Enter a number between 1 & 4.
@@ -32,25 +38,32 @@ public class UserInput {
                 4) Exit
                 """);
 
-        while (true){
-            try {
+        while (true)
+        {
+            try
+            {
                 action = scanner.nextInt();
-                if (action > 0 && action < 5){
+                if (action > 0 && action < 5)
+                {
                     break;
                 }
                 System.out.println("Invalid Input! Please try again.");
 
-            } catch (Exception e){
+            }
+            catch (Exception e)
+            {
                 scanner.next();
             }
         }
     }
 
-    public String getUserName() {
+    public String getUserName()
+    {
         return userName;
     }
 
-    public int getAction() {
+    public int getAction()
+    {
         return action;
     }
 }
