@@ -1,61 +1,136 @@
+import java.util.ArrayList;
+
 public class Position
 {
 
-    private Integer currentPosition = 0;
+    private Integer currentPosition;
+    private State state;
 
-    public int move(Data data, int input)
+    private final int END_INDEX = 14;
+    private final int START_INDEX = 0;
+
+    private int leftPosition;
+
+    private int rightPosition;
+
+    Position()
     {
-        int endIndex = data.getBuildingHeights().size() - 1;
-        int startIndex = 0;
+        this.currentPosition = 0;
+        this.leftPosition = 0;
+        this.rightPosition = 0;
+        this.state = new State();
+    }
+
+    Position(State state)
+    {
+        this.currentPosition = 0;
+        this.leftPosition = 0;
+        this.rightPosition = 0;
+        this.state = state;
+    }
+    public void move(ArrayList<Integer> buildingHeights, int input)
+    {
         int temp = currentPosition;
 
         if (input == 1)
         {
-            temp += data.getBuildingHeights().get(currentPosition);
-            if (temp < endIndex)
+            temp += buildingHeights.get(currentPosition);
+            if (temp < END_INDEX)
             {
-                currentPosition = temp;
+                state.setPreviousPosition(currentPosition);
             }
-            else if (temp == endIndex)
+            else if (temp == END_INDEX)
             {
                 System.out.println("On last index!!"); // TODO: consider if character lands on FROZEN exit portal
             }
             else
             {
-                System.out.println("Out of range!! Try again.");
-                return -1;
+                outOfRange();
+                return;
             }
         }
-
         else if (input == 2)
         {
-            temp -= data.getBuildingHeights().get(currentPosition);
-            if (temp >= startIndex)
+            temp -= buildingHeights.get(currentPosition);
+            if (temp >= START_INDEX)
             {
-                currentPosition = temp;
+                state.setPreviousPosition(currentPosition);
             }
             else
             {
-                System.out.println("Out of range!!");
-                return -1;
+                outOfRange();
+                return;
             }
         }
-
-        else if (input == 4)
+        else if (input == 3)
         {
-            return 100;
+            state.setSkipTurn(true);
+        }
+        else
+        {
+            System.out.println("Exiting...");
+            state.setGameRunning(false);
         }
 
-        return getCurrentPosition();
+        currentPosition = temp;
+        state.setOutOfRange(false);
     }
 
-    public int getCurrentPosition()
+    private void outOfRange()
+    {
+        for (int i = 0; i < currentPosition; i++)
+        {
+            System.out.print("                 ");
+        }
+        System.out.println("Out of range!!");
+        state.setOutOfRange(true);
+
+    }
+
+    public int getCurrPosition()
     {
         return currentPosition;
+    }
+
+    public int getLeftPosition()
+    {
+
+        return leftPosition;
+    }
+
+    public int getRightPosition()
+    {
+        return rightPosition;
+    }
+
+    public State getState()
+    {
+        return state;
     }
 
     public void setCurrentPosition(int currentPosition)
     {
         this.currentPosition = currentPosition;
+    }
+
+    public void setLeftPosition(ArrayList<Integer> buildingHeights)
+    {
+        int temp = currentPosition;
+        temp -= buildingHeights.get(currentPosition);
+        temp = temp >= START_INDEX ? temp : -1;
+        this.leftPosition = temp;
+    }
+
+    public void setRightPosition(ArrayList<Integer> buildingHeights)
+    {
+        int temp = currentPosition;
+        temp += buildingHeights.get(currentPosition);
+        temp = temp < END_INDEX ? temp : -1;
+        this.rightPosition = temp;
+    }
+
+    public void setState(State state)
+    {
+        this.state = state;
     }
 }

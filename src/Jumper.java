@@ -2,32 +2,37 @@ public class Jumper
 {
     public static void main(String[] args)
     {
-        Data data = new Data();
         Input input = new Input();
-        Position position = new Position();
+        State state = new State();
+        Position position = new Position(state);
+        Fuel fuel = new Fuel();
+        Data data = new Data(fuel);
         FileIO fileIO = new FileIO("buildings.txt");
+
         fileIO.readFile();
         data.define(fileIO.getData());
-        boolean gameLoop = true;
-        int exit = 100; // TODO: Make magic numbers in a shared class
-        while (gameLoop)
+        input.usernameInput();
+
+        while (state.isGameRunning())
         {
             data.shuffleData();
-            int result = -1;
-            while (result < 0)
+            do
             {
-
-                input.optionInput();
-                result = position.move(data, input.getAction());
-                new Graphic().createGraphic(data, result);
+                position.setLeftPosition(data.heights());
+                position.setRightPosition(data.heights());
+                fuel.print(position.getCurrPosition());
+                new Graphic().create(data, position.getCurrPosition(), position.getLeftPosition(), position.getRightPosition());
+                fuel.collectFuel(position.getCurrPosition());
+                input.actionInput();
+                position.move(data.heights(), input.getAction());
             }
-            if (result == exit)
-            {
-                gameLoop = false;
-            }
+            while (state.isOutOfRange());
         }
-        System.out.println("Exiting...");
+
+
+
         //TODO: ORGANISE WRITE RESULTS
+        //TODO: CREATE FREEZE CLASS & WEB CLASS ACCOUNT FOR TEXT, i.e. just like when "Fuel Collected"
 
     }
 }

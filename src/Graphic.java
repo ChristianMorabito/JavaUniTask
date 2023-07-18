@@ -3,10 +3,19 @@ import java.util.Arrays;
 
 public class Graphic
 {
+    private StringBuilder[][] buildingString;
 
-    private StringBuilder[][] buildingString = new StringBuilder[6][15];
+    Graphic()
+    {
+        this.buildingString = new StringBuilder[6][15];
+    }
 
-    private void print(StringBuilder[][] buildingString)
+    Graphic(StringBuilder[][] buildingString)
+    {
+        this.buildingString = buildingString;
+    }
+
+    private void print()
     {
         for (int i = 0; i < 6; i++)
         {
@@ -21,13 +30,13 @@ public class Graphic
     private void createRoof(Data data, int i, int currHeight, int jumperIndex)
     {
         final String PORTAL = "@";
-        final String JUMPER = "X";
+        final String JUMPER = "|";
         final String FUEL_CELL = "$";
         final String WEB = "###";
         final String FREEZE = "^^^";
         final String ROOF = "   ┎────────┒   ";
         ArrayList<Boolean> exitPortal = data.getExitPortals();
-        ArrayList<Boolean> fuelCell = data.getFuelCells();
+        ArrayList<Boolean> fuelCell = data.getFuel().getCurrentFuel();
         ArrayList<Boolean> web = data.getWeb();
         ArrayList<Boolean> freeze = data.getFreeze();
 
@@ -55,14 +64,33 @@ public class Graphic
 
     }
 
-    private void createBase(ArrayList<Integer> buildingHeights, int i)
+    private void createBase(ArrayList<Integer> buildingHeights, int i, int currPosition, int leftPosition, int rightPosition)
     {
-        String gap = "   ";
-        if (i > 0)
+        final String here =  " _HERE_ ";
+        final String moveTo = "  jump  ";
+        final String betweenGap = "      ";
+        String buildingWidth = "        ";
+        String firstGap = "   ";
+        String baseText;
+
+        if (i == currPosition)
         {
-            gap = gap.trim();
+            baseText = here;
         }
-        buildingString[5][i] = new StringBuilder(gap + buildingHeights.get(i) + "        │" + "      ");
+
+        else if (i == leftPosition || i == rightPosition)
+        {
+            baseText = moveTo;
+        }
+
+        else
+        {
+            baseText = "";
+        }
+
+        buildingWidth = i == currPosition || i == leftPosition || i == rightPosition ? "" : buildingWidth;
+        firstGap = i > 0 ? firstGap.trim() : firstGap;
+        buildingString[5][i] = new StringBuilder(firstGap + buildingHeights.get(i) + baseText + buildingWidth + "│" + betweenGap);
     }
 
     private void createUnderAndAbove(int maxHeight, int currHeight, int i, int j)
@@ -81,9 +109,9 @@ public class Graphic
         }
     }
 
-    public void createGraphic(Data data, int jumperIndex)
+    public void create(Data data, int currentPosition, int leftPosition, int rightPosition)
     {
-        ArrayList<Integer> buildingHeights = data.getBuildingHeights();
+        ArrayList<Integer> buildingHeights = data.heights();
 
         for (int i = 0; i < buildingString[0].length; i++)
         {
@@ -91,16 +119,25 @@ public class Graphic
             int maxHeight = buildingString.length-1;
             int currHeight = buildingHeights.get(i);
 
-            createRoof(data, i, currHeight, jumperIndex);
-            createBase(buildingHeights, i);
+            createRoof(data, i, currHeight, currentPosition);
+            createBase(buildingHeights, i, currentPosition, leftPosition, rightPosition);
 
             for (int j = 0; j < maxHeight-1; j++)
-            { // 1 ... 4, 5
+            {
 
                 createUnderAndAbove(maxHeight, currHeight, i, j);
             }
         }
-        print(buildingString);
+        print();
+    }
+
+    public StringBuilder[][] getBuildingString()
+    {
+        return buildingString;
+    }
+    public void setBuildingString(StringBuilder[][] buildingString)
+    {
+        this.buildingString = buildingString;
     }
 }
 

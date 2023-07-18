@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Charge
+public class ChargeCount
 {
 
     private int chargeAmount = 10;
@@ -40,7 +40,7 @@ public class Charge
             this.chargeAmount -= 1;
         }
 
-        ArrayList<Integer> buildingHeights = data.getBuildingHeights();
+        ArrayList<Integer> buildingHeights = data.heights();
         jumpDeplete(buildingHeights.get(currIndex), buildingHeights.get(prevIndex));
 
         ArrayList<Boolean> fuelCell = data.getFuelCells();
