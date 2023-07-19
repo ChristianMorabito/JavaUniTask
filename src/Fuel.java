@@ -26,7 +26,7 @@ public class Fuel
 
         if (state.fuelShuffleCheck())
         {
-            System.out.println("\uD83D\uDEA8WARNING: Fuel Respawning!!\uD83D\uDEA8");
+            System.out.println("\uD83D\uDEA8 FUEL RESPAWNING \uD83D\uDEA8");
         }
 
         if (currentFuel.get(currentPosition))

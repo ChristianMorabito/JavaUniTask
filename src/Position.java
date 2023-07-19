@@ -78,11 +78,7 @@ public class Position
 
     private void outOfRange()
     {
-        for (int i = 0; i < currentPosition; i++)
-        {
-            System.out.print("                 ");
-        }
-        System.out.println("Out of range!!");
+        System.out.println("\uD83D\uDEA8 BEYOND RANGE: Retry \uD83D\uDEA8");
         state.setOutOfRange(true);
 
     }
