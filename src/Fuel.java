@@ -1,32 +1,51 @@
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Fuel
 {
     private ArrayList<Boolean> currentFuel;
 
-    private ArrayList<Boolean> previousFuel;
+    private State state;
 
     Fuel()
     {
         currentFuel = new ArrayList<>();
+        state = new State();
     }
 
-    Fuel(ArrayList<Boolean> currentFuel)
+    Fuel(State state)
     {
-        this.currentFuel = currentFuel;
-
+        this.currentFuel = new ArrayList<>();
+        this.state = state;
     }
+
 
     public void print(int currentPosition)
     {
+        String fuelCollected = "";
+
+        if (state.fuelShuffleCheck())
+        {
+            System.out.println("\uD83D\uDEA8WARNING: Fuel Respawning!!\uD83D\uDEA8");
+        }
+
         if (currentFuel.get(currentPosition))
         {
-            for (int i = 0; i < currentPosition; i++)
-            {
-                System.out.print("                 ");
-            }
-            System.out.println("Fuel Collected!!");
+            fuelCollected = "  FUELED" + "✅";
         }
+
+        for (int i = 0; i < currentFuel.size(); i++)
+        {
+            if (i == currentPosition) {
+                System.out.print(fuelCollected);
+            }
+            else
+            {
+                System.out.print("             ");
+            }
+        }
+        System.out.println();
+
     }
 
     public void collectFuel(int currentPosition)

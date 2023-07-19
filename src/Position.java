@@ -92,6 +92,11 @@ public class Position
         return currentPosition;
     }
 
+    public int[] getPositions()
+    {
+        return new int[]{currentPosition, leftPosition, rightPosition};
+    }
+
     public int getLeftPosition()
     {
 
@@ -113,10 +118,10 @@ public class Position
         this.currentPosition = currentPosition;
     }
 
-    public void setLeftPosition(ArrayList<Integer> buildingHeights)
+    public void setLeftPosition(ArrayList<Integer> leftHeight)
     {
         int temp = currentPosition;
-        temp -= buildingHeights.get(currentPosition);
+        temp -= leftHeight.get(currentPosition);
         temp = temp >= START_INDEX ? temp : -1;
         this.leftPosition = temp;
     }
@@ -124,6 +129,19 @@ public class Position
     public void setRightPosition(ArrayList<Integer> buildingHeights)
     {
         int temp = currentPosition;
+        temp += buildingHeights.get(currentPosition);
+        temp = temp < END_INDEX ? temp : -1;
+        this.rightPosition = temp;
+    }
+
+    public void setPositions(ArrayList<Integer> buildingHeights)
+    {
+        int temp = currentPosition;
+        temp -= buildingHeights.get(currentPosition);
+        temp = temp >= START_INDEX ? temp : -1;
+        this.leftPosition = temp;
+
+        temp = currentPosition;
         temp += buildingHeights.get(currentPosition);
         temp = temp < END_INDEX ? temp : -1;
         this.rightPosition = temp;

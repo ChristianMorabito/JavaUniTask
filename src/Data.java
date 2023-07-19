@@ -4,34 +4,34 @@ import java.util.Collections;
 public class Data
 {
 
-    private int fuelShuffleCount;
     private ArrayList<Integer> buildingHeights;
     private ArrayList<Boolean> exitPortals;
     private ArrayList<Boolean> fuelCells;
     private ArrayList<Boolean> web;
     private ArrayList<Boolean> freeze;
     private Fuel fuel;
+    private State state;
 
     public Data()
     {
-        this.fuelShuffleCount = 0;
         this.buildingHeights = new ArrayList<>();
         this.exitPortals = new ArrayList<>();
         this.fuelCells = new ArrayList<>();
         this.web = new ArrayList<>();
         this.freeze = new ArrayList<>();
         this.fuel = new Fuel();
+        this.state = new State();
     }
 
-    public Data(Fuel fuel)
+    public Data(Fuel fuel, State state)
     {
-        this.fuelShuffleCount = 0;
         this.buildingHeights = new ArrayList<>();
         this.exitPortals = new ArrayList<>();
         this.fuelCells = new ArrayList<>();
         this.web = new ArrayList<>();
         this.freeze = new ArrayList<>();
         this.fuel = fuel;
+        this.state = state;
     }
 
     public void shuffleData()
@@ -40,17 +40,16 @@ public class Data
         Collections.shuffle(this.buildingHeights);
         Collections.shuffle(this.web.subList(1, 15));
         Collections.shuffle(this.freeze.subList(1, 15));
-        if (this.fuelShuffleCount >= 0 && this.fuelShuffleCount % 3 == 0){
-            fuel.setCurrentFuel(this.fuelCells);
-            Collections.shuffle(this.fuel.getCurrentFuel().subList(0, 14));
+        if (state.fuelShuffleCheck()){
+            fuel.setCurrentFuel(new ArrayList<>(fuelCells));
+            Collections.shuffle(fuel.getCurrentFuel());
         }
-        this.fuelShuffleCount++;
+        state.setFuelShuffleCount(state.getFuelShuffleCount() + 1);
 
     }
 
     public void define(ArrayList<String[]> data)
     {
-
         for (String[] datum : data)
         {
             this.buildingHeights.add(Integer.parseInt(datum[0]));
@@ -85,10 +84,6 @@ public class Data
     {
         return fuel;
     }
-    public int getFuelShuffleCount()
-    {
-        return fuelShuffleCount;
-    }
 
     public void setBuildingHeights(ArrayList<Integer> buildingHeights)
     {
@@ -115,10 +110,6 @@ public class Data
         this.fuelCells = fuelCells;
     }
 
-    public void setFuelShuffleCount(int fuelShuffleCount)
-    {
-        this.fuelShuffleCount = fuelShuffleCount;
-    }
     public void setWeb(ArrayList<Boolean> web)
     {
         this.web = web;

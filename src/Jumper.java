@@ -5,8 +5,8 @@ public class Jumper
         Input input = new Input();
         State state = new State();
         Position position = new Position(state);
-        Fuel fuel = new Fuel();
-        Data data = new Data(fuel);
+        Fuel fuel = new Fuel(state);
+        Data data = new Data(fuel, state);
         FileIO fileIO = new FileIO("buildings.txt");
 
         fileIO.readFile();
@@ -16,12 +16,11 @@ public class Jumper
         while (state.isGameRunning())
         {
             data.shuffleData();
+            position.setPositions(data.heights());
             do
             {
-                position.setLeftPosition(data.heights());
-                position.setRightPosition(data.heights());
                 fuel.print(position.getCurrPosition());
-                new Graphic().create(data, position.getCurrPosition(), position.getLeftPosition(), position.getRightPosition());
+                new Graphic().create(data, position.getPositions());
                 fuel.collectFuel(position.getCurrPosition());
                 input.actionInput();
                 position.move(data.heights(), input.getAction());

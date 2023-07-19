@@ -68,6 +68,8 @@ public class Input
                 scanner.next();
             }
         }
+        String line = "──────────";
+        System.out.println(line.repeat(20));
     }
 
     public String getUserName()
