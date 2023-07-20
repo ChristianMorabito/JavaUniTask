@@ -31,7 +31,7 @@ public class Fuel
 
         if (currentFuel.get(currentPosition))
         {
-            fuelCollected = "  FUELED" + "✅";
+            fuelCollected = "  FUELED" + " ✅";
         }
 
         for (int i = 0; i < currentFuel.size(); i++)

@@ -28,6 +28,8 @@ public class Input
             System.out.println();
             if (userName.length() > 2 && userName.length() < 13 && userName.matches("[a-zA-Z]+"))
             {
+                String line = "──────────";
+                System.out.println(line.repeat(20));
                 break;
             }
             else
