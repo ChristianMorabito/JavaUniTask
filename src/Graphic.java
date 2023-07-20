@@ -30,7 +30,7 @@ public class Graphic
     private void createRoof(Data data, int i, int currHeight, int jumperIndex)
     {
         final String PORTAL = "@";
-        final String JUMPER =    "▐";
+        final String JUMPER =    "█";
         final String FUEL_CELL = "$";
         final String WEB = "##";
         final String FREEZE = "^^^";
@@ -99,7 +99,7 @@ public class Graphic
     {
         final String DEFAULT_SIDES = " │◫◫◫◫◫◫◫◫│ ";
         final String JUMP_SIDES =    " ╹∎∎∎∎∎∎∎∎╹ ";
-        final String EMPTY_SPACE = "            ";
+        final String EMPTY_SPACE =   "            ";
         int underBuilding = maxHeight + j + 1;
 
         if (underBuilding - currHeight < maxHeight)
@@ -124,7 +124,7 @@ public class Graphic
         int currentPosition = positions[0];
         int leftPosition = positions[1];
         int rightPosition = positions[2];
-        ArrayList<Integer> buildingHeights = data.heights();
+        ArrayList<Integer> buildingHeights = data.getBuildingHeights();
 
         for (int i = 0; i < buildingString[0].length; i++)
         {

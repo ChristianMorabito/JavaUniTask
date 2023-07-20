@@ -1,19 +1,26 @@
-import java.util.ArrayList;
-
 public class ChargeCount
 {
-
-    private int chargeAmount = 10;
+    private int chargeAmount;
+    private final int STARTING_CHARGE = 10;
     private final int MAX_CHARGE = 20;
-    private void jumpDeplete(int building1, int building2)
+    private State state;
+
+    ChargeCount(int startingCharge)
     {
-        this.chargeAmount -= Math.abs((building1 - building2)) + 1;
+        chargeAmount = startingCharge;
+        state = new State();
     }
 
-    private int currIndex = 0;
-    private int prevIndex = 0;
+    ChargeCount(State state)
+    {
+        this.chargeAmount = STARTING_CHARGE;
+        this.state = state;
+    }
 
-    private boolean firstMove = false;
+    private void jumpDeplete(int building1, int building2)
+    {
+        this.chargeAmount -= (Math.abs(building1 - building2)) + 1;
+    }
 
     private void fuelCharge()
     {
@@ -26,28 +33,31 @@ public class ChargeCount
             chargeAmount += 5;
         }
     }
-    public void update(Data data)
+    public void update(int currPosition)
     {
-
-        if (!firstMove)
+        if (state.isFirstMove())
         {
-            firstMove = true;
+            state.setFirstMove(false);
             return;
         }
 
-        if (currIndex == prevIndex)
+        if (state.getPreviousPosition() == currPosition)
         {
             this.chargeAmount -= 1;
         }
-
-        ArrayList<Integer> buildingHeights = data.heights();
-        jumpDeplete(buildingHeights.get(currIndex), buildingHeights.get(prevIndex));
-
-        ArrayList<Boolean> fuelCell = data.getFuelCells();
-        if (fuelCell.get(currIndex))
+        else
         {
-            fuelCharge();
+            jumpDeplete(state.getBuilding2Height(), state.getBuilding1Height());
         }
+
+
+//        ArrayList<Integer> buildingHeights = data.heights();
+//
+//        ArrayList<Boolean> fuelCell = data.getFuelCells();
+//        if (fuelCell.get(currIndex))
+//        {
+//            fuelCharge();
+//        }
 
 
 //        ArrayList<Boolean> web = data.getWeb();
@@ -58,22 +68,5 @@ public class ChargeCount
     {
         System.out.println("Current charge = " + this.chargeAmount);
     }
-    public int getCurrIndex()
-    {
-        return currIndex;
-    }
-    public int getPrevIndex()
-    {
-        return prevIndex;
-    }
 
-    public void setCurrIndex(int currIndex)
-    {
-        this.currIndex = currIndex;
-    }
-
-    public void setPrevIndex(int prevIndex)
-    {
-        this.prevIndex = prevIndex;
-    }
 }

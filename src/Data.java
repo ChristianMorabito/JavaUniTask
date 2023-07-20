@@ -60,7 +60,7 @@ public class Data
         }
     }
 
-    public ArrayList<Integer> heights()
+    public ArrayList<Integer> getBuildingHeights()
     {
         return buildingHeights;
     }

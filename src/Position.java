@@ -42,6 +42,7 @@ public class Position
             else if (temp == END_INDEX)
             {
                 System.out.println("On last index!!"); // TODO: consider if character lands on FROZEN exit portal
+
             }
             else
             {
@@ -65,6 +66,7 @@ public class Position
         else if (input == 3)
         {
             state.setSkipTurn(true);
+            state.setPreviousPosition(currentPosition);
         }
         else
         {
@@ -126,7 +128,7 @@ public class Position
     {
         int temp = currentPosition;
         temp += buildingHeights.get(currentPosition);
-        temp = temp < END_INDEX ? temp : -1;
+        temp = temp <= END_INDEX ? temp : -1;
         this.rightPosition = temp;
     }
 
@@ -139,7 +141,7 @@ public class Position
 
         temp = currentPosition;
         temp += buildingHeights.get(currentPosition);
-        temp = temp < END_INDEX ? temp : -1;
+        temp = temp <= END_INDEX ? temp : -1;
         this.rightPosition = temp;
     }
 

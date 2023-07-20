@@ -7,23 +7,28 @@ public class Jumper
         Position position = new Position(state);
         Fuel fuel = new Fuel(state);
         Data data = new Data(fuel, state);
+        ChargeCount chargeCount = new ChargeCount(state);
         FileIO fileIO = new FileIO("buildings.txt");
 
         fileIO.readFile();
         data.define(fileIO.getData());
-        input.usernameInput();
+//        input.usernameInput();
 
         while (state.isGameRunning())
         {
+            state.setBuilding1Height(data.getBuildingHeights().get(position.getCurrPosition()));
             data.shuffleData();
-            position.setPositions(data.heights());
+            position.setPositions(data.getBuildingHeights());
+            chargeCount.update(position.getCurrPosition());
+            chargeCount.print();
+            state.setBuilding2Height(data.getBuildingHeights().get(position.getCurrPosition()));
             do
             {
                 fuel.print(position.getCurrPosition());
                 new Graphic().create(data, position.getPositions());
                 fuel.collectFuel(position.getCurrPosition());
                 input.actionInput();
-                position.move(data.heights(), input.getAction());
+                position.move(data.getBuildingHeights(), input.getAction());
             }
             while (state.isOutOfRange());
         }
