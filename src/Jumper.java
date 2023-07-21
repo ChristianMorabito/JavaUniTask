@@ -31,8 +31,7 @@ public class Jumper
                 position.move(data.getBuildingHeights(), input.getAction());
             }
             while (state.isOutOfRange());
-            chargeCount.update(position.getCurrPosition(), fuel.getCurrentFuel());
-            //TODO: BREAK CHARGE_COUNT UPDATE() INTO SMALLER FUNCTIONS
+            //TODO: figure out elegant exit solution that doesn't mess with score
         }
 
 

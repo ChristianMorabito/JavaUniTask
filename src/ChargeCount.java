@@ -27,28 +27,17 @@ public class ChargeCount
 
     private void fuelCharge()
     {
-        if (this.chargeAmount + 5 > MAX_CHARGE)
-        {
-            this.chargeAmount = MAX_CHARGE;
-        }
-        else
-        {
-            chargeAmount += 5;
-        }
+        chargeAmount = Math.min(chargeAmount + 5, MAX_CHARGE);
     }
     public void update(int currPosition, ArrayList<Boolean> dataFuelCells)
     {
-
-
+        if (dataFuelCells.get(currPosition))
+        {
+            fuelCharge();
+        }
         if (state.isFirstMove())
         {
             state.setFirstMove(false);
-            if (dataFuelCells.get(currPosition)) //TODO: make more elegant (instead of repeating code)
-                                                // code was pasted so that if game begins on fuel cell,
-                                                // then it is counted
-            {
-                fuelCharge();
-            }
             return;
         }
 
@@ -60,10 +49,6 @@ public class ChargeCount
         else
         {
             jumpDeplete(state.getBuilding2Height(), state.getBuilding1Height());
-        }
-        if (dataFuelCells.get(currPosition))
-        {
-            fuelCharge();
         }
 
 
