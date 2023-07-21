@@ -29,16 +29,25 @@ public class ChargeCount
     {
         chargeAmount = Math.min(chargeAmount + 5, MAX_CHARGE);
     }
+
+
+    public void firstUpdate(int currPosition, ArrayList<Boolean> dataFuelCells)
+    {
+        if (state.isFirstMove())
+        {
+            if (dataFuelCells.get(currPosition))
+            {
+                fuelCharge();
+            }
+            state.setFirstMove(false);
+        }
+    }
+
     public void update(int currPosition, ArrayList<Boolean> dataFuelCells)
     {
         if (dataFuelCells.get(currPosition))
         {
             fuelCharge();
-        }
-        if (state.isFirstMove())
-        {
-            state.setFirstMove(false);
-            return;
         }
 
         if (state.getPreviousPosition() == currPosition)

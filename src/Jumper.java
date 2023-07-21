@@ -16,11 +16,10 @@ public class Jumper
 
         while (state.isGameRunning())
         {
-            state.setBuilding1Height(data.getBuildingHeights().get(position.getCurrPosition()));
             data.shuffleData();
             position.setPositions(data.getBuildingHeights());
-            chargeCount.update(position.getCurrPosition(), fuel.getCurrentFuel());
-            state.setBuilding2Height(data.getBuildingHeights().get(position.getCurrPosition()));
+            state.setBuilding1Height(data.getBuildingHeights().get(position.getCurrPosition()));
+            chargeCount.firstUpdate(position.getCurrPosition(), fuel.getCurrentFuel());
             do
             {
                 chargeCount.print();
@@ -31,7 +30,8 @@ public class Jumper
                 position.move(data.getBuildingHeights(), input.getAction());
             }
             while (state.isOutOfRange());
-            //TODO: figure out elegant exit solution that doesn't mess with score
+            chargeCount.update(position.getCurrPosition(), fuel.getCurrentFuel());
+            state.setBuilding2Height(data.getBuildingHeights().get(position.getCurrPosition()));
         }
 
 
