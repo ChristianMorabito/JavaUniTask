@@ -2,16 +2,18 @@ public class State
 {
     private int previousPosition;
 
+    private boolean lock;
+
     private int building1Height;
     private int building2Height;
     private int fuelShuffleCount;
     private boolean outOfRange;
     private boolean skipTurn;
     private boolean gameRunning;
-    private boolean firstMove;
 
     State()
     {
+        lock = true;
         building2Height = 0;
         building1Height = 0;
         previousPosition = 0;
@@ -19,9 +21,8 @@ public class State
         outOfRange = false;
         gameRunning = true;
         skipTurn = false;
-        firstMove = true;
     }
-    State(int building1Height, int previousPosition, int building2Height, int fuelShuffleCount, boolean outOfRange, boolean gameRunning, boolean skipTurn, boolean firstMove)
+    State(int building1Height, int previousPosition, int building2Height, int fuelShuffleCount, boolean outOfRange, boolean gameRunning, boolean skipTurn)
     {
         this.building1Height = building1Height;
         this.previousPosition = previousPosition;
@@ -30,7 +31,6 @@ public class State
         this.outOfRange = outOfRange;
         this.gameRunning = gameRunning;
         this.skipTurn = skipTurn;
-        this.firstMove = firstMove;
     }
 
     public boolean fuelShuffleCheck()
@@ -72,11 +72,6 @@ public class State
     {
         return skipTurn;
     }
-
-    public boolean isFirstMove()
-    {
-        return firstMove;
-    }
     public void setGameRunning(boolean gameRunning)
     {
         this.gameRunning = gameRunning;
@@ -90,10 +85,6 @@ public class State
     public void setSkipTurn(boolean skipTurn)
     {
         this.skipTurn = skipTurn;
-    }
-    public void setFirstMove(boolean firstMove)
-    {
-        this.firstMove = firstMove;
     }
 
     public void setFuelShuffleCount(int fuelShuffleCount)
@@ -112,5 +103,13 @@ public class State
     public void setBuilding1Height(int building1Height)
     {
         this.building1Height = building1Height;
+    }
+
+    public boolean isLock() {
+        return lock;
+    }
+
+    public void setLock(boolean lock) {
+        this.lock = lock;
     }
 }

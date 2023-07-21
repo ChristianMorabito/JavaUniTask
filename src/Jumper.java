@@ -18,8 +18,8 @@ public class Jumper
         {
             data.shuffleData();
             position.setPositions(data.getBuildingHeights());
+            chargeCount.fuelRespawn(position.getCurrPosition(), fuel.getCurrentFuel());
             state.setBuilding1Height(data.getBuildingHeights().get(position.getCurrPosition()));
-            chargeCount.firstUpdate(position.getCurrPosition(), fuel.getCurrentFuel());
             do
             {
                 chargeCount.print();
@@ -30,8 +30,8 @@ public class Jumper
                 position.move(data.getBuildingHeights(), input.getAction());
             }
             while (state.isOutOfRange());
-            chargeCount.update(position.getCurrPosition(), fuel.getCurrentFuel());
             state.setBuilding2Height(data.getBuildingHeights().get(position.getCurrPosition()));
+            chargeCount.update(position.getCurrPosition(), fuel.getCurrentFuel());
         }
 
 

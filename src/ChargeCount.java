@@ -31,15 +31,11 @@ public class ChargeCount
     }
 
 
-    public void firstUpdate(int currPosition, ArrayList<Boolean> dataFuelCells)
+    public void fuelRespawn(int currPosition, ArrayList<Boolean> dataFuelCells)
     {
-        if (state.isFirstMove())
+        if (dataFuelCells.get(currPosition))
         {
-            if (dataFuelCells.get(currPosition))
-            {
-                fuelCharge();
-            }
-            state.setFirstMove(false);
+            fuelCharge();
         }
     }
 
