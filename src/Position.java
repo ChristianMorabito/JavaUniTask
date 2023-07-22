@@ -28,7 +28,7 @@ public class Position
         this.rightPosition = 0;
         this.state = state;
     }
-    public void move(ArrayList<Integer> buildingHeights, int input)
+    public void move(ArrayList<Integer> buildingHeights, int input, Log log)
     {
         int temp = currentPosition;
 
@@ -41,12 +41,18 @@ public class Position
             }
             else if (temp == END_INDEX)
             {
-                System.out.println("On last index!!"); // TODO: consider if character lands on FROZEN exit portal
-
+                if (!state.isFrozen())
+                {
+                    state.setGameRunning(false);
+                }
             }
             else
             {
-                outOfRange();
+                if (!state.isFrozen())
+                {
+                    state.setOutOfRange(true);
+                    return;
+                }
                 return;
             }
         }
@@ -59,7 +65,7 @@ public class Position
             }
             else
             {
-                outOfRange();
+                state.setOutOfRange(true);
                 return;
             }
         }
@@ -76,12 +82,18 @@ public class Position
 
         currentPosition = temp;
         state.setOutOfRange(false);
+        if (!state.isFrozen()) // if frozen, turn number is not incremented
+        {
+            log.setTurnCount(log.getTurnCount() + 1);
+        }
     }
 
-    private void outOfRange()
+    public void printIfOutOfRange()
     {
-        System.out.println("\uD83D\uDEA8 BEYOND RANGE: Retry \uD83D\uDEA8");
-        state.setOutOfRange(true);
+        if (state.isOutOfRange())
+        {
+            System.out.println("\uD83D\uDEA8 BEYOND RANGE: Retry \uD83D\uDEA8");
+        }
 
     }
 

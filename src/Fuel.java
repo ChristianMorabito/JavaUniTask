@@ -22,7 +22,7 @@ public class Fuel
 
     public void print(int currentPosition)
     {
-        String fuelCollected = "";
+        String fuelCollected = "✅ FUELED ✅";
 
         if (state.fuelShuffleCheck())
         {
@@ -31,20 +31,9 @@ public class Fuel
 
         if (currentFuel.get(currentPosition))
         {
-            fuelCollected = "  FUELED" + " ✅";
-        }
+            System.out.println(fuelCollected);
 
-        for (int i = 0; i < currentFuel.size(); i++)
-        {
-            if (i == currentPosition) {
-                System.out.print(fuelCollected);
-            }
-            else
-            {
-                System.out.print("             ");
-            }
         }
-        System.out.println();
 
     }
 

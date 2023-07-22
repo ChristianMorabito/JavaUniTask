@@ -4,18 +4,22 @@ public class Input
 {
     private String userName;
 
+    private State state;
+
     private int action;
 
     Input()
     {
+        this.state = new State();
         this.userName = "Unfilled";
         this.action = 0;
     }
 
-    Input(String userName, int action)
+    Input(State state)
     {
-        this.userName = userName;
-        this.action = action;
+        this.state = state;
+        this.userName = "Unfilled";
+        this.action = 0;
     }
     public void usernameInput()
     {
@@ -39,8 +43,32 @@ public class Input
         }
     }
 
+    private void frozenInput()
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("""
+                ┎------------------------------┒
+                │                              │
+                │     You have lost a turn     │
+                │❆❅❆❅❆❅❆❅❆❅❆❅❆❅❆❅❆❅❆❅│
+                │         Press  ENTER         │
+                │                              │
+                └------------------------------┘
+                """);
+
+        while (!scanner.hasNextLine());
+        String line = "──────────";
+        System.out.println(line.repeat(20));
+
+    }
+
     public void actionInput()
     {
+        if (state.isFrozen())
+        {
+            frozenInput();
+            return;
+        }
         Scanner scanner = new Scanner(System.in);
         System.out.print("""
                 ┎------------------------------┒

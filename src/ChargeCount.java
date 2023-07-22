@@ -2,53 +2,65 @@ import java.util.ArrayList;
 
 public class ChargeCount
 {
-    private int chargeAmount;
+    private int amount;
     private final int STARTING_CHARGE = 10;
     private final int MAX_CHARGE = 20;
     private State state;
 
     ChargeCount(int startingCharge)
     {
-        chargeAmount = startingCharge;
+        amount = startingCharge;
         state = new State();
     }
 
     ChargeCount(State state)
     {
-        this.chargeAmount = STARTING_CHARGE;
+        this.amount = STARTING_CHARGE;
         this.state = state;
     }
 
     private void jumpDeplete(int building1, int building2)
     {
-        this.chargeAmount -= (Math.abs(building1 - building2)) + 1;
+        this.amount -= (Math.abs(building1 - building2)) + 1;
         chargeCheck();
     }
 
-    private void fuelCharge()
+    private void fuelCharge(Log log)
     {
-        chargeAmount = Math.min(chargeAmount + 5, MAX_CHARGE);
+        amount = Math.min(amount + 5, MAX_CHARGE);
+        log.setFuelCount(log.getFuelCount() + 1);
+
     }
 
 
-    public void fuelRespawn(int currPosition, ArrayList<Boolean> dataFuelCells)
+    public void passiveCheck(int currPosition, ArrayList<Boolean> dataFuelCells, Log log)
     {
-        if (dataFuelCells.get(currPosition))
+        if (state.getPreviousPosition() == currPosition && dataFuelCells.get(currPosition))
         {
-            fuelCharge();
+            fuelCharge(log);
+        }
+
+        if (state.isWebbed())
+        {
+            this.amount -= 5;
+            chargeCheck();
         }
     }
 
-    public void update(int currPosition, ArrayList<Boolean> dataFuelCells)
+    public void activeCheck(int currPosition, ArrayList<Boolean> dataFuelCells, Log log)
     {
+        if (chargeCheck()) // if jumper fuel goes to < 1, the game exits before potential refuel
+        {
+            return;
+        }
         if (dataFuelCells.get(currPosition))
         {
-            fuelCharge();
+            fuelCharge(log);
         }
 
         if (state.getPreviousPosition() == currPosition)
         {
-            this.chargeAmount -= 1;
+            this.amount -= 1;
             chargeCheck();
         }
         else
@@ -56,37 +68,30 @@ public class ChargeCount
             jumpDeplete(state.getBuilding2Height(), state.getBuilding1Height());
         }
 
-
-//        ArrayList<Integer> buildingHeights = data.heights();
-//
-//        ArrayList<Boolean> fuelCell = data.getFuelCells();
-
-
-//        ArrayList<Boolean> web = data.getWeb();
-//        ArrayList<Boolean> freeze = data.getFreeze();
-
     }
 
-    public void chargeCheck()
+    public boolean chargeCheck()
     {
-        if (chargeAmount < 1)
+        if (amount < 1)
         {
             state.setGameRunning(false);
+            return true;
         }
+        return false;
 
     }
     public void print()
     {
-        if (chargeAmount > 0)
+        if (amount > 0)
         {
-            String chargeBlock = "█ ".repeat(chargeAmount);
+            String chargeBlock = "█ ".repeat(amount);
             System.out.print(chargeBlock);
         }
-        System.out.println(chargeAmount);
+        System.out.println(amount + "\n");
     }
 
-    public int getChargeAmount()
+    public int getAmount()
     {
-        return chargeAmount;
+        return amount;
     }
 }

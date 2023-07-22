@@ -1,9 +1,10 @@
+import javax.swing.plaf.PanelUI;
+
 public class State
 {
     private int previousPosition;
-
-    private boolean lock;
-
+    private boolean frozen;
+    private boolean webbed;
     private int building1Height;
     private int building2Height;
     private int fuelShuffleCount;
@@ -13,7 +14,6 @@ public class State
 
     State()
     {
-        lock = true;
         building2Height = 0;
         building1Height = 0;
         previousPosition = 0;
@@ -21,6 +21,8 @@ public class State
         outOfRange = false;
         gameRunning = true;
         skipTurn = false;
+        frozen = false;
+        webbed = false;
     }
     State(int building1Height, int previousPosition, int building2Height, int fuelShuffleCount, boolean outOfRange, boolean gameRunning, boolean skipTurn)
     {
@@ -31,6 +33,18 @@ public class State
         this.outOfRange = outOfRange;
         this.gameRunning = gameRunning;
         this.skipTurn = skipTurn;
+    }
+
+    public void exitPrint(int amount, String name)
+    {
+        String webbedString = "were WEBBED which ";
+        if (amount > 0)
+        {
+            System.out.println("Congratulations, " + name + "! You have escaped the Nowhere Dimension!!");
+            return;
+        }
+        webbedString = webbed ? webbedString : "";
+        System.out.println("Oh no, " + name + "! You " + webbedString + "drained your fuel! You remain trapped in the Nowhere Dimension!! ");
     }
 
     public boolean fuelShuffleCheck()
@@ -56,6 +70,11 @@ public class State
     public int getBuilding2Height()
     {
         return building2Height;
+    }
+
+    public boolean isFrozen()
+    {
+        return frozen;
     }
 
     public boolean isGameRunning()
@@ -105,11 +124,18 @@ public class State
         this.building1Height = building1Height;
     }
 
-    public boolean isLock() {
-        return lock;
+    public void setFrozen(boolean frozen)
+    {
+        this.frozen = frozen;
     }
 
-    public void setLock(boolean lock) {
-        this.lock = lock;
+    public void setWebbed(boolean webbed)
+    {
+        this.webbed = webbed;
+    }
+
+    public boolean isWebbed()
+    {
+        return webbed;
     }
 }

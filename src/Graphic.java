@@ -17,6 +17,7 @@ public class Graphic
 
     private void print()
     {
+        System.out.println();
         for (int i = 0; i < 6; i++)
         {
             String formattedString = Arrays.toString(buildingString[i])
