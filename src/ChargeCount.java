@@ -7,13 +7,13 @@ public class ChargeCount
     private final int MAX_CHARGE = 20;
     private State state;
 
-    ChargeCount(int startingCharge)
+    public ChargeCount(int startingCharge)
     {
         amount = startingCharge;
         state = new State();
     }
 
-    ChargeCount(State state)
+    public ChargeCount(State state)
     {
         this.amount = STARTING_CHARGE;
         this.state = state;
@@ -21,7 +21,7 @@ public class ChargeCount
 
     private void jumpDeplete(int building1, int building2)
     {
-        this.amount -= (Math.abs(building1 - building2)) + 1;
+        amount -= (Math.abs(building1 - building2)) + 1;
         chargeCheck();
     }
 
@@ -42,8 +42,9 @@ public class ChargeCount
 
         if (state.isWebbed())
         {
-            this.amount -= 5;
+            amount -= 5;
             chargeCheck();
+
         }
     }
 
@@ -60,7 +61,7 @@ public class ChargeCount
 
         if (state.getPreviousPosition() == currPosition)
         {
-            this.amount -= 1;
+            amount -= 1;
             chargeCheck();
         }
         else

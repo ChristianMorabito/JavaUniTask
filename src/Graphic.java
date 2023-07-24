@@ -5,9 +5,9 @@ public class Graphic
 {
     private StringBuilder[][] buildingString;
 
-    Graphic()
+    public Graphic()
     {
-        this.buildingString = new StringBuilder[6][15];
+        this.buildingString = new StringBuilder[Data.MAX_HEIGHT + 1][Data.ROW_LENGTH];
     }
 
     Graphic(StringBuilder[][] buildingString)
@@ -18,7 +18,7 @@ public class Graphic
     private void print()
     {
         System.out.println();
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < Data.MAX_HEIGHT + 1; i++)
         {
             String formattedString = Arrays.toString(buildingString[i])
                 .replace(",", "")
@@ -28,7 +28,7 @@ public class Graphic
         }
     }
 
-    private void createRoof(Data data, int i, int currHeight, int jumperIndex)
+    private void createRoof(Parse parse, int i, int currHeight, int jumperIndex)
     {
         final String PORTAL = "@";
         final String JUMPER =    "█";
@@ -36,31 +36,31 @@ public class Graphic
         final String WEB = "##";
         final String FREEZE = "^^^";
         final String ROOF = " ┎────────┒ ";
-        ArrayList<Boolean> exitPortal = data.getExitPortals();
-        ArrayList<Boolean> fuelCell = data.getFuel().getCurrentFuel();
-        ArrayList<Boolean> web = data.getWeb();
-        ArrayList<Boolean> freeze = data.getFreeze();
+        ArrayList<Boolean> exitPortal = parse.getExitPortals();
+        ArrayList<Boolean> fuelCell = parse.getFuel().getCurrentFuel();
+        ArrayList<Boolean> web = parse.getWeb();
+        ArrayList<Boolean> freeze = parse.getFreeze();
 
-        buildingString[5 - currHeight][i] = new StringBuilder(ROOF);
+        buildingString[Data.MAX_HEIGHT - currHeight][i] = new StringBuilder(ROOF);
         if (i == jumperIndex)
         {
-            buildingString[5 - currHeight][i] = buildingString[5 - currHeight][i].replace(2, 3, JUMPER);
+            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(2, 3, JUMPER);
         }
         if (fuelCell.get(i))
         {
-            buildingString[5 - currHeight][i] = buildingString[5 - currHeight][i].replace(3, 4, FUEL_CELL);
+            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(3, 4, FUEL_CELL);
         }
         if (freeze.get(i))
         {
-            buildingString[5 - currHeight][i] = buildingString[5 - currHeight][i].replace(4, 7, FREEZE);
+            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(4, 7, FREEZE);
         }
         if (web.get(i))
         {
-            buildingString[5 - currHeight][i] = buildingString[5 - currHeight][i].replace(7, 9, WEB);
+            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(7, 9, WEB);
         }
         if (exitPortal.get(i))
         {
-            buildingString[5 - currHeight][i] = buildingString[5 - currHeight][i].replace(9, 10, PORTAL);
+            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(9, 10, PORTAL);
         }
 
     }
@@ -93,17 +93,22 @@ public class Graphic
 
         buildingWidth = i == currPosition || i == leftPosition || i == rightPosition ? "" : buildingWidth;
         firstGap = i > 0 ? firstGap.trim() : firstGap;
-        buildingString[5][i] = new StringBuilder(firstGap + buildingHeights.get(i) + baseText + buildingWidth + buildingSide + betweenGap);
+        buildingString[Data.MAX_HEIGHT][i] = new StringBuilder(firstGap +
+                                                               buildingHeights.get(i) +
+                                                               baseText +
+                                                               buildingWidth +
+                                                               buildingSide +
+                                                               betweenGap);
     }
 
-    private void createUnderAndAbove(int maxHeight, int currHeight, int i, int j, int leftPosition, int rightPosition)
+    private void createUnderAndAbove(int currHeight, int i, int j, int leftPosition, int rightPosition)
     {
         final String DEFAULT_SIDES = " │◫◫◫◫◫◫◫◫│ ";
         final String JUMP_SIDES =    " ╹∎∎∎∎∎∎∎∎╹ ";
         final String EMPTY_SPACE =   "            ";
-        int underBuilding = maxHeight + j + 1;
+        int underBuilding = Data.MAX_HEIGHT + j + 1;
 
-        if (underBuilding - currHeight < maxHeight)
+        if (underBuilding - currHeight < Data.MAX_HEIGHT)
         {
             if (i == leftPosition || i == rightPosition)
             {
@@ -116,30 +121,29 @@ public class Graphic
         }
         else
         {
-            buildingString[(underBuilding - currHeight) - maxHeight][i] = new StringBuilder(EMPTY_SPACE);
+            buildingString[(underBuilding - currHeight) - Data.MAX_HEIGHT][i] = new StringBuilder(EMPTY_SPACE);
         }
     }
 
-    public void create(Data data, int[] positions)
+    public void create(Parse parse, int[] positions)
     {
         int currentPosition = positions[0];
         int leftPosition = positions[1];
         int rightPosition = positions[2];
-        ArrayList<Integer> buildingHeights = data.getBuildingHeights();
+        ArrayList<Integer> buildingHeights = parse.getBuildingHeights();
 
-        for (int i = 0; i < buildingString[0].length; i++)
+        for (int i = 0; i < Data.ROW_LENGTH; i++)
         {
 
-            int maxHeight = buildingString.length-1;
             int currHeight = buildingHeights.get(i);
 
-            createRoof(data, i, currHeight, currentPosition);
+            createRoof(parse, i, currHeight, currentPosition);
             createBase(buildingHeights, i, currentPosition, leftPosition, rightPosition);
 
-            for (int j = 0; j < maxHeight-1; j++)
+            for (int j = 0; j < Data.MAX_HEIGHT - 1; j++)
             {
 
-                createUnderAndAbove(maxHeight, currHeight, i, j, leftPosition, rightPosition);
+                createUnderAndAbove(currHeight, i, j, leftPosition, rightPosition);
             }
         }
         print();

@@ -8,11 +8,23 @@ and the win status of the game.
 public class Log {
     private int turnCount;
     private int fuelCount;
+    private int webCount;
+    private int freezeCount;
 
-    Log()
+    public Log()
     {
         turnCount = 0;
         fuelCount = 0;
+        this.webCount = 0;
+        this.freezeCount = 0;
+    }
+
+    public Log(int turnCount, int fuelCount, int webCount, int freezeCount)
+    {
+        this.turnCount = turnCount;
+        this.fuelCount = fuelCount;
+        this.webCount = webCount;
+        this.freezeCount = freezeCount;
     }
 
     public int getFuelCount() {
@@ -21,18 +33,44 @@ public class Log {
 
     public String display()
     {
-        return "Turn count: " + turnCount + "\nFuel count: " + fuelCount;
+        return "Turn count: " + turnCount + "\n" +
+               "Fuel count: " + fuelCount + "\n" +
+               "Web count: " + webCount + "\n" +
+               "Freeze count: " + freezeCount + "\n";
     }
 
-    public int getTurnCount() {
+    public int getTurnCount()
+    {
         return turnCount;
     }
 
-    public void setFuelCount(int fuelCount) {
+    public int getFreezeCount()
+    {
+        return freezeCount;
+    }
+
+    public int getWebCount()
+    {
+        return webCount;
+    }
+
+    public void setFuelCount(int fuelCount)
+    {
         this.fuelCount = fuelCount;
     }
 
-    public void setTurnCount(int turnCount) {
+    public void setTurnCount(int turnCount)
+    {
         this.turnCount = turnCount;
+    }
+
+    public void setFreezeCount(int freezeCount)
+    {
+        this.freezeCount = freezeCount;
+    }
+
+    public void setWebCount(int webCount)
+    {
+        this.webCount = webCount;
     }
 }

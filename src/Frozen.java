@@ -2,17 +2,22 @@ import java.util.ArrayList;
 
 public class Frozen {
 
-    Frozen() {
+    public Frozen() {
     }
 
-    public void checking(State state, ArrayList<Boolean> freeze, int currentPosition) {
+    public void checking(State state, ArrayList<Boolean> freeze, int currentPosition, Log log) {
         if (freeze.get(currentPosition)) {
+            log.setFreezeCount(log.getFreezeCount() + 1);
             state.setFrozen(true);
         }
     }
 
-    public void turningOff(State state) {
-        state.setFrozen(false);
+    public void turningOff(State state, int currPosition) {
+        if (currPosition != Data.END_INDEX)
+        {
+            state.setFrozen(false);
+        }
+
     }
 
     public void print(State state) {

@@ -9,14 +9,14 @@ public class FileIO
     private File textFile;
     private String fileName;
 
-    FileIO()
+    public FileIO(Data data)
     {
         this.data = new ArrayList<>();
         this.fileName = "Empty file name";
         this.textFile = new File(fileName);
     }
 
-    FileIO(String fileName)
+    public FileIO(String fileName)
     {
         this.data = new ArrayList<>();
         this.fileName = fileName;
@@ -54,7 +54,6 @@ public class FileIO
             System.out.println("Reading file error!! Exiting...");
             System.exit(-1);
         }
-
     }
 
     public void setData(ArrayList<String[]> data)

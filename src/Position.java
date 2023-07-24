@@ -6,14 +6,11 @@ public class Position
     private Integer currentPosition;
     private State state;
 
-    private final int END_INDEX = 14;
-    private final int START_INDEX = 0;
-
     private int leftPosition;
 
     private int rightPosition;
 
-    Position()
+    public Position()
     {
         this.currentPosition = 0;
         this.leftPosition = 0;
@@ -21,29 +18,32 @@ public class Position
         this.state = new State();
     }
 
-    Position(State state)
+    public Position(State state)
     {
         this.currentPosition = 0;
         this.leftPosition = 0;
         this.rightPosition = 0;
         this.state = state;
     }
-    public void move(ArrayList<Integer> buildingHeights, int input, Log log)
+    public void move(ArrayList<Integer> buildingHeights, int input, Log log, ArrayList<Boolean> freezeCheck, Frozen frozen)
     {
         int temp = currentPosition;
 
         if (input == 1)
         {
             temp += buildingHeights.get(currentPosition);
-            if (temp < END_INDEX)
+            if (temp < Data.END_INDEX)
             {
                 state.setPreviousPosition(currentPosition);
             }
-            else if (temp == END_INDEX)
+            else if (temp == Data.END_INDEX)
             {
+                currentPosition = temp;
+                frozen.checking(state, freezeCheck, currentPosition, log);
                 if (!state.isFrozen())
                 {
                     state.setGameRunning(false);
+                    return;
                 }
             }
             else
@@ -59,7 +59,7 @@ public class Position
         else if (input == 2)
         {
             temp -= buildingHeights.get(currentPosition);
-            if (temp >= START_INDEX)
+            if (temp >= Data.START_INDEX)
             {
                 state.setPreviousPosition(currentPosition);
             }
@@ -132,7 +132,7 @@ public class Position
     {
         int temp = currentPosition;
         temp -= leftHeight.get(currentPosition);
-        temp = temp >= START_INDEX ? temp : -1;
+        temp = temp >= Data.START_INDEX ? temp : -1;
         this.leftPosition = temp;
     }
 
@@ -140,7 +140,7 @@ public class Position
     {
         int temp = currentPosition;
         temp += buildingHeights.get(currentPosition);
-        temp = temp <= END_INDEX ? temp : -1;
+        temp = temp <= Data.END_INDEX ? temp : -1;
         this.rightPosition = temp;
     }
 
@@ -148,12 +148,12 @@ public class Position
     {
         int temp = currentPosition;
         temp -= buildingHeights.get(currentPosition);
-        temp = temp >= START_INDEX ? temp : -1;
+        temp = temp >= Data.START_INDEX ? temp : -1;
         this.leftPosition = temp;
 
         temp = currentPosition;
         temp += buildingHeights.get(currentPosition);
-        temp = temp <= END_INDEX ? temp : -1;
+        temp = temp <= Data.END_INDEX ? temp : -1;
         this.rightPosition = temp;
     }
 

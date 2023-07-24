@@ -7,47 +7,47 @@ public class Jumper
         Input input = new Input(state);
         Position position = new Position(state);
         Fuel fuel = new Fuel(state);
-        Data data = new Data(fuel, state);
+        Parse parse = new Parse(fuel, state);
         Frozen frozen = new Frozen();
         Web web = new Web();
         ChargeCount chargeCount = new ChargeCount(state);
         FileIO fileIO = new FileIO("buildings.txt");
-
         fileIO.readFile();
-        data.define(fileIO.getData());
-        input.usernameInput();
+        parse.define(fileIO.getData());
+//        input.usernameInput();
 
         while (state.isGameRunning())
         {
             web.turningOff(state);
-            data.shuffleData();
-            web.checking(state, data.getWeb(), position.getCurrPosition());
-            position.setPositions(data.getBuildingHeights());
+            parse.shuffleData();
+            web.checking(state, parse.getWeb(), position.getCurrPosition(), log);
+            position.setPositions(parse.getBuildingHeights());
             chargeCount.passiveCheck(position.getCurrPosition(), fuel.getCurrentFuel(), log);
-            state.setBuilding1Height(data.getBuildingHeights().get(position.getCurrPosition()));
-            frozen.checking(state, data.getFreeze(), position.getCurrPosition());
+            state.setBuilding1Height(parse.getBuildingHeights().get(position.getCurrPosition()));
+            frozen.checking(state, parse.getFreeze(), position.getCurrPosition(), log);
             do
             {
                 if (state.isGameRunning())
                 {
+                    System.out.println(log.display());
                     chargeCount.print();
                     frozen.print(state);
                     web.print(state);
                     position.printIfOutOfRange();
-                    fuel.print(position.getCurrPosition());
-                    new Graphic().create(data, position.getPositions());
+                    fuel.print(position.getCurrPosition(), chargeCount.getAmount());
+                    new Graphic().create(parse, position.getPositions());
                     fuel.collectFuel(position.getCurrPosition());
                     input.actionInput();
-                    position.move(data.getBuildingHeights(), input.getAction(), log);
+                    position.move(parse.getBuildingHeights(), input.getAction(), log, parse.getFreeze(), frozen);
                 }
             }
             while (state.isOutOfRange());
-            frozen.turningOff(state);
-            state.setBuilding2Height(data.getBuildingHeights().get(position.getCurrPosition()));
+            frozen.turningOff(state, position.getCurrPosition());
+            state.setBuilding2Height(parse.getBuildingHeights().get(position.getCurrPosition()));
             chargeCount.activeCheck(position.getCurrPosition(), fuel.getCurrentFuel(), log);
         }
-        state.exitPrint(chargeCount.getAmount(), input.getUserName());
         System.out.println(log.display());
+        state.exitPrint(chargeCount.getAmount(), input.getUserName());
 
 
 

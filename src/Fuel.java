@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Fuel
@@ -7,22 +6,21 @@ public class Fuel
 
     private State state;
 
-    Fuel()
+    public Fuel()
     {
         currentFuel = new ArrayList<>();
         state = new State();
     }
 
-    Fuel(State state)
+    public Fuel(State state)
     {
         this.currentFuel = new ArrayList<>();
         this.state = state;
     }
 
 
-    public void print(int currentPosition)
+    public void print(int currentPosition, int chargeCount)
     {
-        String fuelCollected = "✅ FUELED ✅";
 
         if (state.fuelShuffleCheck())
         {
@@ -31,7 +29,11 @@ public class Fuel
 
         if (currentFuel.get(currentPosition))
         {
-            System.out.println(fuelCollected);
+            if (chargeCount == 20)
+            {
+                System.out.println("✅✅ MAX FUELED ✅✅");
+            }
+            System.out.println("✅ FUELED ✅");
 
         }
 

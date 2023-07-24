@@ -8,14 +8,14 @@ public class Input
 
     private int action;
 
-    Input()
+    public Input()
     {
         this.state = new State();
         this.userName = "Unfilled";
         this.action = 0;
     }
 
-    Input(State state)
+    public Input(State state)
     {
         this.state = state;
         this.userName = "Unfilled";
@@ -50,7 +50,7 @@ public class Input
                 ┎------------------------------┒
                 │                              │
                 │     You have lost a turn     │
-                │❆❅❆❅❆❅❆❅❆❅❆❅❆❅❆❅❆❅❆❅│
+                │                              │
                 │         Press  ENTER         │
                 │                              │
                 └------------------------------┘

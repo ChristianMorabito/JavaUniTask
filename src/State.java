@@ -12,7 +12,7 @@ public class State
     private boolean skipTurn;
     private boolean gameRunning;
 
-    State()
+    public State()
     {
         building2Height = 0;
         building1Height = 0;
@@ -24,7 +24,7 @@ public class State
         frozen = false;
         webbed = false;
     }
-    State(int building1Height, int previousPosition, int building2Height, int fuelShuffleCount, boolean outOfRange, boolean gameRunning, boolean skipTurn)
+    public State(int building1Height, int previousPosition, int building2Height, int fuelShuffleCount, boolean outOfRange, boolean gameRunning, boolean skipTurn)
     {
         this.building1Height = building1Height;
         this.previousPosition = previousPosition;
