@@ -27,57 +27,56 @@ public class Position
     }
     public void move(ArrayList<Integer> buildingHeights, int input, Log log, ArrayList<Boolean> freezeCheck, Frozen frozen)
     {
+        if (state.isFrozen())
+        {
+            return;
+        }
         int temp = currentPosition;
 
-        if (input == 1)
+        switch (input)
         {
-            temp += buildingHeights.get(currentPosition);
-            if (temp < Data.END_INDEX)
+            case 1 ->
             {
-                state.setPreviousPosition(currentPosition);
-            }
-            else if (temp == Data.END_INDEX)
-            {
-                currentPosition = temp;
-                frozen.checking(state, freezeCheck, currentPosition, log);
-                if (!state.isFrozen())
+                temp += buildingHeights.get(currentPosition);
+                if (temp <= Data.END_INDEX)
                 {
-                    state.setGameRunning(false);
-                    return;
+                    state.setPreviousPosition(currentPosition);
                 }
-            }
-            else
-            {
-                if (!state.isFrozen())
+
+                else
                 {
                     state.setOutOfRange(true);
                     return;
                 }
-                return;
             }
-        }
-        else if (input == 2)
-        {
-            temp -= buildingHeights.get(currentPosition);
-            if (temp >= Data.START_INDEX)
+            case 2 ->
             {
+                temp -= buildingHeights.get(currentPosition);
+                if (temp >= Data.START_INDEX)
+                {
+                    state.setPreviousPosition(currentPosition);
+                }
+                else
+                {
+                    state.setOutOfRange(true);
+                    return;
+                }
+            }
+            case 3 ->
+            {
+                state.setSkipTurn(true);
                 state.setPreviousPosition(currentPosition);
             }
-            else
+            case 4 ->
             {
-                state.setOutOfRange(true);
-                return;
+                System.out.println("Exiting...");
+                state.setGameRunning(false);
             }
-        }
-        else if (input == 3)
-        {
-            state.setSkipTurn(true);
-            state.setPreviousPosition(currentPosition);
-        }
-        else
-        {
-            System.out.println("Exiting...");
-            state.setGameRunning(false);
+            default ->
+            {
+                System.out.println("Input error! Exiting...");
+                System.exit(-1);
+            }
         }
 
         currentPosition = temp;

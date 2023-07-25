@@ -12,12 +12,9 @@ public class Frozen {
         }
     }
 
-    public void turningOff(State state, int currPosition) {
-        if (currPosition != Data.END_INDEX)
-        {
-            state.setFrozen(false);
-        }
-
+    public void turningOff(State state, int currPosition)
+    {
+        state.setFrozen(false);
     }
 
     public void print(State state) {

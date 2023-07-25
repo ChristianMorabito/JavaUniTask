@@ -3,11 +3,11 @@ import javax.swing.plaf.PanelUI;
 public class State
 {
     private int previousPosition;
-    private boolean frozen;
-    private boolean webbed;
     private int building1Height;
     private int building2Height;
     private int fuelShuffleCount;
+    private boolean frozen;
+    private boolean webbed;
     private boolean outOfRange;
     private boolean skipTurn;
     private boolean gameRunning;
@@ -24,7 +24,7 @@ public class State
         frozen = false;
         webbed = false;
     }
-    public State(int building1Height, int previousPosition, int building2Height, int fuelShuffleCount, boolean outOfRange, boolean gameRunning, boolean skipTurn)
+    public State(int building1Height, int previousPosition, int building2Height, int fuelShuffleCount, boolean outOfRange, boolean gameRunning, boolean skipTurn, boolean exitFreezeCheck)
     {
         this.building1Height = building1Height;
         this.previousPosition = previousPosition;
@@ -45,6 +45,14 @@ public class State
         }
         webbedString = webbed ? webbedString : "";
         System.out.println("Oh no, " + name + "! You " + webbedString + "drained your fuel! You remain trapped in the Nowhere Dimension!! ");
+    }
+
+    public void exitCheck(int currentPosition)
+    {
+        if (currentPosition == Data.END_INDEX && !frozen)
+        {
+            gameRunning = false;
+        }
     }
 
     public boolean fuelShuffleCheck()
@@ -115,6 +123,7 @@ public class State
     {
         this.previousPosition = previousPosition;
     }
+
     public void setBuilding2Height(int building2Height)
     {
         this.building2Height = building2Height;

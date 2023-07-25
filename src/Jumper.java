@@ -25,11 +25,11 @@ public class Jumper
             chargeCount.passiveCheck(position.getCurrPosition(), fuel.getCurrentFuel(), log);
             state.setBuilding1Height(parse.getBuildingHeights().get(position.getCurrPosition()));
             frozen.checking(state, parse.getFreeze(), position.getCurrPosition(), log);
+            state.exitCheck(position.getCurrPosition());
             do
             {
                 if (state.isGameRunning())
                 {
-                    System.out.println(log.display());
                     chargeCount.print();
                     frozen.print(state);
                     web.print(state);
@@ -46,18 +46,9 @@ public class Jumper
             state.setBuilding2Height(parse.getBuildingHeights().get(position.getCurrPosition()));
             chargeCount.activeCheck(position.getCurrPosition(), fuel.getCurrentFuel(), log);
         }
-        System.out.println(log.display());
         state.exitPrint(chargeCount.getAmount(), input.getUserName());
 
-
-
-
-        // PRINT WIN/LOSS STATE. IF LOSS, WERE YOU WEBBED?
-
-
-
         //TODO: ORGANISE WRITE RESULTS
-        //TODO: CREATE FREEZE CLASS & WEB CLASS ACCOUNT FOR TEXT, i.e. just like when "Fuel Collected"
 
     }
 }

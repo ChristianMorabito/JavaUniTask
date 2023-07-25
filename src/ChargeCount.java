@@ -3,8 +3,7 @@ import java.util.ArrayList;
 public class ChargeCount
 {
     private int amount;
-    private final int STARTING_CHARGE = 10;
-    private final int MAX_CHARGE = 20;
+
     private State state;
 
     public ChargeCount(int startingCharge)
@@ -15,7 +14,7 @@ public class ChargeCount
 
     public ChargeCount(State state)
     {
-        this.amount = STARTING_CHARGE;
+        this.amount = Data.STARTING_CHARGE;
         this.state = state;
     }
 
@@ -27,7 +26,7 @@ public class ChargeCount
 
     private void fuelCharge(Log log)
     {
-        amount = Math.min(amount + 5, MAX_CHARGE);
+        amount = Math.min(amount + 5, Data.MAX_CHARGE);
         log.setFuelCount(log.getFuelCount() + 1);
 
     }
@@ -50,6 +49,10 @@ public class ChargeCount
 
     public void activeCheck(int currPosition, ArrayList<Boolean> dataFuelCells, Log log)
     {
+        if (!state.isGameRunning())
+        {
+            return;
+        }
         if (chargeCheck()) // if jumper fuel goes to < 1, the game exits before potential refuel
         {
             return;

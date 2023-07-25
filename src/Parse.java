@@ -37,8 +37,8 @@ public class Parse
     public void shuffleData()
     {
 
-        Collections.shuffle(this.buildingHeights);
-        Collections.shuffle(this.web.subList(Data.START_INDEX + 1, Data.ROW_LENGTH));
+//        Collections.shuffle(this.buildingHeights);
+//        Collections.shuffle(this.web.subList(Data.START_INDEX + 1, Data.ROW_LENGTH));
         Collections.shuffle(this.freeze.subList(Data.START_INDEX + 1, Data.ROW_LENGTH));
         if (state.fuelShuffleCheck()){
             fuel.setCurrentFuel(new ArrayList<>(fuelCells));
