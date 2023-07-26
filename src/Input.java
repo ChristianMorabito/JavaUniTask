@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Input
 {
-    private String userName;
+    private String name;
 
     private State state;
 
@@ -11,14 +11,14 @@ public class Input
     public Input()
     {
         this.state = new State();
-        this.userName = "Unfilled";
+        this.name = "Unfilled";
         this.action = 0;
     }
 
     public Input(State state)
     {
         this.state = state;
-        this.userName = "Unfilled";
+        this.name = "Unfilled";
         this.action = 0;
     }
     public void usernameInput()
@@ -28,17 +28,15 @@ public class Input
         while (true)
         {
             System.out.print("Username: ");
-            userName = scanner.nextLine();
+            name = scanner.nextLine();
             System.out.println();
-            if (userName.length() > 2 && userName.length() < 13 && userName.matches("[a-zA-Z]+"))
+            if (name.length() > 2 && name.length() < 13)
             {
-                String line = "──────────";
-                System.out.println(line.repeat(20));
                 break;
             }
             else
             {
-                System.out.println("Invalid input! Please try again.");
+                Print.invalidInput();
             }
         }
     }
@@ -46,39 +44,17 @@ public class Input
     private void frozenInput()
     {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("""
-                ┎------------------------------┒
-                │                              │
-                │     You have lost a turn     │
-                │                              │
-                │         Press  ENTER         │
-                │                              │
-                └------------------------------┘
-                """);
-
         while (!scanner.hasNextLine());
-        String line = "──────────";
-        System.out.println(line.repeat(20));
 
     }
 
-    public void actionInput()
+    public void action()
     {
-        if (state.isFrozen())
-        {
+        if (state.isFrozen()) {
             frozenInput();
             return;
         }
         Scanner scanner = new Scanner(System.in);
-        System.out.print("""
-                ┎------------------------------┒
-                │ Enter a number between 1 & 4 │
-                │ 1) Jump RIGHT                |
-                │ 2) Jump LEFT                 │
-                │ 3) Skip Turn                 │
-                │ 4) Exit                      │
-                └------------------------------┘
-                """);
 
         while (true)
         {
@@ -90,7 +66,7 @@ public class Input
                 {
                     break;
                 }
-                System.out.println("Invalid Input! Please try again.");
+                Print.invalidInput();
 
             }
             catch (Exception e)
@@ -98,13 +74,11 @@ public class Input
                 scanner.next();
             }
         }
-        String line = "──────────";
-        System.out.println(line.repeat(20));
     }
 
-    public String getUserName()
+    public String getName()
     {
-        return userName;
+        return name;
     }
 
     public int getAction()
@@ -117,8 +91,8 @@ public class Input
         this.action = action;
     }
 
-    public void setUserName(String userName)
+    public void setName(String name)
     {
-        this.userName = userName;
+        this.name = name;
     }
 }

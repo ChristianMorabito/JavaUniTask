@@ -3,50 +3,56 @@ public class Jumper
     public static void main(String[] args)
     {
         Log log = new Log();
+        Count count = new Count();
         State state = new State();
         Input input = new Input(state);
-        Position position = new Position(state);
-        Fuel fuel = new Fuel(state);
-        Parse parse = new Parse(fuel, state);
+        Position position = new Position(count, state);
+        Fuel fuel = new Fuel(count);
+        Parse parse = new Parse(fuel, count);
         Frozen frozen = new Frozen();
         Web web = new Web();
-        ChargeCount chargeCount = new ChargeCount(state);
+        Charge charge = new Charge(count, state);
         FileIO fileIO = new FileIO("buildings.txt");
         fileIO.readFile();
         parse.define(fileIO.getData());
-//        input.usernameInput();
+        input.usernameInput();
 
         while (state.isGameRunning())
         {
-            web.turningOff(state);
-            parse.shuffleData();
-            web.checking(state, parse.getWeb(), position.getCurrPosition(), log);
-            position.setPositions(parse.getBuildingHeights());
-            chargeCount.passiveCheck(position.getCurrPosition(), fuel.getCurrentFuel(), log);
-            state.setBuilding1Height(parse.getBuildingHeights().get(position.getCurrPosition()));
-            frozen.checking(state, parse.getFreeze(), position.getCurrPosition(), log);
-            state.exitCheck(position.getCurrPosition());
+            web.turnOff(state);
+            parse.shuffle();
+            web.check(state, parse.getWeb(), position.getCurrentSpot(), log);
+            position.set(parse.buildings());
+            charge.passiveCheck(position.getCurrentSpot(), fuel.getArray(), log);
+            count.setHeight_1(parse.buildings().get(position.getCurrentSpot()));
+            frozen.check(state, parse.getFreeze(), position.getCurrentSpot(), log);
+            state.exitCheck(position.getCurrentSpot());
             do
             {
                 if (state.isGameRunning())
                 {
-                    chargeCount.print();
-                    frozen.print(state);
-                    web.print(state);
-                    position.printIfOutOfRange();
-                    fuel.print(position.getCurrPosition(), chargeCount.getAmount());
-                    new Graphic().create(parse, position.getPositions());
-                    fuel.collectFuel(position.getCurrPosition());
-                    input.actionInput();
-                    position.move(parse.getBuildingHeights(), input.getAction(), log, parse.getFreeze(), frozen);
+                    Print.clearScreen();
+                    Print.chargeAmount(charge.getAmount());
+                    Print.frozen(state);
+                    Print.web(state);
+                    Print.outOfRange(state);
+                    Print.fuelRespawning(count.fuelShuffleCheck());
+                    Print.fuelCollected(fuel.getArray(), position.getCurrentSpot(), charge.getAmount());
+                    Print.graphic(parse, position.getPositions());
+                    Print.action(state.isFrozen());
+
+                    input.action();
+                    position.move(parse.buildings(), input.getAction(), log, parse.getFreeze(), frozen);
                 }
             }
             while (state.isOutOfRange());
-            frozen.turningOff(state, position.getCurrPosition());
-            state.setBuilding2Height(parse.getBuildingHeights().get(position.getCurrPosition()));
-            chargeCount.activeCheck(position.getCurrPosition(), fuel.getCurrentFuel(), log);
+
+            fuel.collect(position.getCurrentSpot());
+            frozen.turningOff(state, position.getCurrentSpot());
+            count.setHeight_2(parse.buildings().get(position.getCurrentSpot()));
+            charge.activeCheck(position.getCurrentSpot(), fuel.getArray(), log);
         }
-        state.exitPrint(chargeCount.getAmount(), input.getUserName());
+        Print.exit(charge.getAmount(), input.getName(), state.isExit(), state.isWebbed());
 
         //TODO: ORGANISE WRITE RESULTS
 

@@ -2,58 +2,38 @@ import java.util.ArrayList;
 
 public class Fuel
 {
-    private ArrayList<Boolean> currentFuel;
+    private ArrayList<Boolean> array;
 
-    private State state;
+    private Count count;
 
     public Fuel()
     {
-        currentFuel = new ArrayList<>();
-        state = new State();
+        array = new ArrayList<>();
+        count = new Count();
     }
 
-    public Fuel(State state)
+    public Fuel(Count count)
     {
-        this.currentFuel = new ArrayList<>();
-        this.state = state;
+        this.array = new ArrayList<>();
+        this.count = count;
     }
 
 
-    public void print(int currentPosition, int chargeCount)
+    public void collect(int currentPosition)
     {
-
-        if (state.fuelShuffleCheck())
+        if (array.get(currentPosition))
         {
-            System.out.println("\uD83D\uDEA8 FUEL RESPAWNING \uD83D\uDEA8");
-        }
-
-        if (currentFuel.get(currentPosition))
-        {
-            if (chargeCount == 20)
-            {
-                System.out.println("✅✅ MAX FUELED ✅✅");
-            }
-            System.out.println("✅ FUELED ✅");
-
-        }
-
-    }
-
-    public void collectFuel(int currentPosition)
-    {
-        if (currentFuel.get(currentPosition))
-        {
-            currentFuel.set(currentPosition, false);
+            array.set(currentPosition, false);
         }
     }
 
-    public ArrayList<Boolean> getCurrentFuel()
+    public ArrayList<Boolean> getArray()
     {
-        return currentFuel;
+        return array;
     }
 
-    public void setCurrentFuel(ArrayList<Boolean> currentFuel)
+    public void setArray(ArrayList<Boolean> array)
     {
-        this.currentFuel = currentFuel;
+        this.array = array;
     }
 }

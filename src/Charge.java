@@ -1,20 +1,23 @@
 import java.util.ArrayList;
 
-public class ChargeCount
+public class Charge
 {
     private int amount;
 
+    private Count count;
     private State state;
 
-    public ChargeCount(int startingCharge)
+    public Charge(int startingCharge)
     {
         amount = startingCharge;
+        count = new Count();
         state = new State();
     }
 
-    public ChargeCount(State state)
+    public Charge(Count count, State state)
     {
         this.amount = Data.STARTING_CHARGE;
+        this.count = count;
         this.state = state;
     }
 
@@ -34,7 +37,7 @@ public class ChargeCount
 
     public void passiveCheck(int currPosition, ArrayList<Boolean> dataFuelCells, Log log)
     {
-        if (state.getPreviousPosition() == currPosition && dataFuelCells.get(currPosition))
+        if (count.getPreviousPosition() == currPosition && dataFuelCells.get(currPosition))
         {
             fuelCharge(log);
         }
@@ -62,14 +65,14 @@ public class ChargeCount
             fuelCharge(log);
         }
 
-        if (state.getPreviousPosition() == currPosition)
+        if (count.getPreviousPosition() == currPosition)
         {
             amount -= 1;
             chargeCheck();
         }
         else
         {
-            jumpDeplete(state.getBuilding2Height(), state.getBuilding1Height());
+            jumpDeplete(count.getHeight_2(), count.getHeight_1());
         }
 
     }
@@ -84,15 +87,7 @@ public class ChargeCount
         return false;
 
     }
-    public void print()
-    {
-        if (amount > 0)
-        {
-            String chargeBlock = "█ ".repeat(amount);
-            System.out.print(chargeBlock);
-        }
-        System.out.println(amount + "\n");
-    }
+
 
     public int getAmount()
     {

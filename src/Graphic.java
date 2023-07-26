@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Graphic
 {
@@ -15,19 +14,6 @@ public class Graphic
         this.buildingString = buildingString;
     }
 
-    private void print()
-    {
-        System.out.println();
-        for (int i = 0; i < Data.MAX_HEIGHT + 1; i++)
-        {
-            String formattedString = Arrays.toString(buildingString[i])
-                .replace(",", "")
-                .replace("[", "")
-                .replace("]", "");
-            System.out.println(formattedString);
-        }
-    }
-
     private void createRoof(Parse parse, int i, int currHeight, int jumperIndex)
     {
         final String PORTAL = "@";
@@ -37,7 +23,7 @@ public class Graphic
         final String FREEZE = "^^^";
         final String ROOF = " ┎────────┒ ";
         ArrayList<Boolean> exitPortal = parse.getExitPortals();
-        ArrayList<Boolean> fuelCell = parse.getFuel().getCurrentFuel();
+        ArrayList<Boolean> fuelCell = parse.getFuel().getArray();
         ArrayList<Boolean> web = parse.getWeb();
         ArrayList<Boolean> freeze = parse.getFreeze();
 
@@ -125,16 +111,15 @@ public class Graphic
         }
     }
 
-    public void create(Parse parse, int[] positions)
+    public StringBuilder[][] create(Parse parse, int[] positions)
     {
         int currentPosition = positions[0];
         int leftPosition = positions[1];
         int rightPosition = positions[2];
-        ArrayList<Integer> buildingHeights = parse.getBuildingHeights();
+        ArrayList<Integer> buildingHeights = parse.buildings();
 
         for (int i = 0; i < Data.ROW_LENGTH; i++)
         {
-
             int currHeight = buildingHeights.get(i);
 
             createRoof(parse, i, currHeight, currentPosition);
@@ -146,7 +131,7 @@ public class Graphic
                 createUnderAndAbove(currHeight, i, j, leftPosition, rightPosition);
             }
         }
-        print();
+        return buildingString;
     }
 
     public StringBuilder[][] getBuildingString()

@@ -10,7 +10,7 @@ public class Parse
     private ArrayList<Boolean> web;
     private ArrayList<Boolean> freeze;
     private Fuel fuel;
-    private State state;
+    private Count count;
 
     public Parse()
     {
@@ -20,10 +20,10 @@ public class Parse
         this.web = new ArrayList<>();
         this.freeze = new ArrayList<>();
         this.fuel = new Fuel();
-        this.state = new State();
+        this.count = new Count();
     }
 
-    public Parse(Fuel fuel, State state)
+    public Parse(Fuel fuel, Count count)
     {
         this.buildingHeights = new ArrayList<>();
         this.exitPortals = new ArrayList<>();
@@ -31,20 +31,20 @@ public class Parse
         this.web = new ArrayList<>();
         this.freeze = new ArrayList<>();
         this.fuel = fuel;
-        this.state = state;
+        this.count = count;
     }
 
-    public void shuffleData()
+    public void shuffle()
     {
 
-//        Collections.shuffle(this.buildingHeights);
-//        Collections.shuffle(this.web.subList(Data.START_INDEX + 1, Data.ROW_LENGTH));
+        Collections.shuffle(this.buildingHeights);
+        Collections.shuffle(this.web.subList(Data.START_INDEX + 1, Data.ROW_LENGTH));
         Collections.shuffle(this.freeze.subList(Data.START_INDEX + 1, Data.ROW_LENGTH));
-        if (state.fuelShuffleCheck()){
-            fuel.setCurrentFuel(new ArrayList<>(fuelCells));
-            Collections.shuffle(fuel.getCurrentFuel());
+        if (count.fuelShuffleCheck()){
+            fuel.setArray(new ArrayList<>(fuelCells));
+//            Collections.shuffle(fuel.getArray());
         }
-        state.setFuelShuffleCount(state.getFuelShuffleCount() + 1);
+        count.setFuelShuffleCount(count.getFuelShuffleCount() + 1);
 
     }
 
@@ -60,7 +60,7 @@ public class Parse
         }
     }
 
-    public ArrayList<Integer> getBuildingHeights()
+    public ArrayList<Integer> buildings()
     {
         return buildingHeights;
     }

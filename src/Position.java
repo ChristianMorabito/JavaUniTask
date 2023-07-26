@@ -3,7 +3,9 @@ import java.util.ArrayList;
 public class Position
 {
 
-    private Integer currentPosition;
+    private Integer currentSpot;
+    private Count count;
+
     private State state;
 
     private int leftPosition;
@@ -12,17 +14,19 @@ public class Position
 
     public Position()
     {
-        this.currentPosition = 0;
+        this.currentSpot = 0;
         this.leftPosition = 0;
         this.rightPosition = 0;
+        this.count = new Count();
         this.state = new State();
     }
 
-    public Position(State state)
+    public Position(Count count, State state)
     {
-        this.currentPosition = 0;
+        this.currentSpot = 0;
         this.leftPosition = 0;
         this.rightPosition = 0;
+        this.count = count;
         this.state = state;
     }
     public void move(ArrayList<Integer> buildingHeights, int input, Log log, ArrayList<Boolean> freezeCheck, Frozen frozen)
@@ -31,16 +35,16 @@ public class Position
         {
             return;
         }
-        int temp = currentPosition;
+        int temp = currentSpot;
 
         switch (input)
         {
             case 1 ->
             {
-                temp += buildingHeights.get(currentPosition);
+                temp += buildingHeights.get(currentSpot);
                 if (temp <= Data.END_INDEX)
                 {
-                    state.setPreviousPosition(currentPosition);
+                    count.setPreviousPosition(currentSpot);
                 }
 
                 else
@@ -51,10 +55,10 @@ public class Position
             }
             case 2 ->
             {
-                temp -= buildingHeights.get(currentPosition);
+                temp -= buildingHeights.get(currentSpot);
                 if (temp >= Data.START_INDEX)
                 {
-                    state.setPreviousPosition(currentPosition);
+                    count.setPreviousPosition(currentSpot);
                 }
                 else
                 {
@@ -65,12 +69,13 @@ public class Position
             case 3 ->
             {
                 state.setSkipTurn(true);
-                state.setPreviousPosition(currentPosition);
+                count.setPreviousPosition(currentSpot);
             }
             case 4 ->
             {
                 System.out.println("Exiting...");
                 state.setGameRunning(false);
+                state.setExit(true);
             }
             default ->
             {
@@ -79,7 +84,7 @@ public class Position
             }
         }
 
-        currentPosition = temp;
+        currentSpot = temp;
         state.setOutOfRange(false);
         if (!state.isFrozen()) // if frozen, turn number is not incremented
         {
@@ -87,23 +92,14 @@ public class Position
         }
     }
 
-    public void printIfOutOfRange()
+    public int getCurrentSpot()
     {
-        if (state.isOutOfRange())
-        {
-            System.out.println("\uD83D\uDEA8 BEYOND RANGE: Retry \uD83D\uDEA8");
-        }
-
-    }
-
-    public int getCurrPosition()
-    {
-        return currentPosition;
+        return currentSpot;
     }
 
     public int[] getPositions()
     {
-        return new int[]{currentPosition, leftPosition, rightPosition};
+        return new int[]{currentSpot, leftPosition, rightPosition};
     }
 
     public int getLeftPosition()
@@ -122,36 +118,36 @@ public class Position
         return state;
     }
 
-    public void setCurrentPosition(int currentPosition)
+    public void setCurrentSpot(int currentSpot)
     {
-        this.currentPosition = currentPosition;
+        this.currentSpot = currentSpot;
     }
 
     public void setLeftPosition(ArrayList<Integer> leftHeight)
     {
-        int temp = currentPosition;
-        temp -= leftHeight.get(currentPosition);
+        int temp = currentSpot;
+        temp -= leftHeight.get(currentSpot);
         temp = temp >= Data.START_INDEX ? temp : -1;
         this.leftPosition = temp;
     }
 
     public void setRightPosition(ArrayList<Integer> buildingHeights)
     {
-        int temp = currentPosition;
-        temp += buildingHeights.get(currentPosition);
+        int temp = currentSpot;
+        temp += buildingHeights.get(currentSpot);
         temp = temp <= Data.END_INDEX ? temp : -1;
         this.rightPosition = temp;
     }
 
-    public void setPositions(ArrayList<Integer> buildingHeights)
+    public void set(ArrayList<Integer> buildingHeights)
     {
-        int temp = currentPosition;
-        temp -= buildingHeights.get(currentPosition);
+        int temp = currentSpot;
+        temp -= buildingHeights.get(currentSpot);
         temp = temp >= Data.START_INDEX ? temp : -1;
         this.leftPosition = temp;
 
-        temp = currentPosition;
-        temp += buildingHeights.get(currentPosition);
+        temp = currentSpot;
+        temp += buildingHeights.get(currentSpot);
         temp = temp <= Data.END_INDEX ? temp : -1;
         this.rightPosition = temp;
     }
