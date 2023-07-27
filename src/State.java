@@ -1,5 +1,3 @@
-import javax.swing.plaf.PanelUI;
-
 public class State
 {
 
@@ -9,27 +7,31 @@ public class State
     private boolean skipTurn;
     private boolean gameRunning;
     private boolean exit;
+    private boolean numbers;
+    private boolean numbersLoop;
 
     public State()
     {
-
         outOfRange = false;
         gameRunning = true;
         skipTurn = false;
         frozen = false;
         webbed = false;
         exit = false;
+        numbers = false;
+        numbersLoop = false;
+
     }
-    public State(boolean outOfRange, boolean gameRunning, boolean skipTurn, boolean exit)
+    public State(boolean outOfRange, boolean gameRunning, boolean skipTurn, boolean exit, boolean numbers, boolean numbersLoop)
     {
 
         this.outOfRange = outOfRange;
         this.gameRunning = gameRunning;
         this.skipTurn = skipTurn;
         this.exit = exit;
+        this.numbers = numbers;
+        this.numbersLoop = numbersLoop;
     }
-
-
 
     public void exitCheck(int currentPosition)
     {
@@ -38,8 +40,6 @@ public class State
             gameRunning = false;
         }
     }
-
-
 
     public boolean isFrozen()
     {
@@ -68,6 +68,17 @@ public class State
     {
         return webbed;
     }
+
+    public boolean isNumbers()
+    {
+        return numbers;
+    }
+
+    public boolean isNumbersLoop()
+    {
+        return numbersLoop;
+    }
+
     public void setGameRunning(boolean gameRunning)
     {
         this.gameRunning = gameRunning;
@@ -96,5 +107,14 @@ public class State
     public void setExit(boolean exit)
     {
         this.exit = exit;
+    }
+
+    public void setNumbers(boolean numbers)
+    {
+        this.numbers = numbers;
+    }
+    public void setNumbersLoop(boolean numbersLoop)
+    {
+        this.numbersLoop = numbersLoop;
     }
 }

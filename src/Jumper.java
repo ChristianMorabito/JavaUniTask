@@ -1,7 +1,9 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public class Jumper
 {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
         Log log = new Log();
         Count count = new Count();
         State state = new State();
@@ -12,8 +14,8 @@ public class Jumper
         Frozen frozen = new Frozen();
         Web web = new Web();
         Charge charge = new Charge(count, state);
-        FileIO fileIO = new FileIO("buildings.txt");
-        fileIO.readFile();
+        FileIO fileIO = new FileIO();
+        fileIO.read();
         parse.define(fileIO.getData());
         input.usernameInput();
 
@@ -27,34 +29,34 @@ public class Jumper
             count.setHeight_1(parse.buildings().get(position.getCurrentSpot()));
             frozen.check(state, parse.getFreeze(), position.getCurrentSpot(), log);
             state.exitCheck(position.getCurrentSpot());
+
             do
             {
                 if (state.isGameRunning())
                 {
                     Print.clearScreen();
-                    Print.chargeAmount(charge.getAmount());
+                    Print.chargeAmount(charge.getAmount(), state.isNumbers());
                     Print.frozen(state);
                     Print.web(state);
                     Print.outOfRange(state);
                     Print.fuelRespawning(count.fuelShuffleCheck());
                     Print.fuelCollected(fuel.getArray(), position.getCurrentSpot(), charge.getAmount());
-                    Print.graphic(parse, position.getPositions());
+                    Print.graphic(parse, position.getPositions(), state.isNumbers());
                     Print.action(state.isFrozen());
 
+                    fuel.collect(position.getCurrentSpot());
                     input.action();
-                    position.move(parse.buildings(), input.getAction(), log, parse.getFreeze(), frozen);
+                    position.move(parse.buildings(), input.getAction(), log);
                 }
             }
-            while (state.isOutOfRange());
+            while (state.isOutOfRange() || state.isNumbersLoop());
 
-            fuel.collect(position.getCurrentSpot());
             frozen.turningOff(state, position.getCurrentSpot());
             count.setHeight_2(parse.buildings().get(position.getCurrentSpot()));
             charge.activeCheck(position.getCurrentSpot(), fuel.getArray(), log);
         }
+
         Print.exit(charge.getAmount(), input.getName(), state.isExit(), state.isWebbed());
-
-        //TODO: ORGANISE WRITE RESULTS
-
+        fileIO.write(log.display(), input.getName());
     }
 }

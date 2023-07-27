@@ -1,26 +1,19 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileIO
 {
     private ArrayList<String[]> data;
-    private File textFile;
-    private String fileName;
 
-    public FileIO(Data data)
+    public FileIO()
     {
-        this.data = new ArrayList<>();
-        this.fileName = "Empty file name";
-        this.textFile = new File(fileName);
+        data = new ArrayList<String[]>();
     }
 
-    public FileIO(String fileName)
+    public FileIO(ArrayList<String[]> data)
     {
-        this.data = new ArrayList<>();
-        this.fileName = fileName;
-        this.textFile = new File(fileName);
+        this.data = data;
     }
 
     public ArrayList<String[]> getData()
@@ -28,46 +21,51 @@ public class FileIO
         return data;
     }
 
-    public File getTextFile()
+    public void write(String writeData, String username) throws IOException
     {
-        return textFile;
-    }
-
-    public String getFileName()
-    {
-        return fileName;
-    }
-
-    public void readFile()
-    {
+        FileWriter fileWriter = new FileWriter(Data.WRITE_FILE_NAME);
         try
         {
-            Scanner scanner = new Scanner(textFile);
-            while (scanner.hasNextLine())
-            {
-                data.add(scanner.next().split(","));
-            }
-            scanner.close();
+            fileWriter.write("___" + username + "'s Gameplay Statistics___\n");
+            fileWriter.write(writeData);
         }
-        catch (FileNotFoundException exception)
+        finally
         {
-            System.out.println("Reading file error!! Exiting...");
-            System.exit(-1);
+            try
+            {
+                fileWriter.close();
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error in closing file! Exiting...");
+            }
         }
     }
 
-    public void setData(ArrayList<String[]> data)
-    {
-        this.data = data;
+    public void read() throws FileNotFoundException {
+        FileReader reader = new FileReader(Data.READ_FILE_NAME);
+        Scanner fileInput = new Scanner(reader);
+        try
+        {
+            while (fileInput.hasNextLine())
+            {
+                data.add(fileInput.next().split(","));
+            }
+        }
+        finally
+        {
+            try
+            {
+                reader.close();
+            }
+            catch (Exception FileNotFoundException)
+            {
+                System.out.println("Reading file error!! Exiting...");
+                System.exit(-1);
+            }
+        }
+
     }
 
-    public void setFileName(String fileName)
-    {
-        this.fileName = fileName;
-    }
 
-    public void setTextFile(File textFile)
-    {
-        this.textFile = textFile;
-    }
 }

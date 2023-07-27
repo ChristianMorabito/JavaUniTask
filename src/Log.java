@@ -15,8 +15,8 @@ public class Log {
     {
         turnCount = 0;
         fuelCount = 0;
-        this.webCount = 0;
-        this.freezeCount = 0;
+        webCount = 0;
+        freezeCount = 0;
     }
 
     public Log(int turnCount, int fuelCount, int webCount, int freezeCount)

@@ -1,5 +1,7 @@
 public class Data
 {
+    public static final String WRITE_FILE_NAME = "outcome.txt";
+    public static final String READ_FILE_NAME = "buildings.txt";
     public static final int MAX_HEIGHT = 5;
     public static final int ROW_LENGTH = 15;
     public static final int START_INDEX = 0;

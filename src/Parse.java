@@ -42,7 +42,7 @@ public class Parse
         Collections.shuffle(this.freeze.subList(Data.START_INDEX + 1, Data.ROW_LENGTH));
         if (count.fuelShuffleCheck()){
             fuel.setArray(new ArrayList<>(fuelCells));
-//            Collections.shuffle(fuel.getArray());
+            Collections.shuffle(fuel.getArray().subList(1,2));
         }
         count.setFuelShuffleCount(count.getFuelShuffleCount() + 1);
 

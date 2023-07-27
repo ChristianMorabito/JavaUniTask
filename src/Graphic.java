@@ -19,9 +19,9 @@ public class Graphic
         final String PORTAL = "@";
         final String JUMPER =    "█";
         final String FUEL_CELL = "$";
-        final String WEB = "##";
-        final String FREEZE = "^^^";
-        final String ROOF = " ┎────────┒ ";
+        final String WEB = "#";
+        final String FREEZE = "^^";
+        final String ROOF = " ┎──────┒";
         ArrayList<Boolean> exitPortal = parse.getExitPortals();
         ArrayList<Boolean> fuelCell = parse.getFuel().getArray();
         ArrayList<Boolean> web = parse.getWeb();
@@ -38,60 +38,47 @@ public class Graphic
         }
         if (freeze.get(i))
         {
-            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(4, 7, FREEZE);
+            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(4, 6, FREEZE);
         }
         if (web.get(i))
         {
-            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(7, 9, WEB);
+            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(6, 7, WEB);
         }
         if (exitPortal.get(i))
         {
-            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(9, 10, PORTAL);
+            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(7, 8, PORTAL);
         }
 
     }
 
-    private void createBase(ArrayList<Integer> buildingHeights, int i, int currPosition, int leftPosition, int rightPosition)
+    public StringBuilder[][] create(Parse parse, int[] positions, boolean numbers)
     {
-        final String here =  "..HERE..";
-        final String jumpTo = "  ↑↑↑↑  ";
-        final String betweenGap = "  ";
-        String buildingWidth = "        ";
-        String firstGap = " ";
-        String buildingSide = "│";
-        String baseText;
+        int currentPosition = positions[0];
+        int leftPosition = positions[1];
+        int rightPosition = positions[2];
+        ArrayList<Integer> buildingHeights = parse.buildings();
 
-        if (i == currPosition)
+        for (int i = 0; i < Data.ROW_LENGTH; i++)
         {
-            baseText = here;
-        }
+            int currHeight = buildingHeights.get(i);
 
-        else if (i == leftPosition || i == rightPosition)
-        {
-            baseText = jumpTo;
-            buildingSide = "╹";
-        }
+            createRoof(parse, i, currHeight, currentPosition);
+            createBase(i, currentPosition, leftPosition, rightPosition, numbers, buildingHeights);
 
-        else
-        {
-            baseText = "";
-        }
+            for (int j = 0; j < Data.MAX_HEIGHT - 1; j++)
+            {
 
-        buildingWidth = i == currPosition || i == leftPosition || i == rightPosition ? "" : buildingWidth;
-        firstGap = i > 0 ? firstGap.trim() : firstGap;
-        buildingString[Data.MAX_HEIGHT][i] = new StringBuilder(firstGap +
-                                                               buildingHeights.get(i) +
-                                                               baseText +
-                                                               buildingWidth +
-                                                               buildingSide +
-                                                               betweenGap);
+                createUnderAndAbove(currHeight, i, j, leftPosition, rightPosition);
+            }
+        }
+        return buildingString;
     }
 
     private void createUnderAndAbove(int currHeight, int i, int j, int leftPosition, int rightPosition)
     {
-        final String DEFAULT_SIDES = " │◫◫◫◫◫◫◫◫│ ";
-        final String JUMP_SIDES =    " ╹∎∎∎∎∎∎∎∎╹ ";
-        final String EMPTY_SPACE =   "            ";
+        final String DEFAULT_SIDES = " │◫◫◫◫◫◫│";
+        final String JUMP_SIDES =    " │∎∎∎∎∎∎│";
+        final String EMPTY_SPACE =   "         ";
         int underBuilding = Data.MAX_HEIGHT + j + 1;
 
         if (underBuilding - currHeight < Data.MAX_HEIGHT)
@@ -110,30 +97,36 @@ public class Graphic
             buildingString[(underBuilding - currHeight) - Data.MAX_HEIGHT][i] = new StringBuilder(EMPTY_SPACE);
         }
     }
-
-    public StringBuilder[][] create(Parse parse, int[] positions)
+    private void createBase(int i, int currPosition, int leftPosition, int rightPosition, boolean numbers, ArrayList<Integer> heights)
     {
-        int currentPosition = positions[0];
-        int leftPosition = positions[1];
-        int rightPosition = positions[2];
-        ArrayList<Integer> buildingHeights = parse.buildings();
+        final String betweenGap = " ";
+        String firstGap = " ";
+        String buildingSide = "│";
+        String baseText;
 
-        for (int i = 0; i < Data.ROW_LENGTH; i++)
+        if (i == currPosition)
         {
-            int currHeight = buildingHeights.get(i);
-
-            createRoof(parse, i, currHeight, currentPosition);
-            createBase(buildingHeights, i, currentPosition, leftPosition, rightPosition);
-
-            for (int j = 0; j < Data.MAX_HEIGHT - 1; j++)
-            {
-
-                createUnderAndAbove(currHeight, i, j, leftPosition, rightPosition);
-            }
+            baseText = numbers ? " HERE." : ".HERE.";
         }
-        return buildingString;
-    }
 
+        else if (i == leftPosition || i == rightPosition)
+        {
+            baseText = numbers ? " ∎∎∎∎∎" : "∎∎∎∎∎∎";
+        }
+
+        else
+        {
+            baseText = numbers ? " ◫◫◫◫◫" : "◫◫◫◫◫◫";
+        }
+
+        firstGap = i > 0 ? firstGap.trim() : firstGap;
+        String numbersSide = numbers ? String.valueOf(heights.get(i)) : buildingSide;
+        buildingString[Data.MAX_HEIGHT][i] = new StringBuilder(firstGap +
+                numbersSide +
+                baseText +
+                buildingSide +
+                betweenGap);
+    }
     public StringBuilder[][] getBuildingString()
     {
         return buildingString;

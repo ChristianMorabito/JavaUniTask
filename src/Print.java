@@ -9,14 +9,15 @@ public class Print
         System.out.flush();
     }
 
-    public static void chargeAmount(int amount)
+    public static void chargeAmount(int amount, boolean numbers)
     {
-        if (amount > 0)
-        {
-            String chargeBlock = "█ ".repeat(amount);
-            System.out.print(chargeBlock);
-        }
-        System.out.println(amount + "\n");
+
+        String chargeNumber = numbers ? String.valueOf(amount) : "";
+        String chargeBlock = "█ ".repeat(amount);
+        System.out.println();
+        System.out.println("Charge: " + chargeBlock + chargeNumber);
+        System.out.println();
+
     }
     public static void frozen(State state) {
 
@@ -61,9 +62,9 @@ public class Print
         }
     }
 
-    public static void graphic(Parse parse, int[] positions)
+    public static void graphic(Parse parse, int[] positions, boolean numbers)
     {
-        StringBuilder[][] buildingString = new Graphic().create(parse, positions);
+        StringBuilder[][] buildingString = new Graphic().create(parse, positions, numbers);
         System.out.println();
         for (int i = 0; i < Data.MAX_HEIGHT + 1; i++)
         {
@@ -93,28 +94,25 @@ public class Print
 
     public static void action(boolean frozen)
     {
+        System.out.println();
         if (!frozen){
-            System.out.print("""
-                ┎------------------------------┒
-                │ Enter a number between 1 & 4 │
-                │ 1) Jump RIGHT                |
-                │ 2) Jump LEFT                 │
-                │ 3) Skip Turn                 │
-                │ 4) Exit                      │
-                └------------------------------┘
-                """);
+            System.out.println("┎-------LEGEND-------┒  Enter a number between 0 & 4:");
+            System.out.println("│  █    Jumper       │  0) Numbers");
+            System.out.println("│  @    Exit Portal  │  1) Jump RIGHT");
+            System.out.println("│  $    Fuel         │  2) Jump LEFT ");
+            System.out.println("│  #    Web          │  3) Skip Turn");
+            System.out.println("│  ^^   Freeze       │  4) Exit");
+            System.out.println("└--------------------┘");
             return;
         }
 
-        System.out.print("""
-                ┎------------------------------┒
-                │                              │
-                │     You have lost a turn     │
-                │                              │
-                │         Press  ENTER         │
-                │                              │
-                └------------------------------┘
-                """);
+        System.out.println("┎-------LEGEND-------┒  ");
+        System.out.println("│  █    Jumper       │  You have lost a turn!!");
+        System.out.println("│  @    Exit Portal  │");
+        System.out.println("│  $    Fuel         │");
+        System.out.println("│  #    Web          │");
+        System.out.println("│  ^^   Freeze       │");
+        System.out.println("└--------------------┘");
     }
 
 

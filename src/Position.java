@@ -29,7 +29,7 @@ public class Position
         this.count = count;
         this.state = state;
     }
-    public void move(ArrayList<Integer> buildingHeights, int input, Log log, ArrayList<Boolean> freezeCheck, Frozen frozen)
+    public void move(ArrayList<Integer> buildingHeights, int input, Log log)
     {
         if (state.isFrozen())
         {
@@ -39,6 +39,13 @@ public class Position
 
         switch (input)
         {
+            case 0 ->
+            {
+                state.setNumbers(!state.isNumbers());
+                state.setNumbersLoop(true);
+                return;
+            }
+
             case 1 ->
             {
                 temp += buildingHeights.get(currentSpot);
@@ -86,6 +93,7 @@ public class Position
 
         currentSpot = temp;
         state.setOutOfRange(false);
+        state.setNumbersLoop(false);
         if (!state.isFrozen()) // if frozen, turn number is not incremented
         {
             log.setTurnCount(log.getTurnCount() + 1);

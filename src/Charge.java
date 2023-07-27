@@ -24,7 +24,6 @@ public class Charge
     private void jumpDeplete(int building1, int building2)
     {
         amount -= (Math.abs(building1 - building2)) + 1;
-        chargeCheck();
     }
 
     private void fuelCharge(Log log)
@@ -50,41 +49,33 @@ public class Charge
         }
     }
 
-    public void activeCheck(int currPosition, ArrayList<Boolean> dataFuelCells, Log log)
+    public void activeCheck(int currPosition, ArrayList<Boolean> fuelCells, Log log)
     {
         if (!state.isGameRunning())
         {
             return;
         }
-        if (chargeCheck()) // if jumper fuel goes to < 1, the game exits before potential refuel
-        {
-            return;
-        }
-        if (dataFuelCells.get(currPosition))
-        {
-            fuelCharge(log);
-        }
-
         if (count.getPreviousPosition() == currPosition)
         {
             amount -= 1;
-            chargeCheck();
         }
         else
         {
-            jumpDeplete(count.getHeight_2(), count.getHeight_1());
+           jumpDeplete(count.getHeight_2(), count.getHeight_1());
         }
-
+        if (amount >= 0 && fuelCells.get(currPosition))
+        {
+            fuelCharge(log);
+        }
+        chargeCheck();
     }
 
-    public boolean chargeCheck()
+    private void chargeCheck()
     {
         if (amount < 1)
         {
             state.setGameRunning(false);
-            return true;
         }
-        return false;
 
     }
 

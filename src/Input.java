@@ -25,25 +25,32 @@ public class Input
     {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your username. It must be between 3 to 12 letters long.");
-        while (true)
+        boolean inputInvalid = true;
+
+        while (inputInvalid)
         {
-            System.out.print("Username: ");
+            System.out.print("Name: ");
             name = scanner.nextLine();
-            System.out.println();
-            if (name.length() > 2 && name.length() < 13)
+            if (name.length() < 3)
             {
-                break;
+                System.out.println("Name too short. Please try again.");
+            }
+            else if (name.length() > 12)
+            {
+                System.out.println("Name too long. Please try again.");
             }
             else
             {
-                Print.invalidInput();
+                inputInvalid = false;
             }
         }
+
     }
 
     private void frozenInput()
     {
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Press ENTER: ");
         while (!scanner.hasNextLine());
 
     }
@@ -54,6 +61,7 @@ public class Input
             frozenInput();
             return;
         }
+
         Scanner scanner = new Scanner(System.in);
 
         while (true)
@@ -62,15 +70,14 @@ public class Input
             {
                 System.out.print("Number: ");
                 action = scanner.nextInt();
-                if (action > 0 && action < 5)
+                if (action > -1 && action < 5)
                 {
                     break;
                 }
-                Print.invalidInput();
-
             }
             catch (Exception e)
             {
+                Print.invalidInput();
                 scanner.next();
             }
         }
