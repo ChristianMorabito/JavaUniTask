@@ -34,9 +34,9 @@ public class Log {
     public String display()
     {
         return "Turn count: " + turnCount + "\n" +
-               "Fuel count: " + fuelCount + "\n" +
+               "Fuel collect count: " + fuelCount + "\n" +
                "Web count: " + webCount + "\n" +
-               "Freeze count: " + freezeCount + "\n";
+               "Freeze count: " + freezeCount;
     }
 
     public int getTurnCount()

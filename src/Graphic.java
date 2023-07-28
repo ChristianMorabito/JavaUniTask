@@ -6,7 +6,7 @@ public class Graphic
 
     public Graphic()
     {
-        this.buildingString = new StringBuilder[Data.MAX_HEIGHT + 1][Data.ROW_LENGTH];
+        this.buildingString = new StringBuilder[Data.getMaxHeight() + 1][Data.getRowLength()];
     }
 
     Graphic(StringBuilder[][] buildingString)
@@ -22,31 +22,31 @@ public class Graphic
         final String WEB = "#";
         final String FREEZE = "^^";
         final String ROOF = " ┎──────┒";
-        ArrayList<Boolean> exitPortal = parse.getExitPortals();
+        ArrayList<Boolean> exitPortal = parse.getExitPortal();
         ArrayList<Boolean> fuelCell = parse.getFuel().getArray();
         ArrayList<Boolean> web = parse.getWeb();
         ArrayList<Boolean> freeze = parse.getFreeze();
 
-        buildingString[Data.MAX_HEIGHT - currHeight][i] = new StringBuilder(ROOF);
+        buildingString[Data.getMaxHeight() - currHeight][i] = new StringBuilder(ROOF);
         if (i == jumperIndex)
         {
-            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(2, 3, JUMPER);
+            buildingString[Data.getMaxHeight() - currHeight][i] = buildingString[Data.getMaxHeight() - currHeight][i].replace(2, 3, JUMPER);
         }
         if (fuelCell.get(i))
         {
-            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(3, 4, FUEL_CELL);
+            buildingString[Data.getMaxHeight() - currHeight][i] = buildingString[Data.getMaxHeight() - currHeight][i].replace(3, 4, FUEL_CELL);
         }
         if (freeze.get(i))
         {
-            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(4, 6, FREEZE);
+            buildingString[Data.getMaxHeight() - currHeight][i] = buildingString[Data.getMaxHeight() - currHeight][i].replace(4, 6, FREEZE);
         }
         if (web.get(i))
         {
-            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(6, 7, WEB);
+            buildingString[Data.getMaxHeight() - currHeight][i] = buildingString[Data.getMaxHeight() - currHeight][i].replace(6, 7, WEB);
         }
         if (exitPortal.get(i))
         {
-            buildingString[Data.MAX_HEIGHT - currHeight][i] = buildingString[Data.MAX_HEIGHT - currHeight][i].replace(7, 8, PORTAL);
+            buildingString[Data.getMaxHeight() - currHeight][i] = buildingString[Data.getMaxHeight() - currHeight][i].replace(7, 8, PORTAL);
         }
 
     }
@@ -58,14 +58,14 @@ public class Graphic
         int rightPosition = positions[2];
         ArrayList<Integer> buildingHeights = parse.buildings();
 
-        for (int i = 0; i < Data.ROW_LENGTH; i++)
+        for (int i = 0; i < Data.getRowLength(); i++)
         {
             int currHeight = buildingHeights.get(i);
 
             createRoof(parse, i, currHeight, currentPosition);
             createBase(i, currentPosition, leftPosition, rightPosition, numbers, buildingHeights);
 
-            for (int j = 0; j < Data.MAX_HEIGHT - 1; j++)
+            for (int j = 0; j < Data.getMaxHeight() - 1; j++)
             {
 
                 createUnderAndAbove(currHeight, i, j, leftPosition, rightPosition);
@@ -76,12 +76,12 @@ public class Graphic
 
     private void createUnderAndAbove(int currHeight, int i, int j, int leftPosition, int rightPosition)
     {
-        final String DEFAULT_SIDES = " │◫◫◫◫◫◫│";
-        final String JUMP_SIDES =    " │∎∎∎∎∎∎│";
+        final String DEFAULT_SIDES = " ┃◫◫◫◫◫◫┃";
+        final String JUMP_SIDES =    " ┃∎∎∎∎∎∎┃";
         final String EMPTY_SPACE =   "         ";
-        int underBuilding = Data.MAX_HEIGHT + j + 1;
+        int underBuilding = Data.getMaxHeight() + j + 1;
 
-        if (underBuilding - currHeight < Data.MAX_HEIGHT)
+        if (underBuilding - currHeight < Data.getMaxHeight())
         {
             if (i == leftPosition || i == rightPosition)
             {
@@ -94,14 +94,14 @@ public class Graphic
         }
         else
         {
-            buildingString[(underBuilding - currHeight) - Data.MAX_HEIGHT][i] = new StringBuilder(EMPTY_SPACE);
+            buildingString[(underBuilding - currHeight) - Data.getMaxHeight()][i] = new StringBuilder(EMPTY_SPACE);
         }
     }
     private void createBase(int i, int currPosition, int leftPosition, int rightPosition, boolean numbers, ArrayList<Integer> heights)
     {
         final String betweenGap = " ";
         String firstGap = " ";
-        String buildingSide = "│";
+        String buildingSide = "┃";
         String baseText;
 
         if (i == currPosition)
@@ -121,7 +121,7 @@ public class Graphic
 
         firstGap = i > 0 ? firstGap.trim() : firstGap;
         String numbersSide = numbers ? String.valueOf(heights.get(i)) : buildingSide;
-        buildingString[Data.MAX_HEIGHT][i] = new StringBuilder(firstGap +
+        buildingString[Data.getMaxHeight()][i] = new StringBuilder(firstGap +
                 numbersSide +
                 baseText +
                 buildingSide +

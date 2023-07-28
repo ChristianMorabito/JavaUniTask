@@ -35,7 +35,7 @@ public class State
 
     public void exitCheck(int currentPosition)
     {
-        if (currentPosition == Data.END_INDEX && !frozen)
+        if (currentPosition == Data.getPortalIndex() && !frozen)
         {
             gameRunning = false;
         }

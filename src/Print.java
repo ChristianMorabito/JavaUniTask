@@ -11,7 +11,6 @@ public class Print
 
     public static void chargeAmount(int amount, boolean numbers)
     {
-
         String chargeNumber = numbers ? String.valueOf(amount) : "";
         String chargeBlock = "█ ".repeat(amount);
         System.out.println();
@@ -66,7 +65,7 @@ public class Print
     {
         StringBuilder[][] buildingString = new Graphic().create(parse, positions, numbers);
         System.out.println();
-        for (int i = 0; i < Data.MAX_HEIGHT + 1; i++)
+        for (int i = 0; i < Data.getMaxHeight() + 1; i++)
         {
             String formattedString = Arrays.toString(buildingString[i])
                     .replace(",", "")

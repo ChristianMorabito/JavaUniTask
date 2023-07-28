@@ -1,4 +1,3 @@
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Jumper
@@ -17,6 +16,7 @@ public class Jumper
         FileIO fileIO = new FileIO();
         fileIO.read();
         parse.define(fileIO.getData());
+        parse.shuffleOnlyPortal();
         input.usernameInput();
 
         while (state.isGameRunning())
@@ -45,8 +45,8 @@ public class Jumper
                     Print.action(state.isFrozen());
 
                     fuel.collect(position.getCurrentSpot());
-                    input.action();
-                    position.move(parse.buildings(), input.getAction(), log);
+                    input.inputAction();
+                    input.action(log, parse.buildings(), position);
                 }
             }
             while (state.isOutOfRange() || state.isNumbersLoop());

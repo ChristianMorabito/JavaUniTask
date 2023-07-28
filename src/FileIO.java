@@ -45,11 +45,15 @@ public class FileIO
     public void read() throws FileNotFoundException {
         FileReader reader = new FileReader(Data.READ_FILE_NAME);
         Scanner fileInput = new Scanner(reader);
+        int maxHeight = 0;
+        int i = 0;
         try
         {
             while (fileInput.hasNextLine())
             {
                 data.add(fileInput.next().split(","));
+                maxHeight = Math.max(Integer.parseInt(data.get(i)[0]), maxHeight);
+                i++;
             }
         }
         finally
@@ -64,6 +68,10 @@ public class FileIO
                 System.exit(-1);
             }
         }
+
+        Data.setMaxHeight(maxHeight);
+        Data.setRowLength(data.size());
+
 
     }
 

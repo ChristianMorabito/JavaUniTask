@@ -29,31 +29,17 @@ public class Position
         this.count = count;
         this.state = state;
     }
-    public void move(ArrayList<Integer> buildingHeights, int input, Log log)
+    public void move(ArrayList<Integer> buildingHeights, int input)
     {
-        if (state.isFrozen())
-        {
-            return;
-        }
         int temp = currentSpot;
-
         switch (input)
         {
-            case 0 ->
-            {
-                state.setNumbers(!state.isNumbers());
-                state.setNumbersLoop(true);
-                return;
-            }
-
             case 1 ->
             {
                 temp += buildingHeights.get(currentSpot);
-                if (temp <= Data.END_INDEX)
-                {
+                if (temp <= Data.getEnd_index()) {
                     count.setPreviousPosition(currentSpot);
                 }
-
                 else
                 {
                     state.setOutOfRange(true);
@@ -63,8 +49,7 @@ public class Position
             case 2 ->
             {
                 temp -= buildingHeights.get(currentSpot);
-                if (temp >= Data.START_INDEX)
-                {
+                if (temp >= Data.START_INDEX) {
                     count.setPreviousPosition(currentSpot);
                 }
                 else
@@ -78,26 +63,14 @@ public class Position
                 state.setSkipTurn(true);
                 count.setPreviousPosition(currentSpot);
             }
-            case 4 ->
-            {
-                System.out.println("Exiting...");
-                state.setGameRunning(false);
-                state.setExit(true);
-            }
             default ->
             {
-                System.out.println("Input error! Exiting...");
+                Print.invalidInput();
                 System.exit(-1);
             }
         }
-
         currentSpot = temp;
         state.setOutOfRange(false);
-        state.setNumbersLoop(false);
-        if (!state.isFrozen()) // if frozen, turn number is not incremented
-        {
-            log.setTurnCount(log.getTurnCount() + 1);
-        }
     }
 
     public int getCurrentSpot()
@@ -143,7 +116,7 @@ public class Position
     {
         int temp = currentSpot;
         temp += buildingHeights.get(currentSpot);
-        temp = temp <= Data.END_INDEX ? temp : -1;
+        temp = temp <= Data.getEnd_index() ? temp : -1;
         this.rightPosition = temp;
     }
 
@@ -156,7 +129,7 @@ public class Position
 
         temp = currentSpot;
         temp += buildingHeights.get(currentSpot);
-        temp = temp <= Data.END_INDEX ? temp : -1;
+        temp = temp <= Data.getEnd_index() ? temp : -1;
         this.rightPosition = temp;
     }
 

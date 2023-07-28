@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Input
@@ -55,7 +56,36 @@ public class Input
 
     }
 
-    public void action()
+    public void action(Log log, ArrayList<Integer> buildingHeights, Position position)
+    {
+        if (state.isFrozen())
+        {
+            return;
+        }
+
+        switch (action)
+        {
+            case 0 ->
+            {
+                state.setNumbers(!state.isNumbers());
+                state.setNumbersLoop(true);
+                return;
+            }
+            case 4 ->
+            {
+                System.out.println("Exiting...");
+                state.setGameRunning(false);
+                state.setExit(true);
+            }
+            default ->
+                position.move(buildingHeights, action);
+        }
+
+        state.setNumbersLoop(false);
+        log.setTurnCount(log.getTurnCount() + 1);
+    }
+
+    public void inputAction()
     {
         if (state.isFrozen()) {
             frozenInput();

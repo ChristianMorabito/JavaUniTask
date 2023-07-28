@@ -5,7 +5,7 @@ public class Parse
 {
 
     private ArrayList<Integer> buildingHeights;
-    private ArrayList<Boolean> exitPortals;
+    private ArrayList<Boolean> exitPortal;
     private ArrayList<Boolean> fuelCells;
     private ArrayList<Boolean> web;
     private ArrayList<Boolean> freeze;
@@ -15,7 +15,7 @@ public class Parse
     public Parse()
     {
         this.buildingHeights = new ArrayList<>();
-        this.exitPortals = new ArrayList<>();
+        this.exitPortal = new ArrayList<>();
         this.fuelCells = new ArrayList<>();
         this.web = new ArrayList<>();
         this.freeze = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Parse
     public Parse(Fuel fuel, Count count)
     {
         this.buildingHeights = new ArrayList<>();
-        this.exitPortals = new ArrayList<>();
+        this.exitPortal = new ArrayList<>();
         this.fuelCells = new ArrayList<>();
         this.web = new ArrayList<>();
         this.freeze = new ArrayList<>();
@@ -34,12 +34,19 @@ public class Parse
         this.count = count;
     }
 
+    public void shuffleOnlyPortal()
+    {
+        int twoThirdsMark = (Data.getRowLength() - (Data.getRowLength() / 3) - 1);
+        Collections.shuffle(this.exitPortal.subList(twoThirdsMark, Data.getRowLength()));
+        Data.setPortalIndex(exitPortal.indexOf(true));
+    }
+
     public void shuffle()
     {
 
         Collections.shuffle(this.buildingHeights);
-        Collections.shuffle(this.web.subList(Data.START_INDEX + 1, Data.ROW_LENGTH));
-        Collections.shuffle(this.freeze.subList(Data.START_INDEX + 1, Data.ROW_LENGTH));
+        Collections.shuffle(this.web.subList(Data.START_INDEX + 1, Data.getRowLength()));
+        Collections.shuffle(this.freeze.subList(Data.START_INDEX + 1, Data.getRowLength()));
         if (count.fuelShuffleCheck()){
             fuel.setArray(new ArrayList<>(fuelCells));
             Collections.shuffle(fuel.getArray().subList(1,2));
@@ -53,7 +60,7 @@ public class Parse
         for (String[] datum : data)
         {
             this.buildingHeights.add(Integer.parseInt(datum[0]));
-            this.exitPortals.add(Boolean.parseBoolean(datum[1]));
+            this.exitPortal.add(Boolean.parseBoolean(datum[1]));
             this.fuelCells.add(Boolean.parseBoolean(datum[2]));
             this.web.add(Boolean.parseBoolean(datum[3]));
             this.freeze.add(Boolean.parseBoolean(datum[4]));
@@ -76,9 +83,9 @@ public class Parse
     {
         return web;
     }
-    public ArrayList<Boolean> getExitPortals()
+    public ArrayList<Boolean> getExitPortal()
     {
-        return exitPortals;
+        return exitPortal;
     }
     public Fuel getFuel()
     {
@@ -90,9 +97,9 @@ public class Parse
         this.buildingHeights = buildingHeights;
     }
 
-    public void setExitPortals(ArrayList<Boolean> exitPortals)
+    public void setExitPortal(ArrayList<Boolean> exitPortal)
     {
-        this.exitPortals = exitPortals;
+        this.exitPortal = exitPortal;
     }
 
     public void setFreeze(ArrayList<Boolean> freeze)
