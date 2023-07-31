@@ -4,9 +4,7 @@ import java.util.Scanner;
 public class Input
 {
     private String name;
-
     private State state;
-
     private int action;
 
     public Input()
@@ -22,39 +20,6 @@ public class Input
         this.name = "Unfilled";
         this.action = 0;
     }
-    public void usernameInput()
-    {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your username. It must be between 3 to 12 letters long.");
-        boolean inputInvalid = true;
-
-        while (inputInvalid)
-        {
-            System.out.print("Name: ");
-            name = scanner.nextLine();
-            if (name.length() < 3)
-            {
-                System.out.println("Name too short. Please try again.");
-            }
-            else if (name.length() > 12)
-            {
-                System.out.println("Name too long. Please try again.");
-            }
-            else
-            {
-                inputInvalid = false;
-            }
-        }
-
-    }
-
-    private void frozenInput()
-    {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Press ENTER: ");
-        while (!scanner.hasNextLine());
-
-    }
 
     public void action(Log log, ArrayList<Integer> buildingHeights, Position position)
     {
@@ -65,24 +30,31 @@ public class Input
 
         switch (action)
         {
-            case 0 ->
-            {
+            case 0 -> {
                 state.setNumbers(!state.isNumbers());
                 state.setNumbersLoop(true);
                 return;
             }
-            case 4 ->
-            {
+            case 4 -> {
                 System.out.println("Exiting...");
                 state.setGameRunning(false);
                 state.setExit(true);
             }
-            default ->
-                position.move(buildingHeights, action);
+            default -> position.move(buildingHeights, action);
         }
 
         state.setNumbersLoop(false);
         log.setTurnCount(log.getTurnCount() + 1);
+    }
+
+    public int getAction()
+    {
+        return action;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
     public void inputAction()
@@ -113,23 +85,46 @@ public class Input
         }
     }
 
-    public String getName()
+    public void setName(String name)
     {
-        return name;
+        this.name = name;
     }
 
-    public int getAction()
+    private void frozenInput()
     {
-        return action;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Press ENTER: ");
+        while (!scanner.hasNextLine());
+
+    }
+
+    public void usernameInput()
+    {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your username. It must be between 3 to 12 letters long.");
+        boolean inputInvalid = true;
+
+        while (inputInvalid)
+        {
+            System.out.print("Name: ");
+            name = scanner.nextLine();
+            if (name.length() < 3)
+            {
+                System.out.println("Name too short. Please try again.");
+            }
+            else if (name.length() > 12)
+            {
+                System.out.println("Name too long. Please try again.");
+            }
+            else
+            {
+                inputInvalid = false;
+            }
+        }
     }
 
     public void setAction(int action)
     {
         this.action = action;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
     }
 }

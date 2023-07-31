@@ -14,6 +14,56 @@ public class Graphic
         this.buildingString = buildingString;
     }
 
+    public StringBuilder[][] create(Parse parse, int[] positions, boolean numbers)
+    {
+        int currentPosition = positions[0];
+        int leftPosition = positions[1];
+        int rightPosition = positions[2];
+        ArrayList<Integer> buildingHeights = parse.buildings();
+
+        for (int i = 0; i < Data.getRowLength(); i++)
+        {
+            int currHeight = buildingHeights.get(i);
+            createRoof(parse, i, currHeight, currentPosition);
+            createBase(i, currentPosition, leftPosition, rightPosition, numbers, buildingHeights);
+
+            for (int j = 0; j < Data.getMaxHeight() - 1; j++)
+            {
+                createUnderAndAbove(currHeight, i, j, leftPosition, rightPosition);
+            }
+        }
+        return buildingString;
+    }
+
+    private void createBase(int i, int currPosition, int leftPosition, int rightPosition, boolean numbers, ArrayList<Integer> heights)
+    {
+        final String betweenGap = " ";
+        String firstGap = " ";
+        String buildingSide = "┃";
+        String baseText;
+
+        if (i == currPosition)
+        {
+            baseText = numbers ? " HERE." : ".HERE.";
+        }
+        else if (i == leftPosition || i == rightPosition)
+        {
+            baseText = numbers ? " ∎∎∎∎∎" : "∎∎∎∎∎∎";
+        }
+        else
+        {
+            baseText = numbers ? " ◫◫◫◫◫" : "◫◫◫◫◫◫";
+        }
+
+        firstGap = i > 0 ? firstGap.trim() : firstGap;
+        String numbersSide = numbers ? String.valueOf(heights.get(i)) : buildingSide;
+        buildingString[Data.getMaxHeight()][i] = new StringBuilder(firstGap +
+                numbersSide +
+                baseText +
+                buildingSide +
+                betweenGap);
+    }
+
     private void createRoof(Parse parse, int i, int currHeight, int jumperIndex)
     {
         final String PORTAL = "@";
@@ -48,30 +98,6 @@ public class Graphic
         {
             buildingString[Data.getMaxHeight() - currHeight][i] = buildingString[Data.getMaxHeight() - currHeight][i].replace(7, 8, PORTAL);
         }
-
-    }
-
-    public StringBuilder[][] create(Parse parse, int[] positions, boolean numbers)
-    {
-        int currentPosition = positions[0];
-        int leftPosition = positions[1];
-        int rightPosition = positions[2];
-        ArrayList<Integer> buildingHeights = parse.buildings();
-
-        for (int i = 0; i < Data.getRowLength(); i++)
-        {
-            int currHeight = buildingHeights.get(i);
-
-            createRoof(parse, i, currHeight, currentPosition);
-            createBase(i, currentPosition, leftPosition, rightPosition, numbers, buildingHeights);
-
-            for (int j = 0; j < Data.getMaxHeight() - 1; j++)
-            {
-
-                createUnderAndAbove(currHeight, i, j, leftPosition, rightPosition);
-            }
-        }
-        return buildingString;
     }
 
     private void createUnderAndAbove(int currHeight, int i, int j, int leftPosition, int rightPosition)
@@ -97,44 +123,14 @@ public class Graphic
             buildingString[(underBuilding - currHeight) - Data.getMaxHeight()][i] = new StringBuilder(EMPTY_SPACE);
         }
     }
-    private void createBase(int i, int currPosition, int leftPosition, int rightPosition, boolean numbers, ArrayList<Integer> heights)
-    {
-        final String betweenGap = " ";
-        String firstGap = " ";
-        String buildingSide = "┃";
-        String baseText;
 
-        if (i == currPosition)
-        {
-            baseText = numbers ? " HERE." : ".HERE.";
-        }
-
-        else if (i == leftPosition || i == rightPosition)
-        {
-            baseText = numbers ? " ∎∎∎∎∎" : "∎∎∎∎∎∎";
-        }
-
-        else
-        {
-            baseText = numbers ? " ◫◫◫◫◫" : "◫◫◫◫◫◫";
-        }
-
-        firstGap = i > 0 ? firstGap.trim() : firstGap;
-        String numbersSide = numbers ? String.valueOf(heights.get(i)) : buildingSide;
-        buildingString[Data.getMaxHeight()][i] = new StringBuilder(firstGap +
-                numbersSide +
-                baseText +
-                buildingSide +
-                betweenGap);
-    }
     public StringBuilder[][] getBuildingString()
     {
         return buildingString;
     }
+
     public void setBuildingString(StringBuilder[][] buildingString)
     {
         this.buildingString = buildingString;
     }
 }
-
-

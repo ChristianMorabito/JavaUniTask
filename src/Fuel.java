@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class Fuel
 {
     private ArrayList<Boolean> array;
-
     private Count count;
 
     public Fuel()
@@ -17,7 +16,6 @@ public class Fuel
         this.array = new ArrayList<>();
         this.count = count;
     }
-
 
     public void collect(int currentPosition)
     {

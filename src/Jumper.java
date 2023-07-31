@@ -1,8 +1,18 @@
 import java.io.IOException;
 
+/**
+ * This class is the main driver class which holds the main method.
+ * @author Christian Morabito
+ * @version ver 1.0.0
+ */
 public class Jumper
 {
-    public static void main(String[] args) throws IOException {
+    /**
+     * This is the main method which begins the program execution
+     * @param    args    An array of string passed in as command line parameters
+     */
+    public static void main(String[] args) throws IOException
+    {
         Log log = new Log();
         Count count = new Count();
         State state = new State();
@@ -10,8 +20,6 @@ public class Jumper
         Position position = new Position(count, state);
         Fuel fuel = new Fuel(count);
         Parse parse = new Parse(fuel, count);
-        Frozen frozen = new Frozen();
-        Web web = new Web();
         Charge charge = new Charge(count, state);
         FileIO fileIO = new FileIO();
         fileIO.read();
@@ -21,41 +29,29 @@ public class Jumper
 
         while (state.isGameRunning())
         {
-            web.turnOff(state);
+            Frozen.turningOff(state);
+            count.setHeight_2(parse.buildings().get(position.getCurrentSpot()));
+            Web.turnOff(state);
             parse.shuffle();
-            web.check(state, parse.getWeb(), position.getCurrentSpot(), log);
+            Web.check(state, parse.getWeb(), position.getCurrentSpot(), log);
             position.set(parse.buildings());
             charge.passiveCheck(position.getCurrentSpot(), fuel.getArray(), log);
             count.setHeight_1(parse.buildings().get(position.getCurrentSpot()));
-            frozen.check(state, parse.getFreeze(), position.getCurrentSpot(), log);
+            Frozen.check(state, parse.getFreeze(), position.getCurrentSpot(), log);
             state.exitCheck(position.getCurrentSpot());
-
             do
             {
                 if (state.isGameRunning())
                 {
-                    Print.clearScreen();
-                    Print.chargeAmount(charge.getAmount(), state.isNumbers());
-                    Print.frozen(state);
-                    Print.web(state);
-                    Print.outOfRange(state);
-                    Print.fuelRespawning(count.fuelShuffleCheck());
-                    Print.fuelCollected(fuel.getArray(), position.getCurrentSpot(), charge.getAmount());
-                    Print.graphic(parse, position.getPositions(), state.isNumbers());
-                    Print.action(state.isFrozen());
-
+                    Print.all(charge, state, count, fuel, parse, position);
                     fuel.collect(position.getCurrentSpot());
                     input.inputAction();
                     input.action(log, parse.buildings(), position);
                 }
             }
             while (state.isOutOfRange() || state.isNumbersLoop());
-
-            frozen.turningOff(state, position.getCurrentSpot());
-            count.setHeight_2(parse.buildings().get(position.getCurrentSpot()));
             charge.activeCheck(position.getCurrentSpot(), fuel.getArray(), log);
         }
-
         Print.exit(charge.getAmount(), input.getName(), state.isExit(), state.isWebbed());
         fileIO.write(log.display(), input.getName());
     }

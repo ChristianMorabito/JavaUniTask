@@ -29,6 +29,32 @@ public class Position
         this.count = count;
         this.state = state;
     }
+    public int getCurrentSpot()
+    {
+        return currentSpot;
+    }
+
+    public int[] getPositions()
+    {
+        return new int[]{currentSpot, leftPosition, rightPosition};
+    }
+
+    public int getLeftPosition()
+    {
+
+        return leftPosition;
+    }
+
+    public int getRightPosition()
+    {
+        return rightPosition;
+    }
+
+    public State getState()
+    {
+        return state;
+    }
+
     public void move(ArrayList<Integer> buildingHeights, int input)
     {
         int temp = currentSpot;
@@ -37,7 +63,7 @@ public class Position
             case 1 ->
             {
                 temp += buildingHeights.get(currentSpot);
-                if (temp <= Data.getEnd_index()) {
+                if (temp <= Data.getEndIndex()) {
                     count.setPreviousPosition(currentSpot);
                 }
                 else
@@ -73,30 +99,19 @@ public class Position
         state.setOutOfRange(false);
     }
 
-    public int getCurrentSpot()
-    {
-        return currentSpot;
-    }
 
-    public int[] getPositions()
-    {
-        return new int[]{currentSpot, leftPosition, rightPosition};
-    }
 
-    public int getLeftPosition()
+    public void set(ArrayList<Integer> buildingHeights)
     {
+        int temp = currentSpot;
+        temp -= buildingHeights.get(currentSpot);
+        temp = temp >= Data.START_INDEX ? temp : -1;
+        this.leftPosition = temp;
 
-        return leftPosition;
-    }
-
-    public int getRightPosition()
-    {
-        return rightPosition;
-    }
-
-    public State getState()
-    {
-        return state;
+        temp = currentSpot;
+        temp += buildingHeights.get(currentSpot);
+        temp = temp <= Data.getEndIndex() ? temp : -1;
+        this.rightPosition = temp;
     }
 
     public void setCurrentSpot(int currentSpot)
@@ -116,20 +131,7 @@ public class Position
     {
         int temp = currentSpot;
         temp += buildingHeights.get(currentSpot);
-        temp = temp <= Data.getEnd_index() ? temp : -1;
-        this.rightPosition = temp;
-    }
-
-    public void set(ArrayList<Integer> buildingHeights)
-    {
-        int temp = currentSpot;
-        temp -= buildingHeights.get(currentSpot);
-        temp = temp >= Data.START_INDEX ? temp : -1;
-        this.leftPosition = temp;
-
-        temp = currentSpot;
-        temp += buildingHeights.get(currentSpot);
-        temp = temp <= Data.getEnd_index() ? temp : -1;
+        temp = temp <= Data.getEndIndex() ? temp : -1;
         this.rightPosition = temp;
     }
 

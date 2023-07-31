@@ -2,12 +2,7 @@ import java.util.ArrayList;
 
 public class Frozen
 {
-
-    public Frozen()
-    {
-    }
-
-    public void check(State state, ArrayList<Boolean> freeze, int currentPosition, Log log)
+    public static void check(State state, ArrayList<Boolean> freeze, int currentPosition, Log log)
     {
         if (freeze.get(currentPosition)) {
             log.setFreezeCount(log.getFreezeCount() + 1);
@@ -15,10 +10,9 @@ public class Frozen
         }
     }
 
-    public void turningOff(State state, int currPosition)
+    public static void turningOff(State state)
     {
         state.setFrozen(false);
     }
-
 
 }
