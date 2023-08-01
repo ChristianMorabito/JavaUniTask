@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 /**
  * This class is the main driver class which holds the main method.
  * @author Christian Morabito
@@ -11,7 +9,7 @@ public class Jumper
      * This is the main method which begins the program execution
      * @param    args    An array of string passed in as command line parameters
      */
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args)
     {
         Log log = new Log();
         Count count = new Count();
@@ -31,8 +29,6 @@ public class Jumper
 
         while (state.isGameRunning())
         {
-            Frozen.turningOff(state);
-            count.setHeight_2(parse.buildings().get(position.getCurrentSpot()));
             Web.turnOff(state);
             parse.shuffle();
             Web.check(state, parse.getWeb(), position.getCurrentSpot(), log);
@@ -45,13 +41,15 @@ public class Jumper
             {
                 if (state.isGameRunning())
                 {
-                    Print.all(charge, state, count, fuel, parse, position);
+                    Print.inGameAll(charge, state, count, fuel, parse, position);
                     fuel.collect(position.getCurrentSpot());
                     input.inputAction();
                     input.action(log, parse.buildings(), position);
                 }
             }
             while (state.isOutOfRange() || state.isNumbersLoop());
+            Frozen.turningOff(state);
+            count.setHeight_2(parse.buildings().get(position.getCurrentSpot()));
             charge.activeCheck(position.getCurrentSpot(), fuel.getArray(), log);
         }
         Print.exit(charge.getAmount(), input.getName(), state.isExit(), state.isWebbed());

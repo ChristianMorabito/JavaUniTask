@@ -23,7 +23,7 @@ public class FileIO
 
     /**
      * Non-default constructor which creates the FiloIO object.
-     * @param data Accepts array list (String) to store the 'data' field
+     * @param data Accepts 2d arraylist (String) to store the 'data' field
      */
     public FileIO(ArrayList<String[]> data)
     {
@@ -32,40 +32,40 @@ public class FileIO
 
     /**
      * Accessor method for mutator
-     * @return
+     * @return Returns 2d arraylist (string)
      */
     public ArrayList<String[]> getData()
     {
         return data;
     }
 
-
-    public void read() throws FileNotFoundException
+    /**
+     * Reads file, parses data to 2d arraylist (string)
+     * & sets Data fields: maxHeight & rowLength
+     */
+    public void read()
     {
-        FileReader reader = new FileReader(Data.READ_FILE_NAME);
-        Scanner fileInput = new Scanner(reader);
         int maxHeight = 0;
         int i = 0;
+        FileReader reader;
         try
         {
+            reader = new FileReader(Data.READ_FILE_NAME);
+            Scanner fileInput = new Scanner(reader);
+
             while (fileInput.hasNextLine())
             {
                 data.add(fileInput.next().split(","));
                 maxHeight = Math.max(Validation.stringToInteger(data.get(i)[0]), maxHeight);
                 i++;
             }
+            reader.close();
         }
-        finally
+        catch (RuntimeException | IOException e)
         {
-            try
-            {
-                reader.close();
-            }
-            catch (Exception FileNotFoundException)
-            {
-                System.out.println("Reading file error!! Exiting...");
-                System.exit(-1);
-            }
+            System.out.println("File error!! Exiting...");
+            System.exit(-1);
+            throw new RuntimeException(e);
         }
 
         Data.setMaxHeight(maxHeight);
@@ -73,29 +73,34 @@ public class FileIO
         Validation.rowLengthCheck();
     }
 
+    /**
+     * Mutator method to set data field (2d arraylist (string))
+     *
+     */
     public void setData(ArrayList<String[]> data)
     {
         this.data = data;
     }
 
-    public void write(String writeData, String username) throws IOException
+    /**
+     * Writes text file
+     * @param writeData Accepts string data to be written
+     * @param username Accepts string username to be written
+     */
+    public void write(String writeData, String username)
     {
-        FileWriter fileWriter = new FileWriter(Data.WRITE_FILE_NAME);
+        FileWriter fileWriter;
         try
         {
+            fileWriter = new FileWriter(Data.WRITE_FILE_NAME);
             fileWriter.write("___" + username + "'s Gameplay Statistics___\n");
             fileWriter.write(writeData);
+            fileWriter.close();
         }
-        finally
+        catch (IOException e)
         {
-            try
-            {
-                fileWriter.close();
-            }
-            catch (Exception e)
-            {
-                System.out.println("Error in closing file! Exiting...");
-            }
+            System.out.println("Error writing file!!");
+            throw new RuntimeException(e);
         }
     }
 }

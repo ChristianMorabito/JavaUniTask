@@ -19,29 +19,44 @@ public class Print
 
     public static void action(boolean frozen)
     {
+        String turnLost = "You have lost a turn!!";
+        String legend_1 = "┎-------LEGEND-------┒";
+        String legend_2 = "│  █    Jumper       │";
+        String legend_3 = "│  @    Exit Portal  │";
+        String legend_4 = "│  $    Fuel         │";
+        String legend_5 = "│  #    Web          │";
+        String legend_6 = "│  ^^   Freeze       │";
+        String legend_7 = "└--------------------┘";
+        String input_1 = "Enter a number between 0 & 4:";
+        String input_2 = "0) Numbers";
+        String input_3 = "1) Jump RIGHT";
+        String input_4 = "2) Jump LEFT ";
+        String input_5 = "3) Skip Turn";
+        String input_6 = "4) Exit";
+
         System.out.println();
         if (!frozen)
         {
-            System.out.println("┎-------LEGEND-------┒  Enter a number between 0 & 4:");
-            System.out.println("│  █    Jumper       │  0) Numbers");
-            System.out.println("│  @    Exit Portal  │  1) Jump RIGHT");
-            System.out.println("│  $    Fuel         │  2) Jump LEFT ");
-            System.out.println("│  #    Web          │  3) Skip Turn");
-            System.out.println("│  ^^   Freeze       │  4) Exit");
-            System.out.println("└--------------------┘");
+            System.out.println(legend_1 + " " + input_1);
+            System.out.println(legend_2 + " " + input_2);
+            System.out.println(legend_3 + " " + input_3);
+            System.out.println(legend_4 + " " + input_4);
+            System.out.println(legend_5 + " " + input_5);
+            System.out.println(legend_6 + " " + input_6);
+            System.out.println(legend_7);
+
             return;
         }
-
-        System.out.println("┎-------LEGEND-------┒  ");
-        System.out.println("│  █    Jumper       │  You have lost a turn!!");
-        System.out.println("│  @    Exit Portal  │");
-        System.out.println("│  $    Fuel         │");
-        System.out.println("│  #    Web          │");
-        System.out.println("│  ^^   Freeze       │");
-        System.out.println("└--------------------┘");
+        System.out.println(legend_1);
+        System.out.println(legend_2);
+        System.out.println(legend_3);
+        System.out.println(legend_4 + " " + turnLost);
+        System.out.println(legend_5);
+        System.out.println(legend_6);
+        System.out.println(legend_7);
     }
 
-    public static void all(Charge charge, State state, Count count, Fuel fuel, Parse parse, Position position)
+    public static void inGameAll(Charge charge, State state, Count count, Fuel fuel, Parse parse, Position position)
     {
         clearScreen();
         chargeAmount(charge.getAmount(), state.isNumbers());
