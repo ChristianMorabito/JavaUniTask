@@ -51,4 +51,34 @@ public class Validation {
         return integer;
     }
 
+    public static boolean stringLength(String name, int lessThan, int greaterThan)
+    {
+        if (name.length() < lessThan)
+        {
+            System.out.println("Input too SHORT. Please try again.");
+            return true;
+        }
+        else if (name.length() > greaterThan)
+        {
+            System.out.println("Input too LONG. Please try again.");
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean integerLength(int integer, int lessThan, int greaterThan)
+    {
+        if (integer < lessThan)
+        {
+            System.out.println("Integer too LOW. Please try again.");
+            return true;
+        }
+        else if (integer > greaterThan)
+        {
+            System.out.println("Integer too HIGH. Please try again.");
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -66,23 +66,22 @@ public class Input
 
         Scanner scanner = new Scanner(System.in);
 
-        while (true)
+        do
         {
             try
             {
                 System.out.print("Number: ");
                 action = scanner.nextInt();
-                if (action > -1 && action < 5)
-                {
-                    break;
-                }
             }
             catch (Exception e)
             {
                 Print.invalidInput();
                 scanner.next();
             }
+
         }
+        while (Validation.integerLength(action, 0, 4));
+
     }
 
     public void setName(String name)
@@ -102,25 +101,13 @@ public class Input
     {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your username. It must be between 3 to 12 letters long.");
-        boolean inputInvalid = true;
 
-        while (inputInvalid)
+        do
         {
             System.out.print("Name: ");
             name = scanner.nextLine();
-            if (name.length() < 3)
-            {
-                System.out.println("Name too short. Please try again.");
-            }
-            else if (name.length() > 12)
-            {
-                System.out.println("Name too long. Please try again.");
-            }
-            else
-            {
-                inputInvalid = false;
-            }
         }
+        while (Validation.stringLength(name.trim(), 3, 12));
     }
 
     public void setAction(int action)

@@ -25,6 +25,8 @@ public class Jumper
         fileIO.read();
         parse.define(fileIO.getData());
         parse.shuffleOnlyPortal();
+        Print.clearScreen();
+        Print.title();
         input.usernameInput();
 
         while (state.isGameRunning())

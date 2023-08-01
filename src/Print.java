@@ -4,6 +4,19 @@ import java.util.Arrays;
 public class Print
 {
 
+    public static void title()
+    {
+        System.out.println("""
+                     
+                     ██╗ █████╗ ██╗   ██╗ █████╗          ██╗██╗   ██╗███╗   ███╗██████╗ ███████╗██████╗\s
+                     ██║██╔══██╗██║   ██║██╔══██╗         ██║██║   ██║████╗ ████║██╔══██╗██╔════╝██╔══██╗
+                     ██║███████║██║   ██║███████║         ██║██║   ██║██╔████╔██║██████╔╝█████╗  ██████╔╝
+                ██   ██║██╔══██║╚██╗ ██╔╝██╔══██║    ██   ██║██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══╝  ██╔══██╗
+                ╚█████╔╝██║  ██║ ╚████╔╝ ██║  ██║    ╚█████╔╝╚██████╔╝██║ ╚═╝ ██║██║     ███████╗██║  ██║
+                 ╚════╝ ╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝     ╚════╝  ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝
+                """); // reference: https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+    }
+
     public static void action(boolean frozen)
     {
         System.out.println();
@@ -52,6 +65,7 @@ public class Print
 
     public static void clearScreen()
     {
+        // reference: https://stackoverflow.com/questions/2979383/how-to-clear-the-console-using-java
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
