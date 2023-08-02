@@ -21,11 +21,11 @@ public class Print
     {
         String turnLost = "You have lost a turn!!";
         String legend_1 = "┎-------LEGEND-------┒";
-        String legend_2 = "│  █    Jumper       │";
-        String legend_3 = "│  @    Exit Portal  │";
-        String legend_4 = "│  $    Fuel         │";
-        String legend_5 = "│  #    Web          │";
-        String legend_6 = "│  ^^   Freeze       │";
+        String legend_2 = "│  " + Data.JUMPER + "    Jumper       │";
+        String legend_3 = "│  " + Data.PORTAL + "    Exit Portal  │";
+        String legend_4 = "│  " + Data.FUEL_CELL + "    Fuel         │";
+        String legend_5 = "│  " + Data.WEB + "    Web          │";
+        String legend_6 = "│  " + Data.FREEZE + "    Freeze       │";
         String legend_7 = "└--------------------┘";
         String input_1 = "Enter a number between 0 & 4:";
         String input_2 = "0) Numbers";
@@ -64,8 +64,9 @@ public class Print
         web(state);
         outOfRange(state);
         fuelRespawning(count.fuelShuffleCheck());
-        fuelCollected(fuel.getArray(), position.getCurrentSpot(), charge.getAmount());
-        graphic(parse, position.getPositions(), state.isNumbers());
+        fuelCollected(fuel.getArray(), position.getCurrentPosition(), charge.getAmount());
+        graphic(parse, position.getCurrentPosition(), position.getLeftPosition(),
+                position.getRightPosition(), state.isNumbers());
         action(state.isFrozen());
     }
 
@@ -129,9 +130,12 @@ public class Print
         }
     }
 
-    public static void graphic(Parse parse, int[] positions, boolean numbers)
+    public static void graphic(Parse parse, int currentPosition, int leftPosition,
+                               int rightPosition, boolean numbers)
     {
-        StringBuilder[][] buildingString = new Graphic().create(parse, positions, numbers);
+        StringBuilder[][] buildingString = new Graphic().create(parse,
+                currentPosition,leftPosition, rightPosition, numbers);
+
         System.out.println();
         for (int i = 0; i < Data.getMaxHeight() + 1; i++)
         {

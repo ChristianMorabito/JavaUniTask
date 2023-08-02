@@ -24,33 +24,33 @@ public class Jumper
         parse.define(fileIO.getData());
         parse.shuffleOnlyPortal();
         Print.clearScreen();
-        Print.title();
-        input.usernameInput();
+//        Print.title();
+//        input.usernameInput();
 
         while (state.isGameRunning())
         {
             Web.turnOff(state);
             parse.shuffle();
-            Web.check(state, parse.getWeb(), position.getCurrentSpot(), log);
+            Web.check(state, parse.getWeb(), position.getCurrentPosition(), log);
             position.set(parse.buildings());
-            charge.passiveCheck(position.getCurrentSpot(), fuel.getArray(), log);
-            count.setHeight_1(parse.buildings().get(position.getCurrentSpot()));
-            Frozen.check(state, parse.getFreeze(), position.getCurrentSpot(), log);
-            state.exitCheck(position.getCurrentSpot());
+            charge.passiveCheck(position.getCurrentPosition(), fuel.getArray(), log);
+            count.setHeight_1(parse.buildings().get(position.getCurrentPosition()));
+            Frozen.check(state, parse.getFreeze(), position.getCurrentPosition(), log);
+            state.exitCheck(position.getCurrentPosition());
             do
             {
                 if (state.isGameRunning())
                 {
                     Print.inGameAll(charge, state, count, fuel, parse, position);
-                    fuel.collect(position.getCurrentSpot());
+                    fuel.collect(position.getCurrentPosition());
                     input.inputAction();
                     input.action(log, parse.buildings(), position);
                 }
             }
             while (state.isOutOfRange() || state.isNumbersLoop());
             Frozen.turningOff(state);
-            count.setHeight_2(parse.buildings().get(position.getCurrentSpot()));
-            charge.activeCheck(position.getCurrentSpot(), fuel.getArray(), log);
+            count.setHeight_2(parse.buildings().get(position.getCurrentPosition()));
+            charge.activeCheck(position.getCurrentPosition(), fuel.getArray(), log);
         }
         Print.exit(charge.getAmount(), input.getName(), state.isExit(), state.isWebbed());
         fileIO.write(log.display(), input.getName());

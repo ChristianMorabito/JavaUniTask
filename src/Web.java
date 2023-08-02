@@ -10,7 +10,8 @@ public class Web
             log.setWebCount(log.getWebCount() + 1);
         }
     }
-    public static void turnOff(State state) {
+    public static void turnOff(State state)
+    {
         state.setWebbed(false);
     }
 

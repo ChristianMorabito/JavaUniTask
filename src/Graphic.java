@@ -9,6 +9,15 @@ import java.util.ArrayList;
 
 public class Graphic
 {
+    final private int SIDES_AND_GAP = 3; // 3 = 2 building sides + 1 gap (between buildings)
+    final private int INNER_BUILDING_SPACE = Data.BUILDING_WIDTH - SIDES_AND_GAP;
+    final private char SINGLE_SPACE = ' ';
+    final private String JUMPER_WINDOW = "‡".repeat(INNER_BUILDING_SPACE);
+    final private String DARK_WINDOW =  "∎".repeat(INNER_BUILDING_SPACE);
+    final private String CLEAR_WINDOW = "◫".repeat(INNER_BUILDING_SPACE);
+    final private String FULL_WINDOW =  "◩".repeat(INNER_BUILDING_SPACE);
+    final private String BUILDING_SIDE = "┃";
+
     private StringBuilder[][] buildingString;
 
     /**
@@ -31,13 +40,15 @@ public class Graphic
     /**
      * Method to iterate over 2d string-builder array to parse graphic string
      * @param parse Accepts Parse object
-     * @param positions Accepts int array containing current position, & L/R jump positions
+     * @param currentPosition Accepts int which represents current position player is on
+     * @param leftPosition Accepts int which represents position if player potentially jumps left
+     * @param rightPosition Accepts int which represents position if player potentially jumps right
+     * @param numbers Accepts int which represents if numbers bool is true (from State class)
      **/
-    public StringBuilder[][] create(Parse parse, int[] positions, boolean numbers)
+    public StringBuilder[][] create(Parse parse, int currentPosition, int leftPosition,
+                                    int rightPosition, boolean numbers)
     {
-        int currentPosition = positions[0];
-        int leftPosition = positions[1];
-        int rightPosition = positions[2];
+
         ArrayList<Integer> heights = parse.buildings();
 
         for (int i = 0; i < Data.getRowLength(); i++)
@@ -48,7 +59,7 @@ public class Graphic
 
             for (int j = 0; j < Data.getMaxHeight() - 1; j++)
             {
-                createUnderAndAbove(currentHeight, i, j, leftPosition, rightPosition);
+                createUnderAndAbove(currentPosition, currentHeight, i, j, leftPosition, rightPosition);
             }
         }
         return buildingString;
@@ -66,31 +77,29 @@ public class Graphic
     private void createBase(int i, int currentPosition, int leftPosition, int rightPosition,
                             boolean numbers, ArrayList<Integer> heights)
     {
-        final String betweenGap = " ";
-        String firstGap = " ";
-        String buildingSide = "┃";
         String baseText;
+        int beginIndex = heights.get(i).toString().length();
 
-        if (i == currentPosition)
+
+        if (i == Data.getPortalIndex())
         {
-            baseText = numbers ? " HERE." : ".HERE.";
+            baseText = numbers ? SINGLE_SPACE + FULL_WINDOW.substring(beginIndex) : FULL_WINDOW;
+        }
+        else if (i == currentPosition)
+        {
+            baseText = numbers ? SINGLE_SPACE + JUMPER_WINDOW.substring(beginIndex) : JUMPER_WINDOW;
         }
         else if (i == leftPosition || i == rightPosition)
         {
-            baseText = numbers ? " ∎∎∎∎∎" : "∎∎∎∎∎∎";
+            baseText = numbers ? SINGLE_SPACE + DARK_WINDOW.substring(beginIndex) : DARK_WINDOW;
         }
         else
         {
-            baseText = numbers ? " ◫◫◫◫◫" : "◫◫◫◫◫◫";
+            baseText = numbers ? SINGLE_SPACE + CLEAR_WINDOW.substring(beginIndex) : CLEAR_WINDOW;
         }
 
-        firstGap = i > 0 ? firstGap.trim() : firstGap;
-        String numbersSide = numbers ? String.valueOf(heights.get(i)) : buildingSide;
-        buildingString[Data.getMaxHeight()][i] = new StringBuilder(firstGap +
-                numbersSide +
-                baseText +
-                buildingSide +
-                betweenGap);
+        String numbersSide = numbers ? String.valueOf(heights.get(i)) : BUILDING_SIDE;
+        buildingString[Data.getMaxHeight()][i] = new StringBuilder(numbersSide + baseText + BUILDING_SIDE);
     }
 
     /**
@@ -103,60 +112,60 @@ public class Graphic
      **/
     private void createRoof(Parse parse, int i, int currentHeight, int currentPosition)
     {
-        final String PORTAL = "@";
-        final String JUMPER =    "█";
-        final String FUEL_CELL = "$";
-        final String WEB = "#";
-        final String FREEZE = "^^";
-        final String ROOF = " ┎──────┒";
-        ArrayList<Boolean> exitPortal = parse.getExitPortal();
-        ArrayList<Boolean> fuelCell = parse.getFuel().getArray();
-        ArrayList<Boolean> web = parse.getWeb();
-        ArrayList<Boolean> freeze = parse.getFreeze();
+        String TOP_LEFT_ROOF = "┎";
+        String TOP_RIGHT_ROOF = "┒";
+        String ROOF = "─";
+        final String WHOLE_ROOF = TOP_LEFT_ROOF + ROOF.repeat(INNER_BUILDING_SPACE) + TOP_RIGHT_ROOF;
+        final boolean[] CONDITIONS = {i == currentPosition, parse.getFuel().getArray().get(i),
+                parse.getFreeze().get(i), parse.getWeb().get(i), parse.getExitPortal().get(i)};
+        final int HEIGHT_FORMULA = Data.getMaxHeight() - currentHeight;
+        final String[] SYMBOLS_ARRAY = new String[] {Data.JUMPER, Data.FUEL_CELL, Data.FREEZE, Data.WEB, Data.PORTAL};
+        buildingString[Data.getMaxHeight() - currentHeight][i] = new StringBuilder(WHOLE_ROOF);
 
-        buildingString[Data.getMaxHeight() - currentHeight][i] = new StringBuilder(ROOF);
-        if (i == currentPosition)
+        int nextPosition = 1; // 1 = 1-th index on top of building (so symbol doesn't begin on edge of building).
+        for (int x = 0; x < CONDITIONS.length; x++)
         {
-            buildingString[Data.getMaxHeight() - currentHeight][i] = buildingString[Data.getMaxHeight() - currentHeight][i].replace(2, 3, JUMPER);
-        }
-        if (fuelCell.get(i))
-        {
-            buildingString[Data.getMaxHeight() - currentHeight][i] = buildingString[Data.getMaxHeight() - currentHeight][i].replace(3, 4, FUEL_CELL);
-        }
-        if (freeze.get(i))
-        {
-            buildingString[Data.getMaxHeight() - currentHeight][i] = buildingString[Data.getMaxHeight() - currentHeight][i].replace(4, 6, FREEZE);
-        }
-        if (web.get(i))
-        {
-            buildingString[Data.getMaxHeight() - currentHeight][i] = buildingString[Data.getMaxHeight() - currentHeight][i].replace(6, 7, WEB);
-        }
-        if (exitPortal.get(i))
-        {
-            buildingString[Data.getMaxHeight() - currentHeight][i] = buildingString[Data.getMaxHeight() - currentHeight][i].replace(7, 8, PORTAL);
+            int startPosition = nextPosition;
+            nextPosition += SYMBOLS_ARRAY[x].length();
+            if (CONDITIONS[x])
+            {
+                buildingString[HEIGHT_FORMULA][i] =
+                buildingString[HEIGHT_FORMULA][i].replace(startPosition, nextPosition, SYMBOLS_ARRAY[x]);
+            }
         }
     }
 
     /**
      * Method to graphically fill above & between (building roof & base) in the 2d stringbuilder array
+     * @param currentPosition Accepts int which represents current position player is on.
      * @param currentHeight Accepts int which represents the building height the player currently is on
      * @param i Accepts int iterator from 1st for-loop
      * @param j Accepts int iterator from nested for-loop
      * @param leftPosition Accepts int which represents position if player potentially jumps left
      * @param rightPosition Accepts int which represents position if player potentially jumps right
      **/
-    private void createUnderAndAbove(int currentHeight, int i, int j, int leftPosition, int rightPosition)
+    private void createUnderAndAbove(int currentPosition, int currentHeight, int i, int j, int leftPosition, int rightPosition)
     {
-        final String DEFAULT_SIDES = " ┃◫◫◫◫◫◫┃";
-        final String JUMP_SIDES =    " ┃∎∎∎∎∎∎┃";
-        final String EMPTY_SPACE =   "         ";
+        final String DEFAULT_SIDES = BUILDING_SIDE + CLEAR_WINDOW + BUILDING_SIDE;
+        final String CURRENT_SIDES = BUILDING_SIDE + JUMPER_WINDOW + BUILDING_SIDE;
+        final String JUMP_TO_SIDES = BUILDING_SIDE + DARK_WINDOW + BUILDING_SIDE;
+        final String PORTAL_SIDES = BUILDING_SIDE + FULL_WINDOW + BUILDING_SIDE;
+        final String EMPTY_SPACE =   Character.toString(SINGLE_SPACE).repeat(Data.BUILDING_WIDTH - 1);
         int underBuilding = Data.getMaxHeight() + j + 1;
 
         if (underBuilding - currentHeight < Data.getMaxHeight())
         {
-            if (i == leftPosition || i == rightPosition)
+            if (i == Data.getPortalIndex())
             {
-                buildingString[underBuilding - currentHeight][i] = new StringBuilder(JUMP_SIDES);
+                buildingString[underBuilding - currentHeight][i] = new StringBuilder(PORTAL_SIDES);
+            }
+            else if (i == currentPosition)
+            {
+                buildingString[underBuilding - currentHeight][i] = new StringBuilder(CURRENT_SIDES);
+            }
+            else if (i == leftPosition || i == rightPosition)
+            {
+                buildingString[underBuilding - currentHeight][i] = new StringBuilder(JUMP_TO_SIDES);
             }
             else
             {
