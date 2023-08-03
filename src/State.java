@@ -1,11 +1,15 @@
+import java.util.ArrayList;
+
 public class State
 {
 
     private boolean exit;
+    private boolean frozeExit;
     private boolean frozen;
     private boolean gameRunning;
     private boolean numbers;
-    private boolean numbersLoop;
+    private boolean numLoop;
+    private boolean exitFrozeLoop;
     private boolean outOfRange;
     private boolean skipTurn;
     private boolean webbed;
@@ -16,34 +20,54 @@ public class State
         frozen = false;
         gameRunning = true;
         numbers = false;
-        numbersLoop = false;
+        numLoop = false;
         outOfRange = false;
         skipTurn = false;
         webbed = false;
+        frozeExit = false;
+        exitFrozeLoop = false;
     }
 
     public State(boolean outOfRange, boolean gameRunning, boolean skipTurn,
-                 boolean exit, boolean numbers, boolean numbersLoop)
+                 boolean exit, boolean numbers, boolean numLoop, boolean frozeExit, boolean exitFrozeLoop)
     {
         this.outOfRange = outOfRange;
         this.gameRunning = gameRunning;
         this.skipTurn = skipTurn;
         this.exit = exit;
         this.numbers = numbers;
-        this.numbersLoop = numbersLoop;
+        this.numLoop = numLoop;
+        this.frozeExit = frozeExit;
+        this.exitFrozeLoop = exitFrozeLoop;
     }
 
     public void exitCheck(int currentPosition)
     {
-        if (currentPosition == Data.getPortalIndex() && !frozen)
+        if (currentPosition == Values.getEndIndex() && !frozen)
         {
             gameRunning = false;
         }
     }
 
+    public void freezeOnExitCheck(ArrayList<Boolean> freeze)
+    {
+        frozeExit = freeze.get(Values.getEndIndex());
+
+    }
+
     public boolean isExit()
     {
         return exit;
+    }
+
+    public boolean isExitFrozeLoop()
+    {
+        return exitFrozeLoop;
+    }
+
+    public boolean isFrozeExit()
+    {
+        return frozeExit;
     }
 
     public boolean isFrozen()
@@ -61,9 +85,9 @@ public class State
         return numbers;
     }
 
-    public boolean isNumbersLoop()
+    public boolean isNumLoop()
     {
-        return numbersLoop;
+        return numLoop;
     }
 
     public boolean isOutOfRange()
@@ -86,6 +110,16 @@ public class State
         this.exit = exit;
     }
 
+    public void setExitFrozeLoop(boolean exitFrozeLoop)
+    {
+        this.exitFrozeLoop = exitFrozeLoop;
+    }
+
+    public void setFrozeExit(boolean frozeExit)
+    {
+        this.frozeExit = frozeExit;
+    }
+
     public void setFrozen(boolean frozen)
     {
         this.frozen = frozen;
@@ -101,9 +135,9 @@ public class State
         this.numbers = numbers;
     }
 
-    public void setNumbersLoop(boolean numbersLoop)
+    public void setNumLoop(boolean numLoop)
     {
-        this.numbersLoop = numbersLoop;
+        this.numLoop = numLoop;
     }
 
     public void setOutOfRange(boolean outOfRange)
@@ -120,4 +154,5 @@ public class State
     {
         this.webbed = webbed;
     }
+
 }

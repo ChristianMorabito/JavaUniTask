@@ -21,7 +21,7 @@ public class Input
         this.action = 0;
     }
 
-    public void action(Log log, ArrayList<Integer> buildingHeights, Position position)
+    public void action(Count count, Log log, ArrayList<Boolean> freeze, ArrayList<Integer> buildingHeights, Player player)
     {
         if (state.isFrozen())
         {
@@ -30,20 +30,22 @@ public class Input
 
         switch (action)
         {
-            case 0 -> {
+            case 0 ->
+            {
                 state.setNumbers(!state.isNumbers());
-                state.setNumbersLoop(true);
+                state.setNumLoop(true);
                 return;
             }
-            case 4 -> {
+            case 4 ->
+            {
                 System.out.println("Exiting...");
                 state.setGameRunning(false);
                 state.setExit(true);
             }
-            default -> position.move(buildingHeights, action);
+            default -> player.move(state, count, freeze, buildingHeights, action);
         }
 
-        state.setNumbersLoop(false);
+        state.setNumLoop(false);
         log.setTurnCount(log.getTurnCount() + 1);
     }
 
@@ -59,8 +61,9 @@ public class Input
 
     public void inputAction()
     {
-        if (state.isFrozen()) {
-            frozenInput();
+        if (state.isFrozen())
+        {
+            cannotMove();
             return;
         }
 
@@ -89,7 +92,7 @@ public class Input
         this.name = name;
     }
 
-    private void frozenInput()
+    private void cannotMove()
     {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Press ENTER: ");
@@ -105,7 +108,7 @@ public class Input
         do
         {
             System.out.print("Name: ");
-            name = scanner.nextLine();
+            this.name = scanner.nextLine();
         }
         while (Validation.stringLength(name.trim(), 3, 12));
     }

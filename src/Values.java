@@ -5,10 +5,11 @@
  * @version ver1.0.0
  */
 
-public class Data
+public final class Values
 {
     public static final String WRITE_FILE_NAME = "outcome.txt";
     public static final String READ_FILE_NAME = "buildings.txt";
+    public static final int FUEL_UPDATE_COUNT = 3;
     public static final int COLUMN_LENGTH = 5;
     public static final int START_INDEX = 0;
     public static final int MIN_ROW_LENGTH = 6;
@@ -17,7 +18,6 @@ public class Data
     private static int maxHeight = -1;
     private static int rowLength = -1;
     private static int endIndex = -1;
-    private static int portalIndex = -1;
 
     final public static int BUILDING_WIDTH = 8; // cannot be less than 7
     final public static String PORTAL =    "@";
@@ -25,6 +25,11 @@ public class Data
     final public static String FUEL_CELL = "$";
     final public static String WEB =       "#";
     final public static String FREEZE =    "^";
+
+    private Values()
+    {
+        // no need to instantiate
+    }
 
     /**
      * Accessor method to get endIndex
@@ -45,15 +50,6 @@ public class Data
     }
 
     /**
-     * Accessor method to get portalIndex
-     * @return portalIndex: int
-     */
-    public static int getPortalIndex()
-    {
-        return portalIndex;
-    }
-
-    /**
      * Accessor method to get rowLength
      * @return rowLength: int
      */
@@ -68,7 +64,7 @@ public class Data
      */
     public static void setEndIndex(int endIndex)
     {
-        Data.endIndex = Data.endIndex == -1 ? endIndex : Data.endIndex;
+        Values.endIndex = Values.endIndex == -1 ? endIndex : Values.endIndex;
     }
 
     /**
@@ -77,16 +73,7 @@ public class Data
      */
     public static void setMaxHeight(int maxHeight)
     {
-        Data.maxHeight = Data.maxHeight == -1 ? maxHeight : Data.maxHeight;
-    }
-
-    /**
-     * Mutator method to set portalIndex: int.
-     * After the portalIndex has been set once, it cannot be overridden.
-     */
-    public static void setPortalIndex(int portalIndex)
-    {
-        Data.portalIndex = Data.portalIndex == -1 ? portalIndex : Data.portalIndex;
+        Values.maxHeight = Values.maxHeight == -1 ? maxHeight : Values.maxHeight;
     }
 
     /**
@@ -95,6 +82,6 @@ public class Data
      */
     public static void setRowLength(int rowLength)
     {
-        Data.rowLength = Data.rowLength == -1 ? rowLength : Data.rowLength;
+        Values.rowLength = Values.rowLength == -1 ? rowLength : Values.rowLength;
     }
 }

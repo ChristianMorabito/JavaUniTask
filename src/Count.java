@@ -5,8 +5,8 @@
  */
 public class Count
 {
-    private int fuelShuffleCount;
-    private int previousPosition;
+    private int fuelMove;
+    private int prevPosition;
     private int height_1;
     private int height_2;
 
@@ -17,24 +17,24 @@ public class Count
     {
         height_2 = 0;
         height_1 = 0;
-        previousPosition = 0;
-        fuelShuffleCount = 0;
+        prevPosition = 0;
+        fuelMove = 0;
     }
 
     /**
      * Non-Default constructor which creates the object of the class Count.
      *
      * @param height_1              Accepts an int for first building height
-     * @param previousPosition      Accepts int to initialise jumper's previous position
+     * @param prevPosition      Accepts int to initialise jumper's previous position
      * @param height_2              Accepts an int for previous building height
-     * @param fuelShuffleCount      Accepts int to initialise fuelShuffleCount
+     * @param fuelMove      Accepts int to initialise fuelShuffleCount
      */
-    public Count(int height_1, int previousPosition, int height_2, int fuelShuffleCount)
+    public Count(int height_1, int prevPosition, int height_2, int fuelMove)
     {
         this.height_1 = height_1;
-        this.previousPosition = previousPosition;
+        this.prevPosition = prevPosition;
         this.height_2 = height_2;
-        this.fuelShuffleCount = fuelShuffleCount;
+        this.fuelMove = fuelMove;
     }
 
     /**
@@ -44,25 +44,26 @@ public class Count
      */
     public boolean fuelShuffleCheck()
     {
-        return fuelShuffleCount >= 0 && fuelShuffleCount % 3 == 0;
+        return fuelMove >= 0 &&
+                Validation.fuelShuffleModulo(fuelMove) == 0;
     }
 
     /**
      * Accessor method for fuelShuffleCount
      * @return returns fuelShuffleCount: int
      */
-    public int getFuelShuffleCount()
+    public int getFuelMove()
     {
-        return fuelShuffleCount;
+        return fuelMove;
     }
 
     /**
      * Accessor method for previousPosition
      * @return returns previousPosition: int
      */
-    public int getPreviousPosition()
+    public int getPrevPosition()
     {
-        return previousPosition;
+        return prevPosition;
     }
 
     /**
@@ -86,20 +87,20 @@ public class Count
 
     /**
      * Mutator method for fuelShuffleCount
-     * @param fuelShuffleCount used to update the fuelShuffleCount: int, through incrementation.
+     * @param fuelMove used to update the fuelShuffleCount: int, through incrementation.
      */
-    public void setFuelShuffleCount(int fuelShuffleCount)
+    public void setFuelMove(int fuelMove)
     {
-        this.fuelShuffleCount = fuelShuffleCount;
+        this.fuelMove = fuelMove;
     }
 
     /**
      * Mutator method for previousPosition
-     * @param previousPosition used to update the previousPosition: int
+     * @param prevPosition used to update the previousPosition: int
      */
-    public void setPreviousPosition(int previousPosition)
+    public void setPrevPosition(int prevPosition)
     {
-        this.previousPosition = previousPosition;
+        this.prevPosition = prevPosition;
     }
 
     /**

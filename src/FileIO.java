@@ -50,7 +50,7 @@ public class FileIO
         FileReader reader;
         try
         {
-            reader = new FileReader(Data.READ_FILE_NAME);
+            reader = new FileReader(Values.READ_FILE_NAME);
             Scanner fileInput = new Scanner(reader);
 
             while (fileInput.hasNextLine())
@@ -68,8 +68,8 @@ public class FileIO
             throw new RuntimeException(e);
         }
 
-        Data.setMaxHeight(maxHeight);
-        Data.setRowLength(data.size());
+        Values.setMaxHeight(maxHeight);
+        Values.setRowLength(data.size());
         Validation.rowLengthCheck();
     }
 
@@ -92,7 +92,7 @@ public class FileIO
         FileWriter fileWriter;
         try
         {
-            fileWriter = new FileWriter(Data.WRITE_FILE_NAME);
+            fileWriter = new FileWriter(Values.WRITE_FILE_NAME);
             fileWriter.write("___" + username + "'s Gameplay Statistics___\n");
             fileWriter.write(writeData);
             fileWriter.close();
@@ -104,3 +104,4 @@ public class FileIO
         }
     }
 }
+

@@ -9,31 +9,22 @@ public class Charge
 {
 
     private int amount;
-    private Count count;
-    private State state;
 
     /**
      * Default constructor which creates the object of the class Charge.
      */
     public Charge()
     {
-        amount = 0;
-        count = new Count();
-        state = new State();
+        amount = Values.STARTING_CHARGE;
     }
 
     /**
      * Non-Default constructor which creates the object of the class Charge.
-     *
-     * @param count    Accepts a Count object.
-     * @param state    Accepts a State object.
      */
 
-    public Charge(Count count, State state)
+    public Charge(int amount)
     {
-        this.amount = Data.STARTING_CHARGE;
-        this.count = count;
-        this.state = state;
+        this.amount = amount;
     }
 
     /**
@@ -44,13 +35,13 @@ public class Charge
      * @param log                Accepts the Log object
      */
 
-    public void activeCheck(int currentPosition, ArrayList<Boolean> fuelCells, Log log)
+    public void activeCheck(State state, Count count, int currentPosition, ArrayList<Boolean> fuelCells, Log log)
     {
         if (!state.isGameRunning())
         {
             return;
         }
-        if (count.getPreviousPosition() == currentPosition)
+        if (count.getPrevPosition() == currentPosition)
         {
             amount -= 1;
         }
@@ -58,18 +49,18 @@ public class Charge
         {
             jumpDeplete(count.getHeight_2(), count.getHeight_1());
         }
-        if (amount >= 0 && fuelCells.get(currentPosition))
+        if (amount >= 0 && !count.fuelShuffleCheck() && fuelCells.get(currentPosition))
         {
             fuelCharge(log);
         }
-        chargeCheck();
+        chargeCheck(state);
     }
 
     /**
      * Checks if charge is above 1. If charge is not above 1, then 'gameRunning' (in State class)
      * is set to false.
      */
-    private void chargeCheck()
+    private void chargeCheck(State state)
     {
         if (amount < 1)
         {
@@ -93,20 +84,20 @@ public class Charge
      */
     private void fuelCharge(Log log)
     {
-        amount = Math.min(amount + 5, Data.MAX_CHARGE);
+        amount = Math.min(amount + 5, Values.MAX_CHARGE);
         log.setFuelCount(log.getFuelCount() + 1);
     }
 
     /**
      * Depletes fuel if webbed, or increases fuel if fuel respawns onto jumper.
-     *
+     * @param fuelShuffleCount   Accepts the int of fuel shuffle count
      * @param currentPosition    Accepts the user's current position as an int
      * @param fuelCells          Accepts the fuel cell array as an arraylist (Boolean)
      * @param log                Accepts the Log object
      */
-    public void passiveCheck(int currentPosition, ArrayList<Boolean> fuelCells, Log log)
+    public void passiveCheck(State state, int fuelShuffleCount, int currentPosition, ArrayList<Boolean> fuelCells, Log log)
     {
-        if (count.getPreviousPosition() == currentPosition && fuelCells.get(currentPosition))
+        if (Validation.fuelShuffleModulo(fuelShuffleCount) == 1 && fuelCells.get(currentPosition))
         {
             fuelCharge(log);
         }
@@ -114,7 +105,7 @@ public class Charge
         if (state.isWebbed())
         {
             amount -= 5;
-            chargeCheck();
+            chargeCheck(state);
         }
     }
 

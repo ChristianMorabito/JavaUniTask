@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 /**
  * Utility class for switching on/off 'frozen' boolean
- * (State class), & to increment 'freezeCount' (Log class)
+ * (State class), & to increment 'freezeCount' (Log class)  
  * @author Christian Morabito
  * @version ver1.0.0
  */

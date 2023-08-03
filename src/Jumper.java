@@ -15,42 +15,41 @@ public class Jumper
         Count count = new Count();
         State state = new State();
         Input input = new Input(state);
-        Position position = new Position(count, state);
-        Fuel fuel = new Fuel(count);
-        Parse parse = new Parse(fuel, count);
-        Charge charge = new Charge(count, state);
+        Player player = new Player();
+        Array array = new Array();
+        Charge charge = new Charge();
         FileIO fileIO = new FileIO();
         fileIO.read();
-        parse.define(fileIO.getData());
-        parse.shuffleOnlyPortal();
+        array.define(fileIO.getData());
         Print.clearScreen();
-//        Print.title();
-//        input.usernameInput();
+        Print.title();
+        input.usernameInput();
 
         while (state.isGameRunning())
         {
             Web.turnOff(state);
-            parse.shuffle();
-            Web.check(state, parse.getWeb(), position.getCurrentPosition(), log);
-            position.set(parse.buildings());
-            charge.passiveCheck(position.getCurrentPosition(), fuel.getArray(), log);
-            count.setHeight_1(parse.buildings().get(position.getCurrentPosition()));
-            Frozen.check(state, parse.getFreeze(), position.getCurrentPosition(), log);
-            state.exitCheck(position.getCurrentPosition());
+            array.shuffle(count);
+            Web.check(state, array.getWeb(), player.getCurrentPos(), log);
+            player.set(array.getBuildings());
+            charge.passiveCheck(state, count.getFuelMove(), player.getCurrentPos(), array.getFuel(), log);
+            count.setHeight_1(array.getBuildings().get(player.getCurrentPos()));
+            Frozen.check(state, array.getFreeze(), player.getCurrentPos(), log);
+            state.freezeOnExitCheck(array.getFreeze());
+            state.exitCheck(player.getCurrentPos());
             do
             {
                 if (state.isGameRunning())
                 {
-                    Print.inGameAll(charge, state, count, fuel, parse, position);
-                    fuel.collect(position.getCurrentPosition());
+                    Print.inGameAll(charge, state, count, array, player);
+                    array.fuelCollect(player.getCurrentPos());
                     input.inputAction();
-                    input.action(log, parse.buildings(), position);
+                    input.action(count, log, array.getFreeze(), array.getBuildings(), player);
                 }
             }
-            while (state.isOutOfRange() || state.isNumbersLoop());
+            while (state.isOutOfRange() || state.isNumLoop() || state.isExitFrozeLoop());
             Frozen.turningOff(state);
-            count.setHeight_2(parse.buildings().get(position.getCurrentPosition()));
-            charge.activeCheck(position.getCurrentPosition(), fuel.getArray(), log);
+            count.setHeight_2(array.getBuildings().get(player.getCurrentPos()));
+            charge.activeCheck(state, count, player.getCurrentPos(), array.getFuel(), log);
         }
         Print.exit(charge.getAmount(), input.getName(), state.isExit(), state.isWebbed());
         fileIO.write(log.display(), input.getName());
