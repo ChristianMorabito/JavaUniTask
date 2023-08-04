@@ -7,8 +7,8 @@
 
 public final class Values
 {
-    public static final String WRITE_FILE_NAME = "outcome.txt";
-    public static final String READ_FILE_NAME = "buildings.txt";
+    public static final String WRITE_FILE = "outcome.txt";
+    public static final String READ_FILE = "buildings.txt";
     public static final int FUEL_UPDATE_COUNT = 3;
     public static final int COLUMN_LENGTH = 5;
     public static final int START_INDEX = 0;

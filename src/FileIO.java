@@ -10,97 +10,76 @@ import java.util.Scanner;
 
 public class FileIO
 {
-    private ArrayList<String[]> data;
-
-    /**
-     * Default constructor which creates the FiloIO object.
-     */
-
-    public FileIO()
-    {
-        data = new ArrayList<String[]>();
-    }
-
-    /**
-     * Non-default constructor which creates the FiloIO object.
-     * @param data Accepts 2d arraylist (String) to store the 'data' field
-     */
-    public FileIO(ArrayList<String[]> data)
-    {
-        this.data = data;
-    }
-
-    /**
-     * Accessor method for mutator
-     * @return Returns 2d arraylist (string)
-     */
-    public ArrayList<String[]> getData()
-    {
-        return data;
-    }
 
     /**
      * Reads file, parses data to 2d arraylist (string)
      * & sets Data fields: maxHeight & rowLength
+     * @return returns the data arraylist (2d String)
      */
-    public void read()
+    public static ArrayList<String[]> read(String fileName)
     {
+        ArrayList<String[]> data = new ArrayList<>();
         int maxHeight = 0;
         int i = 0;
-        FileReader reader;
         try
         {
-            reader = new FileReader(Values.READ_FILE_NAME);
-            Scanner fileInput = new Scanner(reader);
-
-            while (fileInput.hasNextLine())
+            FileReader reader = new FileReader(fileName);
+            try
             {
-                data.add(fileInput.next().split(","));
-                maxHeight = Math.max(Validation.stringToInteger(data.get(i)[0]), maxHeight);
-                i++;
+                Scanner fileInput = new Scanner(reader);
+                while (fileInput.hasNextLine())
+                {
+                    data.add(fileInput.next().split(","));
+                    maxHeight = Math.max(Validation.stringToInteger(data.get(i)[0]), maxHeight);
+                    i++;
+                }
             }
-            reader.close();
+            finally
+            {
+                try
+                {
+                    reader.close();
+                }
+                catch (Exception exception)
+                {
+                    System.out.println("Error in closing file!! Exiting...");
+                    System.exit(-1);
+                }
+            }
         }
-        catch (RuntimeException | IOException e)
+        catch (Exception e)
         {
-            System.out.println("File error!! Exiting...");
+            System.out.println("Error in Reading file!! Exiting...");
             System.exit(-1);
-            throw new RuntimeException(e);
         }
 
         Values.setMaxHeight(maxHeight);
         Values.setRowLength(data.size());
         Validation.rowLengthCheck();
+        return data;
     }
 
-    /**
-     * Mutator method to set data field (2d arraylist (string))
-     *
-     */
-    public void setData(ArrayList<String[]> data)
+    public static void write(String writeData, String username)
     {
-        this.data = data;
-    }
-
-    /**
-     * Writes text file
-     * @param writeData Accepts string data to be written
-     * @param username Accepts string username to be written
-     */
-    public void write(String writeData, String username)
-    {
-        FileWriter fileWriter;
         try
         {
-            fileWriter = new FileWriter(Values.WRITE_FILE_NAME);
+            FileWriter fileWriter = new FileWriter(Values.WRITE_FILE);
             fileWriter.write("___" + username + "'s Gameplay Statistics___\n");
             fileWriter.write(writeData);
-            fileWriter.close();
+            try
+            {
+                fileWriter.close();
+            }
+            catch (Exception exception)
+            {
+                System.out.println("Error in closing file!! Exiting...");
+                System.exit(-1);
+            }
         }
-        catch (IOException e)
+        catch (IOException ioException)
         {
             System.out.println("Error writing file!!");
-            throw new RuntimeException(e);
+            System.exit(-1);
         }
     }
 }

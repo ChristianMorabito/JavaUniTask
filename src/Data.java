@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Array
+public class Data
 {
     private ArrayList<Integer> buildingHeights;
     private ArrayList<Boolean> exitPortal;
@@ -10,7 +10,7 @@ public class Array
     private ArrayList<Boolean> web;
     private ArrayList<Boolean> freeze;
 
-    public Array()
+    public Data()
     {
         buildingHeights = new ArrayList<>();
         exitPortal = new ArrayList<>();
@@ -21,7 +21,7 @@ public class Array
 
     }
 
-    public Array(ArrayList<Boolean> fuel)
+    public Data(ArrayList<Boolean> fuel)
     {
         this.buildingHeights = new ArrayList<>();
         this.exitPortal = new ArrayList<>();

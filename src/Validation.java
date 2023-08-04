@@ -17,7 +17,7 @@ public class Validation {
                 trueCount++;
             }
             if (trueCount > 1) {
-                System.out.println("Too many exits found in " + Values.READ_FILE_NAME);
+                System.out.println("Too many exits found in " + Values.READ_FILE);
                 System.out.println("Exiting...");
                 System.exit(-1);
             }
@@ -35,7 +35,7 @@ public class Validation {
 
     public static void rowLengthCheck() {
         if (Values.getRowLength() < Values.MIN_ROW_LENGTH) {
-            System.out.println("Not enough rows in " + Values.READ_FILE_NAME);
+            System.out.println("Not enough rows in " + Values.READ_FILE);
             System.out.println("Exiting...");
             System.exit(-1);
         }
@@ -44,7 +44,7 @@ public class Validation {
         if (string.equalsIgnoreCase("true") || string.equalsIgnoreCase("false")) {
             return Boolean.parseBoolean(string);
         }
-        System.out.println("Invalid boolean found in " + Values.READ_FILE_NAME);
+        System.out.println("Invalid boolean found in " + Values.READ_FILE);
         System.exit(-1);
         return false;
     }
@@ -53,7 +53,7 @@ public class Validation {
         try {
             integer = Integer.parseInt(string);
         } catch (NumberFormatException nfe) {
-            System.out.println("Number Format Exception found in " + Values.READ_FILE_NAME);
+            System.out.println("Number Format Exception found in " + Values.READ_FILE);
             System.out.println("Exiting...");
             System.exit(-1);
         }

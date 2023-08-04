@@ -144,10 +144,10 @@ public class Print
         }
     }
 
-    public static void graphic(Array array, int currentPosition, int leftPosition,
+    public static void graphic(Data data, int currentPosition, int leftPosition,
                                int rightPosition, boolean numbers)
     {
-        StringBuilder[][] buildingString = new Graphic().create(array,
+        StringBuilder[][] buildingString = new Graphic().create(data,
                 currentPosition,leftPosition, rightPosition, numbers);
 
         System.out.println();
@@ -161,7 +161,7 @@ public class Print
         }
     }
 
-    public static void inGameAll(Charge charge, State state, Count count, Array array, Player player)
+    public static void inGameAll(Charge charge, State state, Count count, Data data, Player player)
     {
         // clearScreen();
         chargeAmount(charge.getAmount(), state.isNumbers());
@@ -171,8 +171,8 @@ public class Print
         outOfRange(state);
         cannotJumpFrozenExit(state);
         fuelRespawning(count.fuelShuffleCheck());
-        fuelCollected(array.getFuel(), player.getCurrentPos(), charge.getAmount());
-        graphic(array, player.getCurrentPos(), player.getLeftPos(),
+        fuelCollected(data.getFuel(), player.getCurrentPos(), charge.getAmount());
+        graphic(data, player.getCurrentPos(), player.getLeftPos(),
                 player.getRightPos(), state.isNumbers());
         action(state, player.getRightPos());
     }
