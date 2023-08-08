@@ -24,15 +24,15 @@ public class Print
               ┃                      - the device allows for jumping short distances                      ┃                 
               ┃                      - building heights change frequently.                                ┃     
               ┃                      - fuel cells can refuel the device.                                  ┃                     
-              ┃                      - stay far away from frozen buildings.                               ┃     
+              ┃                      - stay far away from ice buildings.                                  ┃     
               ┃                      - look out from the Nowhere police webs.                             ┃         
               ┖───────────────────────────────────────────────────────────────────────────────────────────┚                 
                 """); // reference: https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
     }
 
-    public static void action(State state, int rightPosition)
+    public static void action(boolean isFrozen, State state, int rightPos)
     {
-        String turnLost = "You have lost a turn!!";
+        String turnLost = "!!YOU HAVE LOST A TURN!!";
         String legend_1 = "┎-------LEGEND-------┒";
         String legend_2 = "│  " + Values.JUMPER + "    Jumper       │";
         String legend_3 = "│  " + Values.PORTAL + "    Exit Portal  │";
@@ -40,34 +40,24 @@ public class Print
         String legend_5 = "│  " + Values.WEB + "    Web          │";
         String legend_6 = "│  " + Values.FREEZE + "    Freeze       │";
         String legend_7 = "└--------------------┘";
-        String input_1 = "Enter a number between 0 & 4:";
-        String input_2 = "0) Numbers";
-        String input_3 = "1) Jump RIGHT";
-        String freeze_3 = "1̶)̶ ̶J̶u̶m̶p̶ ̶R̶I̶G̶H̶T̶";
-        String input_4 = "2) Jump LEFT ";
-        String input_5 = "3) Skip Turn";
-        String input_6 = "4) Exit";
+        String prompt_1 = "Enter a number between 0 & 4:";
+        String input_0 = "0) Numbers";
+        String input_1 = "1) Jump RIGHT";
+        String froze_1 = "1̶)̶ ̶J̶u̶m̶p̶ ̶R̶I̶G̶H̶T̶";
+        String input_2 = "2) Jump LEFT";
+        String froze_2 = "2̶)̶ ̶J̶u̶m̶p̶ ̶L̶E̶F̶T̶";
+        String input_3 = "3) Skip Turn";
+        String input_4 = "4) Exit";
 
         System.out.println();
-        if (!state.isFrozen())
-        {
-            System.out.println(legend_1 + " " + input_1);
-            System.out.println(legend_2 + " " + input_2);
-            System.out.println(legend_3 + " " + (Validation.freezeOnExit(state, rightPosition) ? freeze_3 : input_3));
-            System.out.println(legend_4 + " " + input_4);
-            System.out.println(legend_5 + " " + input_5);
-            System.out.println(legend_6 + " " + input_6);
-            System.out.println(legend_7);
-
-            return;
-        }
-        System.out.println(legend_1);
-        System.out.println(legend_2);
-        System.out.println(legend_3);
-        System.out.println(legend_4 + " " + turnLost);
-        System.out.println(legend_5);
-        System.out.println(legend_6);
+        System.out.println(legend_1 + " " + (isFrozen ? turnLost : prompt_1));
+        System.out.println(legend_2 + " " + input_0);
+        System.out.println(legend_3 + " " + (Validation.freezeOnExit(state, rightPos) || isFrozen ? froze_1 : input_1));
+        System.out.println(legend_4 + " " + (isFrozen ? froze_2 : input_2));
+        System.out.println(legend_5 + " " + input_3);
+        System.out.println(legend_6 + " " + input_4);
         System.out.println(legend_7);
+
     }
 
     public static void cannotJumpFrozenExit(State state)
@@ -109,9 +99,9 @@ public class Print
         System.out.println("--GAME OVER--");
     }
 
-    public static void frozen(State state)
+    public static void ice(boolean isFrozen)
     {
-        if (state.isFrozen())
+        if (isFrozen)
         {
             System.out.println("\uD83D\uDEA8 YOU ARE FROZEN \uD83D\uDEA8");
         }
@@ -161,36 +151,41 @@ public class Print
         }
     }
 
-    public static void inGameAll(Charge charge, State state, Count count, Data data, Player player)
+    public static void inGameAll(boolean isFrozen, boolean isWebbed, Charge charge, State state, Data data, Player player)
     {
         // clearScreen();
         chargeAmount(charge.getAmount(), state.isNumbers());
-        frozen(state);
-        web(state);
+        ice(isFrozen);
+        web(isWebbed);
         frozenExit(state, player.getRightPos());
         outOfRange(state);
         cannotJumpFrozenExit(state);
-        fuelRespawning(count.fuelShuffleCheck());
+        fuelRespawning(data.fuelShuffleCheck());
         fuelCollected(data.getFuel(), player.getCurrentPos(), charge.getAmount());
         graphic(data, player.getCurrentPos(), player.getLeftPos(),
                 player.getRightPos(), state.isNumbers());
-        action(state, player.getRightPos());
+        action(isFrozen, state, player.getRightPos());
     }
     public static void invalidInput()
     {
-        System.out.println("Invalid Input! Please try again.");
+        System.out.println("\uD83D\uDEA8 Invalid Input! Retry \uD83D\uDEA8");
+    }
+
+    public static void inputOutOfRange()
+    {
+        System.out.println("\uD83D\uDEA8 Input Out of Range! Retry \uD83D\uDEA8");
     }
 
     public static void outOfRange(State state)
     {
         if (state.isOutOfRange()) {
-            System.out.println("\uD83D\uDEA8 BEYOND RANGE: Retry \uD83D\uDEA8");
+            System.out.println("\uD83D\uDEA8 BEYOND RANGE! Retry \uD83D\uDEA8");
         }
     }
 
-    public static void web(State state)
+    public static void web(boolean isWebbed)
     {
-        if (state.isWebbed()) {
+        if (isWebbed) {
             System.out.println("\uD83D\uDEA8 YOU ARE WEBBED!! \uD83D\uDEA8");
         }
     }

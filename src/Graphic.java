@@ -40,13 +40,13 @@ public class Graphic
     /**
      * Method to iterate over 2d string-builder array to parse graphic string
      * @param data Accepts Parse object
-     * @param currentPosition Accepts int which represents current position player is on
-     * @param leftPosition Accepts int which represents position if player potentially jumps left
-     * @param rightPosition Accepts int which represents position if player potentially jumps right
+     * @param currentPos Accepts int which represents current position player is on
+     * @param leftPos Accepts int which represents position if player potentially jumps left
+     * @param rightPos Accepts int which represents position if player potentially jumps right
      * @param numbers Accepts int which represents if numbers bool is true (from State class)
      **/
-    public StringBuilder[][] create(Data data, int currentPosition, int leftPosition,
-                                    int rightPosition, boolean numbers)
+    public StringBuilder[][] create(Data data, int currentPos, int leftPos,
+                                    int rightPos, boolean numbers)
     {
 
         ArrayList<Integer> heights = data.getBuildings();
@@ -54,12 +54,12 @@ public class Graphic
         for (int i = 0; i < Values.getRowLength(); i++)
         {
             int currentHeight = heights.get(i);
-            createRoof(data, i, currentHeight, currentPosition);
-            createBase(i, currentPosition, leftPosition, rightPosition, numbers, heights);
+            createRoof(data, i, currentHeight, currentPos);
+            createBase(i, currentPos, leftPos, rightPos, numbers, heights);
 
             for (int j = 0; j < Values.getMaxHeight() - 1; j++)
             {
-                createUnderAndAbove(currentPosition, currentHeight, i, j, leftPosition, rightPosition);
+                createUnderAndAbove(currentPos, currentHeight, i, j, leftPos, rightPos);
             }
         }
         return buildingString;
@@ -68,24 +68,24 @@ public class Graphic
     /**
      * Method to create base graphic (bottom of building)
      * @param i Accepts int iterator from 1st for-loop
-     * @param currentPosition Accepts int which represents current position player is on
-     * @param leftPosition Accepts int which represents position if player potentially jumps left
-     * @param rightPosition Accepts int which represents position if player potentially jumps right
+     * @param currentPos Accepts int which represents current position player is on
+     * @param leftPos Accepts int which represents position if player potentially jumps left
+     * @param rightPos Accepts int which represents position if player potentially jumps right
      * @param numbers Accepts int which represents if numbers bool is true (from State class)
      * @param heights Accepts int array-list containing building heights from Parse class
      **/
-    private void createBase(int i, int currentPosition, int leftPosition, int rightPosition,
+    private void createBase(int i, int currentPos, int leftPos, int rightPos,
                             boolean numbers, ArrayList<Integer> heights)
     {
         String baseText;
         int beginIndex = heights.get(i).toString().length();
 
 
-        if (i == currentPosition)
+        if (i == currentPos)
         {
             baseText = numbers ? SINGLE_SPACE + JUMPER_WINDOW.substring(beginIndex) : JUMPER_WINDOW;
         }
-        else if (i == leftPosition || i == rightPosition)
+        else if (i == leftPos || i == rightPos)
         {
             baseText = numbers ? SINGLE_SPACE + DARK_WINDOW.substring(beginIndex) : DARK_WINDOW;
         }
@@ -108,15 +108,15 @@ public class Graphic
      * @param data Accepts Parse object
      * @param i Accepts int iterator from 1st for loop
      * @param currentHeight Accepts int which represents the building height the player currently is on
-     * @param currentPosition Accepts int which represents current position player is on
+     * @param currentPos Accepts int which represents current position player is on
      **/
-    private void createRoof(Data data, int i, int currentHeight, int currentPosition)
+    private void createRoof(Data data, int i, int currentHeight, int currentPos)
     {
         String TOP_LEFT_ROOF = "┎";
         String TOP_RIGHT_ROOF = "┒";
         String ROOF = "─";
         final String WHOLE_ROOF = TOP_LEFT_ROOF + ROOF.repeat(INNER_BUILDING_SPACE) + TOP_RIGHT_ROOF;
-        final boolean[] CONDITIONS = {i == currentPosition, data.getFuel().get(i),
+        final boolean[] CONDITIONS = {i == currentPos, data.getFuel().get(i),
                 data.getFreeze().get(i), data.getWeb().get(i), data.getExitPortal().get(i)};
         final int HEIGHT_FORMULA = Values.getMaxHeight() - currentHeight;
         final String[] SYMBOLS_ARRAY = new String[] {Values.JUMPER, Values.FUEL_CELL, Values.FREEZE, Values.WEB, Values.PORTAL};
@@ -137,14 +137,14 @@ public class Graphic
 
     /**
      * Method to graphically fill above & between (building roof & base) in the 2d stringbuilder array
-     * @param currentPosition Accepts int which represents current position player is on.
+     * @param currentPos Accepts int which represents current position player is on.
      * @param currentHeight Accepts int which represents the building height the player currently is on
      * @param i Accepts int iterator from 1st for-loop
      * @param j Accepts int iterator from nested for-loop
-     * @param leftPosition Accepts int which represents position if player potentially jumps left
-     * @param rightPosition Accepts int which represents position if player potentially jumps right
+     * @param leftPos Accepts int which represents position if player potentially jumps left
+     * @param rightPos Accepts int which represents position if player potentially jumps right
      **/
-    private void createUnderAndAbove(int currentPosition, int currentHeight, int i, int j, int leftPosition, int rightPosition)
+    private void createUnderAndAbove(int currentPos, int currentHeight, int i, int j, int leftPos, int rightPos)
     {
         final String DEFAULT_SIDES = BUILDING_SIDE + CLEAR_WINDOW + BUILDING_SIDE;
         final String CURRENT_SIDES = BUILDING_SIDE + JUMPER_WINDOW + BUILDING_SIDE;
@@ -155,11 +155,11 @@ public class Graphic
 
         if (underBuilding - currentHeight < Values.getMaxHeight())
         {
-            if (i == currentPosition)
+            if (i == currentPos)
             {
                 buildingString[underBuilding - currentHeight][i] = new StringBuilder(CURRENT_SIDES);
             }
-            else if (i == leftPosition || i == rightPosition)
+            else if (i == leftPos || i == rightPos)
             {
                 buildingString[underBuilding - currentHeight][i] = new StringBuilder(JUMP_TO_SIDES);
             }

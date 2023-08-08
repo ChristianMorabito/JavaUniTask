@@ -1,17 +1,8 @@
-import java.util.ArrayList;
-
-public class Web
+public class Web extends Conflict
 {
-    public static void check(State state, ArrayList<Boolean> web, int currentPosition, Log log)
+    @Override
+    public void logCount(Log log)
     {
-        if (web.get(currentPosition))
-        {
-            state.setWebbed(true);
-            log.setWebCount(log.getWebCount() + 1);
-        }
+        log.setWebCount(log.getWebCount() + 1);
     }
-    public static void turnOff(State state) {
-        state.setWebbed(false);
-    }
-
 }

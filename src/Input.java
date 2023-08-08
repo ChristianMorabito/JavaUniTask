@@ -4,36 +4,29 @@ import java.util.Scanner;
 public class Input
 {
     private String name;
-    private State state;
     private int action;
 
     public Input()
     {
-        this.state = new State();
-        this.name = "Unfilled";
-        this.action = 0;
+        name = "Unfilled";
+        action = 0;
     }
 
-    public Input(State state)
+    public Input(int action)
     {
-        this.state = state;
         this.name = "Unfilled";
-        this.action = 0;
+        this.action = action;
     }
 
-    public void action(Count count, Log log, ArrayList<Boolean> freeze, ArrayList<Integer> buildingHeights, Player player)
+    public void action(State state, boolean isFrozen, Log log, ArrayList<Boolean> freeze,
+                       ArrayList<Integer> buildingHeights, Player player)
     {
-        if (state.isFrozen())
-        {
-            return;
-        }
-
         switch (action)
         {
             case 0 ->
             {
                 state.setNumbers(!state.isNumbers());
-                state.setNumLoop(true);
+                state.setNumbersLoop(true);
                 return;
             }
             case 4 ->
@@ -42,11 +35,18 @@ public class Input
                 state.setGameRunning(false);
                 state.setExit(true);
             }
-            default -> player.move(state, count, freeze, buildingHeights, action);
+            default ->
+            {
+                if (isFrozen) return;
+                player.move(state, freeze, buildingHeights, action);
+            }
         }
 
-        state.setNumLoop(false);
-        log.setTurnCount(log.getTurnCount() + 1);
+        state.setNumbersLoop(false);
+        if (action != 4)
+        {
+            log.setTurnCount(log.getTurnCount() + 1);
+        }
     }
 
     public int getAction()
@@ -59,15 +59,10 @@ public class Input
         return name;
     }
 
-    public void inputAction()
+    public void inputAction(boolean isFrozen)
     {
-        if (state.isFrozen())
-        {
-            cannotMove();
-            return;
-        }
-
         Scanner scanner = new Scanner(System.in);
+        boolean condition = true;
 
         do
         {
@@ -75,6 +70,9 @@ public class Input
             {
                 System.out.print("Number: ");
                 action = scanner.nextInt();
+                condition = isFrozen ?
+                        Validation.betweenRanges(action, 0, 0, 3, 4) :
+                        Validation.integerLength(action, 0, 4);
             }
             catch (Exception e)
             {
@@ -83,21 +81,13 @@ public class Input
             }
 
         }
-        while (Validation.integerLength(action, 0, 4));
+        while (condition);
 
     }
 
     public void setName(String name)
     {
         this.name = name;
-    }
-
-    private void cannotMove()
-    {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Press ENTER: ");
-        while (!scanner.hasNextLine());
-
     }
 
     public void usernameInput()

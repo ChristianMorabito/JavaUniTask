@@ -59,11 +59,11 @@ public class FileIO
         return data;
     }
 
-    public static void write(String writeData, String username)
+    public static void write(String fileName, String writeData, String username)
     {
         try
         {
-            FileWriter fileWriter = new FileWriter(Values.WRITE_FILE);
+            FileWriter fileWriter = new FileWriter(fileName);
             fileWriter.write("___" + username + "'s Gameplay Statistics___\n");
             fileWriter.write(writeData);
             try

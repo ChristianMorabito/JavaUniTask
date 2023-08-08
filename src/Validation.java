@@ -26,7 +26,7 @@ public class Validation {
 
     public static boolean freezeOnExit(State state, int rightPosition)
     {
-        return state.isFrozeExit() && rightPosition == Values.getEndIndex();
+        return state.isFrozenExit() && rightPosition == Values.getEndIndex();
     }
     public static int fuelShuffleModulo(int fuelShuffleCount)
     {
@@ -75,16 +75,27 @@ public class Validation {
         return false;
     }
 
-    public static boolean integerLength(int integer, int lessThan, int greaterThan)
+    public static boolean betweenRanges(int integer, int lessThan1, int greaterThan1, int lessThan2, int greaterThan2)
     {
-        if (integer < lessThan)
+        if (integer < lessThan1 || integer > greaterThan1 && integer < lessThan2 || integer > greaterThan2)
         {
-            System.out.println("Integer too LOW. Please try again.");
+            Print.inputOutOfRange();
             return true;
         }
-        else if (integer > greaterThan)
+        return false;
+    }
+
+    public static boolean innerLoop(State state)
+    {
+        return state.isOutOfRange() || state.isNumbersLoop() ||
+               state.isExitFrozeLoop() || state.isInvalidIntInput();
+    }
+
+    public static boolean integerLength(int integer, int lessThan, int greaterThan)
+    {
+        if (integer < lessThan || integer > greaterThan)
         {
-            System.out.println("Integer too HIGH. Please try again.");
+            Print.inputOutOfRange();
             return true;
         }
         return false;

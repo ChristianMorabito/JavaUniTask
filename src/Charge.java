@@ -9,6 +9,8 @@ public class Charge
 {
 
     private int amount;
+    private int height1;
+    private int height2;
 
     /**
      * Default constructor which creates the object of the class Charge.
@@ -16,15 +18,22 @@ public class Charge
     public Charge()
     {
         amount = Values.STARTING_CHARGE;
+        height2 = 0;
+        height1 = 0;
     }
 
     /**
      * Non-Default constructor which creates the object of the class Charge.
+     * @param amount                Accepts an int for beginning charge amount.
+     * @param height1              Accepts an int for first building height
+     * @param height2              Accepts an int for previous building height
      */
 
-    public Charge(int amount)
+    public Charge(int amount, int height1, int height2)
     {
         this.amount = amount;
+        this.height1 = height1;
+        this.height2 = height2;
     }
 
     /**
@@ -35,21 +44,21 @@ public class Charge
      * @param log                Accepts the Log object
      */
 
-    public void activeCheck(State state, Count count, int currentPosition, ArrayList<Boolean> fuelCells, Log log)
+    public void activeCheck(Player player, Data data, State state, int currentPosition, ArrayList<Boolean> fuelCells, Log log)
     {
         if (!state.isGameRunning())
         {
             return;
         }
-        if (count.getPrevPosition() == currentPosition)
+        if (player.getPrevPosition() == currentPosition)
         {
             amount -= 1;
         }
         else
         {
-            jumpDeplete(count.getHeight_2(), count.getHeight_1());
+            jumpDeplete(height2, height1);
         }
-        if (amount >= 0 && !count.fuelShuffleCheck() && fuelCells.get(currentPosition))
+        if (amount >= 0 && !data.fuelShuffleCheck() && fuelCells.get(currentPosition))
         {
             fuelCharge(log);
         }
@@ -78,6 +87,24 @@ public class Charge
     }
 
     /**
+     * Accessor method for height_1
+     * @return returns height_1: int
+     */
+    public int getHeight1()
+    {
+        return height1;
+    }
+
+    /**
+     * Accessor method for height_2
+     * @return returns height_2: int
+     */
+    public int getHeight2()
+    {
+        return height2;
+    }
+
+    /**
      * Increases charge, ensuring that refueling doesn't go above MAX_CHARGE.
      *
      * @param log                Accepts the Log object
@@ -90,19 +117,19 @@ public class Charge
 
     /**
      * Depletes fuel if webbed, or increases fuel if fuel respawns onto jumper.
-     * @param fuelShuffleCount   Accepts the int of fuel shuffle count
-     * @param currentPosition    Accepts the user's current position as an int
+     * @param shuffleCount       Accepts the int of fuel shuffle count
+     * @param currentPos    Accepts the user's current position as an int
      * @param fuelCells          Accepts the fuel cell array as an arraylist (Boolean)
      * @param log                Accepts the Log object
      */
-    public void passiveCheck(State state, int fuelShuffleCount, int currentPosition, ArrayList<Boolean> fuelCells, Log log)
+    public void passiveCheck(boolean isWebbed, State state, int shuffleCount, int currentPos, ArrayList<Boolean> fuelCells, Log log)
     {
-        if (Validation.fuelShuffleModulo(fuelShuffleCount) == 1 && fuelCells.get(currentPosition))
+        if (Validation.fuelShuffleModulo(shuffleCount) == 1 && fuelCells.get(currentPos))
         {
             fuelCharge(log);
         }
 
-        if (state.isWebbed())
+        if (isWebbed)
         {
             amount -= 5;
             chargeCheck(state);
@@ -118,5 +145,23 @@ public class Charge
     private void jumpDeplete(int building1, int building2)
     {
         amount -= (Math.abs(building1 - building2)) + 1;
+    }
+
+    /**
+     * Mutator method for height_1
+     * @param height1 used to update height_1: int
+     */
+    public void setHeight1(int height1)
+    {
+        this.height1 = height1;
+    }
+
+    /**
+     * Mutator method for height_2
+     * @param height2 used to update height_2: int
+     */
+    public void setHeight2(int height2)
+    {
+        this.height2 = height2;
     }
 }

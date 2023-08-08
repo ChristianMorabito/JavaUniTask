@@ -6,19 +6,22 @@ public class Player
     private int currentPos;
     private int leftPos;
     private int rightPos;
+    private int prevPosition;
 
     public Player()
     {
         currentPos = 0;
         leftPos = 0;
         rightPos = 0;
+        prevPosition = 0;
     }
 
-    public Player(int currentPos, int leftPos, int rightPos)
+    public Player(int currentPos, int leftPos, int rightPos, int prevPosition)
     {
         this.currentPos = currentPos;
         this.leftPos = leftPos;
         this.rightPos = rightPos;
+        this.prevPosition = prevPosition;
     }
     public int getCurrentPos()
     {
@@ -36,7 +39,16 @@ public class Player
         return rightPos;
     }
 
-    public void move(State state, Count count, ArrayList<Boolean> freeze, ArrayList<Integer> buildingHeights, int input)
+    /**
+     * Accessor method for previousPosition
+     * @return returns previousPosition: int
+     */
+    public int getPrevPosition()
+    {
+        return prevPosition;
+    }
+
+    public void move(State state, ArrayList<Boolean> freeze, ArrayList<Integer> buildingHeights, int input)
     {
         int temp = currentPos;
         switch (input)
@@ -51,7 +63,7 @@ public class Player
                         state.setExitFrozeLoop(true);
                         return;
                     }
-                    count.setPrevPosition(currentPos);
+                    prevPosition = currentPos;
                 }
                 else
                 {
@@ -64,7 +76,7 @@ public class Player
                 temp -= buildingHeights.get(currentPos);
                 if (temp >= Values.START_INDEX)
                 {
-                    count.setPrevPosition(currentPos);
+                    prevPosition = currentPos;
                 }
                 else
                 {
@@ -75,7 +87,7 @@ public class Player
             case 3 ->
             {
                 state.setSkipTurn(true);
-                count.setPrevPosition(currentPos);
+                prevPosition = currentPos;
             }
             default ->
             {
@@ -114,6 +126,15 @@ public class Player
         temp -= leftHeight.get(currentPos);
         temp = temp >= Values.START_INDEX ? temp : -1;
         this.leftPos = temp;
+    }
+
+    /**
+     * Mutator method for previousPosition
+     * @param prevPosition used to update the previousPosition: int
+     */
+    public void setPrevPosition(int prevPosition)
+    {
+        this.prevPosition = prevPosition;
     }
 
     public void setRightPos(ArrayList<Integer> buildingHeights)

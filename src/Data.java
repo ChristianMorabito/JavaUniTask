@@ -7,6 +7,7 @@ public class Data
     private ArrayList<Boolean> exitPortal;
     private ArrayList<Boolean> originalFuel;
     private ArrayList<Boolean> fuel;
+    private int fuelMove;
     private ArrayList<Boolean> web;
     private ArrayList<Boolean> freeze;
 
@@ -18,15 +19,17 @@ public class Data
         fuel = new ArrayList<>();
         web = new ArrayList<>();
         freeze = new ArrayList<>();
+        fuelMove = 0;
 
     }
 
-    public Data(ArrayList<Boolean> fuel)
+    public Data(ArrayList<Boolean> fuel, int fuelMove)
     {
         this.buildingHeights = new ArrayList<>();
         this.exitPortal = new ArrayList<>();
         this.originalFuel = new ArrayList<>();
         this.fuel = fuel;
+        this.fuelMove = fuelMove;
         this.web = new ArrayList<>();
         this.freeze = new ArrayList<>();
     }
@@ -51,20 +54,40 @@ public class Data
             fuel.set(currentPosition, false);
         }
     }
+    
+    /**
+     * Checks if fuelShuffleCount is modulo 3 or not.
+     * @return  Returns a boolean that determines if the fuel array should be shuffled
+     * or not.
+     */
+    public boolean fuelShuffleCheck()
+    {
+        return fuelMove >= 0 &&
+                Validation.fuelShuffleModulo(fuelMove) == 0;
+    }
+    
+    public ArrayList<Integer> getBuildings()
+    {
+        return buildingHeights;
+    }
 
     public ArrayList<Boolean> getExitPortal()
     {
         return exitPortal;
     }
 
-    public ArrayList<Integer> getBuildings()
-    {
-        return buildingHeights;
-    }
-
     public ArrayList<Boolean> getFuel()
     {
         return fuel;
+    }
+
+    /**
+     * Accessor method for fuelShuffleCount
+     * @return returns fuelShuffleCount: int
+     */
+    public int getFuelMove()
+    {
+        return fuelMove;
     }
 
     public ArrayList<Boolean> getFreeze()
@@ -112,9 +135,9 @@ public class Data
         this.web = web;
     }
 
-    private void shiftWebOrFreeze(int sharedIndex)
+    private void shift(int sharedIndex)
     {
-        if (sharedIndex > Values.START_INDEX && sharedIndex <= Values.getEndIndex())
+        if (sharedIndex > Values.START_INDEX)
         {
             web.set(web.indexOf(true), false);
             web.set(sharedIndex - 1, true);
@@ -127,22 +150,31 @@ public class Data
 
     }
 
-    public void shuffle(Count count)
+    /**
+     * Mutator method for fuelShuffleCount
+     * @param fuelMove used to update the fuelShuffleCount: int, through incrementation.
+     */
+    public void setFuelMove(int fuelMove)
     {
-        int safeStartIndex = count.getFuelMove() > 0 ? 0 : 1;
+        this.fuelMove = fuelMove;
+    }
+
+    public void shuffle()
+    {
+        int safeStartIndex = fuelMove > 0 ? 0 : 1;
         Collections.shuffle(buildingHeights);
-        Collections.shuffle(web.subList(safeStartIndex, Values.getRowLength()));
+        Collections.shuffle(web.subList(safeStartIndex, Values.getRowLength() - 1)); // web cannot land on exit
         Collections.shuffle(freeze.subList(safeStartIndex, Values.getRowLength()));
         if (web.indexOf(true) == freeze.indexOf(true))
         {
-            shiftWebOrFreeze(web.indexOf(true));
+            shift(web.indexOf(true));
         }
 
-        if (count.fuelShuffleCheck())
+        if (fuelShuffleCheck())
         {
             fuel = new ArrayList<>(originalFuel);
             Collections.shuffle(fuel.subList(safeStartIndex, Values.getEndIndex()));
         }
-        count.setFuelMove(count.getFuelMove() + 1);
+        fuelMove++;
     }
 }
