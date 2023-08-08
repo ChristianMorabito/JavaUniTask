@@ -41,8 +41,9 @@ public class Jumper
                 {
                     Print.inGameAll(ice.isStatus(), web.isStatus(), charge, state, data, player);
                     data.fuelCollect(player.getCurrentPos());
-                    input.inputAction(ice.isStatus());
+                    input.inputAction(ice.isStatus(), state);
                     input.action(state, ice.isStatus(), log, data.getFreeze(), data.getBuildings(), player);
+                    //TODO: FIX BUG WHERE STUCK IN INFINITE LOOP WHEN FROZEN (IF PRESSING 0 FIRST)
                 }
             }
             while (Validation.innerLoop(state));

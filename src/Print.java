@@ -32,7 +32,7 @@ public class Print
 
     public static void action(boolean isFrozen, State state, int rightPos)
     {
-        String turnLost = "!!YOU HAVE LOST A TURN!!";
+        String turnLost = "YOU HAVE LOST A TURN!!";
         String legend_1 = "┎-------LEGEND-------┒";
         String legend_2 = "│  " + Values.JUMPER + "    Jumper       │";
         String legend_3 = "│  " + Values.PORTAL + "    Exit Portal  │";
@@ -94,7 +94,8 @@ public class Print
                 return;
             }
             webbedString = webbed ? webbedString : "";
-            System.out.println("Oh no, " + name + "! You " + webbedString + "drained your fuel! You remain trapped in the Nowhere Dimension!! ");
+            System.out.println("Oh no, " + name + "! You " + webbedString +
+                    "drained your fuel! You remain trapped in the Nowhere Dimension!! ");
         }
         System.out.println("--GAME OVER--");
     }
@@ -155,6 +156,7 @@ public class Print
     {
         // clearScreen();
         chargeAmount(charge.getAmount(), state.isNumbers());
+        invalidInput(state);
         ice(isFrozen);
         web(isWebbed);
         frozenExit(state, player.getRightPos());
@@ -166,15 +168,14 @@ public class Print
                 player.getRightPos(), state.isNumbers());
         action(isFrozen, state, player.getRightPos());
     }
-    public static void invalidInput()
+    public static void invalidInput(State state)
     {
-        System.out.println("\uD83D\uDEA8 Invalid Input! Retry \uD83D\uDEA8");
+        if (state.isInvalidInput())
+        {
+            System.out.println("\uD83D\uDEA8 INVALID INPUT! Retry \uD83D\uDEA8");
+        }
     }
 
-    public static void inputOutOfRange()
-    {
-        System.out.println("\uD83D\uDEA8 Input Out of Range! Retry \uD83D\uDEA8");
-    }
 
     public static void outOfRange(State state)
     {

@@ -86,12 +86,11 @@ public class Player
             }
             case 3 ->
             {
-                state.setSkipTurn(true);
                 prevPosition = currentPos;
             }
             default ->
             {
-                Print.invalidInput();
+                Print.invalidInput(state);
                 System.exit(-1);
             }
         }

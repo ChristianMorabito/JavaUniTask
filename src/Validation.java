@@ -77,28 +77,18 @@ public class Validation {
 
     public static boolean betweenRanges(int integer, int lessThan1, int greaterThan1, int lessThan2, int greaterThan2)
     {
-        if (integer < lessThan1 || integer > greaterThan1 && integer < lessThan2 || integer > greaterThan2)
-        {
-            Print.inputOutOfRange();
-            return true;
-        }
-        return false;
+        return integer < lessThan1 || integer > greaterThan1 && integer < lessThan2 || integer > greaterThan2;
     }
 
     public static boolean innerLoop(State state)
     {
         return state.isOutOfRange() || state.isNumbersLoop() ||
-               state.isExitFrozeLoop() || state.isInvalidIntInput();
+               state.isExitFrozeLoop() || state.isInvalidInput();
     }
 
     public static boolean integerLength(int integer, int lessThan, int greaterThan)
     {
-        if (integer < lessThan || integer > greaterThan)
-        {
-            Print.inputOutOfRange();
-            return true;
-        }
-        return false;
+        return integer < lessThan || integer > greaterThan;
     }
 
 }

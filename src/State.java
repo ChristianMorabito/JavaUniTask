@@ -10,8 +10,7 @@ public class State
     private boolean numbersLoop;
     private boolean exitFrozeLoop;
     private boolean outOfRange;
-    private boolean skipTurn;
-    private boolean invalidIntInput;
+    private boolean invalidInput;
 
     public State()
     {
@@ -20,25 +19,23 @@ public class State
         numbers = false;
         numbersLoop = false;
         outOfRange = false;
-        skipTurn = false;
         frozenExit = false;
         exitFrozeLoop = false;
-        invalidIntInput = false;
+        invalidInput = false;
     }
 
-    public State(boolean outOfRange, boolean gameRunning, boolean skipTurn,
-                 boolean exit, boolean numbers, boolean numbersLoop, boolean frozenExit,
-                 boolean exitFrozeLoop, boolean invalidIntInput)
+    public State(boolean outOfRange, boolean gameRunning, boolean exit, boolean numbers,
+                 boolean numbersLoop, boolean frozenExit,
+                 boolean exitFrozeLoop, boolean invalidInput)
     {
         this.outOfRange = outOfRange;
         this.gameRunning = gameRunning;
-        this.skipTurn = skipTurn;
         this.exit = exit;
         this.numbers = numbers;
         this.numbersLoop = numbersLoop;
         this.frozenExit = frozenExit;
         this.exitFrozeLoop = exitFrozeLoop;
-        this.invalidIntInput = invalidIntInput;
+        this.invalidInput = invalidInput;
     }
 
     public void exitCheck(int currentPosition, boolean isFrozen)
@@ -75,9 +72,9 @@ public class State
         return gameRunning;
     }
 
-    public boolean isInvalidIntInput()
+    public boolean isInvalidInput()
     {
-        return invalidIntInput;
+        return invalidInput;
     }
 
     public boolean isNumbers()
@@ -93,11 +90,6 @@ public class State
     public boolean isOutOfRange()
     {
         return outOfRange;
-    }
-
-    public boolean isSkipTurn()
-    {
-        return skipTurn;
     }
 
     public void setExit(boolean exit)
@@ -120,9 +112,9 @@ public class State
         this.gameRunning = gameRunning;
     }
 
-    public void setInvalidIntInput(boolean invalidIntInput)
+    public void setInvalidInput(boolean invalidInput)
     {
-        this.invalidIntInput = invalidIntInput;
+        this.invalidInput = invalidInput;
     }
 
     public void setNumbers(boolean numbers)
@@ -138,11 +130,6 @@ public class State
     public void setOutOfRange(boolean outOfRange)
     {
         this.outOfRange = outOfRange;
-    }
-
-    public void setSkipTurn(boolean skipTurn)
-    {
-        this.skipTurn = skipTurn;
     }
 
 }

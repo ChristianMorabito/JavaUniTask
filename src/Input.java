@@ -21,6 +21,10 @@ public class Input
     public void action(State state, boolean isFrozen, Log log, ArrayList<Boolean> freeze,
                        ArrayList<Integer> buildingHeights, Player player)
     {
+        if (state.isInvalidInput())
+        {
+            return;
+        }
         switch (action)
         {
             case 0 ->
@@ -37,7 +41,10 @@ public class Input
             }
             default ->
             {
-                if (isFrozen) return;
+                if (isFrozen)
+                {
+                    return;
+                }
                 player.move(state, freeze, buildingHeights, action);
             }
         }
@@ -59,29 +66,23 @@ public class Input
         return name;
     }
 
-    public void inputAction(boolean isFrozen)
+    public void inputAction(boolean isFrozen, State state)
     {
         Scanner scanner = new Scanner(System.in);
         boolean condition = true;
 
-        do
+        try
         {
-            try
-            {
-                System.out.print("Number: ");
-                action = scanner.nextInt();
-                condition = isFrozen ?
-                        Validation.betweenRanges(action, 0, 0, 3, 4) :
+            System.out.print("Number: ");
+            action = scanner.nextInt();
+            condition = isFrozen ? Validation.betweenRanges(action, 0, 0, 3, 4) :
                         Validation.integerLength(action, 0, 4);
-            }
-            catch (Exception e)
-            {
-                Print.invalidInput();
-                scanner.next();
-            }
-
         }
-        while (condition);
+        catch (Exception e)
+        {
+            scanner.next();
+        }
+        state.setInvalidInput(condition);
 
     }
 
