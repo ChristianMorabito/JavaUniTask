@@ -15,11 +15,12 @@ public final class Values
     public static final int MIN_ROW_LENGTH = 6;
     public static final int STARTING_CHARGE = 10;
     public static final int MAX_CHARGE = 20;
+    public static final int MIN_CHARGE = 1;
     private static int maxHeight = -1;
     private static int rowLength = -1;
     private static int endIndex = -1;
 
-    final public static int BUILDING_WIDTH = 8; // cannot be less than 7
+    final public static int BUILDING_WIDTH = 8; // should not be less than 7
     final public static String PORTAL =    "@";
     final public static String JUMPER =    "█";
     final public static String FUEL_CELL = "$";

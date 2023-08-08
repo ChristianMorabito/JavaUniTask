@@ -22,19 +22,17 @@ public class Jumper
         data.define(FileIO.read(Values.READ_FILE));
         Print.clearScreen();
         Print.title();
-        input.usernameInput();
+//        input.usernameInput();
 
         while (state.isGameRunning())
         {
-            web.setStatus(false);
             data.shuffle();
             web.check(data.getWeb(), player.getCurrentPos(), log);
-            player.set(data.getBuildings());
-            charge.passiveCheck(web.isStatus(), state, data.getFuelMove(), player.getCurrentPos(), data.getFuel(), log);
+            player.setPotentialPositions(data.getBuildings());
+            charge.passiveCheck(data, web.isStatus(), state, player.getCurrentPos(), log);
             charge.setHeight1(data.getBuildings().get(player.getCurrentPos()));
             ice.check(data.getFreeze(), player.getCurrentPos(), log);
             state.freezeOnExitCheck(data.getFreeze());
-            state.exitCheck(player.getCurrentPos(), ice.isStatus());
             do
             {
                 if (state.isGameRunning())
@@ -42,16 +40,15 @@ public class Jumper
                     Print.inGameAll(ice.isStatus(), web.isStatus(), charge, state, data, player);
                     data.fuelCollect(player.getCurrentPos());
                     input.inputAction(ice.isStatus(), state);
-                    input.action(state, ice.isStatus(), log, data.getFreeze(), data.getBuildings(), player);
-                    //TODO: FIX BUG WHERE STUCK IN INFINITE LOOP WHEN FROZEN (IF PRESSING 0 FIRST)
+                    input.action(state, ice, log, data.getFreeze(), data.getBuildings(), player);
                 }
             }
             while (Validation.innerLoop(state));
-            ice.setStatus(false);
             charge.setHeight2(data.getBuildings().get(player.getCurrentPos()));
             charge.activeCheck(player, data, state, player.getCurrentPos(), data.getFuel(), log);
+            state.wonGameCheck(player.getCurrentPos(), charge.getAmount());
         }
-        Print.exit(charge.getAmount(), input.getName(), state.isExit(), web.isStatus());
+        Print.exit(charge.getAmount(), state.isWonGame(), input.getName(), state.isExit(), web.isStatus());
         FileIO.write(Values.WRITE_FILE, log.display(), input.getName());
     }
 }

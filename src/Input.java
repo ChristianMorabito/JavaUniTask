@@ -18,7 +18,7 @@ public class Input
         this.action = action;
     }
 
-    public void action(State state, boolean isFrozen, Log log, ArrayList<Boolean> freeze,
+    public void action(State state, Ice ice, Log log, ArrayList<Boolean> freeze,
                        ArrayList<Integer> buildingHeights, Player player)
     {
         if (state.isInvalidInput())
@@ -41,10 +41,7 @@ public class Input
             }
             default ->
             {
-                if (isFrozen)
-                {
-                    return;
-                }
+                ice.setStatus(false);
                 player.move(state, freeze, buildingHeights, action);
             }
         }

@@ -39,18 +39,18 @@ public class Charge
     /**
      * Depletes fuel if user jumped/skipped turn, or increases fuel if user's move landed them on fuel.
      *
-     * @param currentPosition    Accepts the user's current position as an int
+     * @param currentPos    Accepts the user's current position as an int
      * @param fuelCells          Accepts the fuel cell array as an arraylist (Boolean)
      * @param log                Accepts the Log object
      */
 
-    public void activeCheck(Player player, Data data, State state, int currentPosition, ArrayList<Boolean> fuelCells, Log log)
+    public void activeCheck(Player player, Data data, State state, int currentPos, ArrayList<Boolean> fuelCells, Log log)
     {
         if (!state.isGameRunning())
         {
             return;
         }
-        if (player.getPrevPosition() == currentPosition)
+        if (player.getPreviousPos() == currentPos)
         {
             amount -= 1;
         }
@@ -58,7 +58,7 @@ public class Charge
         {
             jumpDeplete(height2, height1);
         }
-        if (amount >= 0 && !data.fuelShuffleCheck() && fuelCells.get(currentPosition))
+        if (amount >= 0 && !data.fuelShuffleCheck() && fuelCells.get(currentPos))
         {
             fuelCharge(log);
         }
@@ -71,7 +71,7 @@ public class Charge
      */
     private void chargeCheck(State state)
     {
-        if (amount < 1)
+        if (amount < Values.MIN_CHARGE)
         {
             state.setGameRunning(false);
         }
@@ -115,16 +115,9 @@ public class Charge
         log.setFuelCount(log.getFuelCount() + 1);
     }
 
-    /**
-     * Depletes fuel if webbed, or increases fuel if fuel respawns onto jumper.
-     * @param shuffleCount       Accepts the int of fuel shuffle count
-     * @param currentPos    Accepts the user's current position as an int
-     * @param fuelCells          Accepts the fuel cell array as an arraylist (Boolean)
-     * @param log                Accepts the Log object
-     */
-    public void passiveCheck(boolean isWebbed, State state, int shuffleCount, int currentPos, ArrayList<Boolean> fuelCells, Log log)
+    public void passiveCheck(Data data, boolean isWebbed, State state, int currentPos, Log log)
     {
-        if (Validation.fuelShuffleModulo(shuffleCount) == 1 && fuelCells.get(currentPos))
+        if (Validation.fuelShuffleModulo(data.getFuelMove()) == 1 && data.getFuel().get(currentPos))
         {
             fuelCharge(log);
         }

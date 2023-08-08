@@ -125,6 +125,15 @@ public class Data
         this.fuel = fuel;
     }
 
+    /**
+     * Mutator method for fuelShuffleCount
+     * @param fuelMove used to update the fuelShuffleCount: int, through incrementation.
+     */
+    public void setFuelMove(int fuelMove)
+    {
+        this.fuelMove = fuelMove;
+    }
+
     public void setOriginalFuel(ArrayList<Boolean> originalFuel)
     {
         this.originalFuel = originalFuel;
@@ -150,22 +159,13 @@ public class Data
 
     }
 
-    /**
-     * Mutator method for fuelShuffleCount
-     * @param fuelMove used to update the fuelShuffleCount: int, through incrementation.
-     */
-    public void setFuelMove(int fuelMove)
-    {
-        this.fuelMove = fuelMove;
-    }
-
     public void shuffle()
     {
         int safeStartIndex = fuelMove > 0 ? 0 : 1;
         Collections.shuffle(buildingHeights);
         Collections.shuffle(web.subList(safeStartIndex, Values.getRowLength() - 1)); // web cannot land on exit
         Collections.shuffle(freeze.subList(safeStartIndex, Values.getRowLength()));
-        if (web.indexOf(true) == freeze.indexOf(true))
+        if (web.indexOf(true) == freeze.indexOf(true) && web.contains(true))
         {
             shift(web.indexOf(true));
         }

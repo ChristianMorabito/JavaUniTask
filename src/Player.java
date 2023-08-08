@@ -43,7 +43,7 @@ public class Player
      * Accessor method for previousPosition
      * @return returns previousPosition: int
      */
-    public int getPrevPosition()
+    public int getPreviousPos()
     {
         return prevPosition;
     }
@@ -101,7 +101,7 @@ public class Player
 
 
 
-    public void set(ArrayList<Integer> buildingHeights)
+    public void setPotentialPositions(ArrayList<Integer> buildingHeights)
     {
         int temp = currentPos;
         temp -= buildingHeights.get(currentPos);

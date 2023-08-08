@@ -83,19 +83,23 @@ public class Print
         System.out.flush();
     }
 
-    public static void exit(int amount, String name, boolean exit, boolean webbed)
+    public static void exit(int charge, boolean wonGame, String name, boolean exit, boolean webbed)
     {
         if (!exit)
         {
-            String webbedString = "were WEBBED which ";
-            if (amount > 0)
+            if (wonGame)
             {
-                System.out.println("Congratulations, " + name + "! You have escaped the Nowhere Dimension!!");
-                return;
+                int chargePercentage = charge / Values.MAX_CHARGE;
+                String emphasis = charge < 2 ? "ONLY " : "";
+                System.out.println("Congratulations, " + name + "! You have escaped the Nowhere Dimension with "
+                        + emphasis + charge + "% charge remaining!!");
             }
-            webbedString = webbed ? webbedString : "";
-            System.out.println("Oh no, " + name + "! You " + webbedString +
-                    "drained your fuel! You remain trapped in the Nowhere Dimension!! ");
+            else
+            {
+                String webbedString = webbed ? "were WEBBED which " : "";
+                System.out.println("Oh no, " + name + "! You " + webbedString +
+                        "drained your fuel! You remain trapped in the Nowhere Dimension!! ");
+            }
         }
         System.out.println("--GAME OVER--");
     }

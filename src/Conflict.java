@@ -7,12 +7,16 @@ public abstract class Conflict
 
     public abstract void logCount(Log log);
 
-    public void check(ArrayList<Boolean> conflict, int currentPosition, Log log)
+    public void check(ArrayList<Boolean> conflictArray, int currentPosition, Log log)
     {
-        if (conflict.get(currentPosition))
+        if (conflictArray.get(currentPosition))
         {
             status = true;
             logCount(log);
+        }
+        else
+        {
+            status = false;
         }
     }
 

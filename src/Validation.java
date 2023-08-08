@@ -33,6 +33,11 @@ public class Validation {
         return fuelShuffleCount % Values.FUEL_UPDATE_COUNT;
     }
 
+    public static boolean onExit(int currentPos)
+    {
+        return currentPos == Values.getEndIndex();
+    }
+
     public static void rowLengthCheck() {
         if (Values.getRowLength() < Values.MIN_ROW_LENGTH) {
             System.out.println("Not enough rows in " + Values.READ_FILE);

@@ -11,6 +11,7 @@ public class State
     private boolean exitFrozeLoop;
     private boolean outOfRange;
     private boolean invalidInput;
+    private boolean wonGame;
 
     public State()
     {
@@ -22,11 +23,12 @@ public class State
         frozenExit = false;
         exitFrozeLoop = false;
         invalidInput = false;
+        wonGame = false;
     }
 
     public State(boolean outOfRange, boolean gameRunning, boolean exit, boolean numbers,
                  boolean numbersLoop, boolean frozenExit,
-                 boolean exitFrozeLoop, boolean invalidInput)
+                 boolean exitFrozeLoop, boolean invalidInput, boolean wonGame)
     {
         this.outOfRange = outOfRange;
         this.gameRunning = gameRunning;
@@ -36,13 +38,15 @@ public class State
         this.frozenExit = frozenExit;
         this.exitFrozeLoop = exitFrozeLoop;
         this.invalidInput = invalidInput;
+        this.wonGame = wonGame;
     }
 
-    public void exitCheck(int currentPosition, boolean isFrozen)
+    public void wonGameCheck(int currentPos, int charge)
     {
-        if (currentPosition == Values.getEndIndex() && !isFrozen)
+        if (Validation.onExit(currentPos) && charge >= Values.MIN_CHARGE - 1)
         {
             gameRunning = false;
+            wonGame = true;
         }
     }
 
@@ -92,6 +96,11 @@ public class State
         return outOfRange;
     }
 
+    public boolean isWonGame()
+    {
+        return wonGame;
+    }
+
     public void setExit(boolean exit)
     {
         this.exit = exit;
@@ -132,4 +141,8 @@ public class State
         this.outOfRange = outOfRange;
     }
 
+    public void setWonGame(boolean wonGame)
+    {
+        this.wonGame = wonGame;
+    }
 }
