@@ -32,7 +32,7 @@ public class Print
 
     public static void action(boolean isFrozen, InputFlag inputFlag, int rightPos)
     {
-        final String limitedMovement = "LIMITED MOVEMENT ❗❗";
+        final String limitedMovement = "LIMITED MOVEMENT!!";
         final String legend_1 = "┎-------LEGEND-------┒";
         final String legend_2 = "│  " + Values.JUMPER + "    Jumper       │";
         final String legend_3 = "│  " + Values.PORTAL + "    Exit Portal  │";
@@ -41,20 +41,20 @@ public class Print
         final String legend_6 = "│  " + Values.FREEZE + "    Freeze       │";
         final String legend_7 = "└--------------------┘";
         final String standard = "Enter a number between 0 & 4:";
-        final String input_0 = "0) Numbers    ✅";
+        final String input_0 = "0) Numbers";
         final String input_1 = "1) Jump RIGHT ✅";
-        final String froze_1 = "1̶)̶ ̶J̶u̶m̶p̶ ̶R̶I̶G̶H̶T̶ ❌";
+        final String froze_1 = "1) Jump RIGHT ❌";
         final String input_2 = "2) Jump LEFT  ✅";
-        final String froze_2 = "2̶)̶ ̶J̶u̶m̶p̶ ̶L̶E̶F̶T̶  ❌";
+        final String froze_2 = "2) Jump LEFT  ❌";
         final String input_3 = "3) Skip Turn  ✅";
-        final String input_4 = "4) Exit       ✅";
+        final String input_4 = "4) Exit";
 
         System.out.println();
         System.out.println(legend_1 + " " + (Validation.freezeOnExit(inputFlag, rightPos) || isFrozen ?
-                                             limitedMovement : standard));
+                limitedMovement : standard));
         System.out.println(legend_2 + " " + input_0);
         System.out.println(legend_3 + " " + (Validation.freezeOnExit(inputFlag, rightPos) || isFrozen ?
-                                             froze_1 : input_1));
+                froze_1 : input_1));
         System.out.println(legend_4 + " " + (isFrozen ? froze_2 : input_2));
         System.out.println(legend_5 + " " + input_3);
         System.out.println(legend_6 + " " + input_4);
@@ -62,13 +62,6 @@ public class Print
 
     }
 
-    public static void cannotJumpFrozenExit(InputFlag inputFlag)
-    {
-        if (inputFlag.isExitFrozeLoop())
-        {
-            System.out.println("\uD83D\uDEA8 INVALID INPUT! Retry \uD83D\uDEA8");
-        }
-    }
     public static void chargeAmount(int amount, boolean numbers)
     {
         String chargeNumber = numbers ? String.valueOf(amount) : "";
@@ -161,14 +154,13 @@ public class Print
 
     public static void inGameAll(boolean isFrozen, boolean isWebbed, Charge charge, InputFlag inputFlag, Data data, Player player)
     {
-        // clearScreen();
+        clearScreen();
         chargeAmount(charge.getAmount(), inputFlag.isNumbers());
         invalidInput(inputFlag);
         ice(isFrozen);
         web(isWebbed);
         frozenExit(inputFlag, player.getRightPos());
         outOfRange(inputFlag);
-//        cannotJumpFrozenExit(inputFlag);
         fuelRespawning(data.fuelShuffleCheck());
         fuelCollected(data.getFuel(), player.getCurrentPos(), charge.getAmount());
         graphic(data, player.getCurrentPos(), player.getLeftPos(),
@@ -198,4 +190,3 @@ public class Print
         }
     }
 }
-

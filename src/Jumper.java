@@ -34,6 +34,7 @@ public class Jumper
             charge.setHeight1(data.getBuildings().get(player.getCurrentPos()));
             ice.check(data.getFreeze(), player.getCurrentPos(), log);
             inputFlag.freezeOnExitCheck(data.getFreeze());
+
             do
             {
                 if (mainFlag.isGameRunning())
@@ -45,6 +46,7 @@ public class Jumper
                 }
             }
             while (Validation.innerLoop(inputFlag));
+
             charge.setHeight2(data.getBuildings().get(player.getCurrentPos()));
             charge.activeCheck(player, data, mainFlag, player.getCurrentPos(), data.getFuel(), log);
             mainFlag.wonGameCheck(player.getCurrentPos(), charge.getAmount());
