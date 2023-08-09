@@ -44,9 +44,9 @@ public class Charge
      * @param log                Accepts the Log object
      */
 
-    public void activeCheck(Player player, Data data, State state, int currentPos, ArrayList<Boolean> fuelCells, Log log)
+    public void activeCheck(Player player, Data data, MainFlag mainFlag, int currentPos, ArrayList<Boolean> fuelCells, Log log)
     {
-        if (!state.isGameRunning())
+        if (!mainFlag.isGameRunning())
         {
             return;
         }
@@ -62,18 +62,18 @@ public class Charge
         {
             fuelCharge(log);
         }
-        chargeCheck(state);
+        chargeCheck(mainFlag);
     }
 
     /**
      * Checks if charge is above 1. If charge is not above 1, then 'gameRunning' (in State class)
      * is set to false.
      */
-    private void chargeCheck(State state)
+    private void chargeCheck(MainFlag mainFlag)
     {
         if (amount < Values.MIN_CHARGE)
         {
-            state.setGameRunning(false);
+            mainFlag.setGameRunning(false);
         }
     }
 
@@ -115,7 +115,7 @@ public class Charge
         log.setFuelCount(log.getFuelCount() + 1);
     }
 
-    public void passiveCheck(Data data, boolean isWebbed, State state, int currentPos, Log log)
+    public void passiveCheck(Data data, boolean isWebbed, MainFlag mainFlag, int currentPos, Log log)
     {
         if (Validation.fuelShuffleModulo(data.getFuelMove()) == 1 && data.getFuel().get(currentPos))
         {
@@ -125,7 +125,7 @@ public class Charge
         if (isWebbed)
         {
             amount -= 5;
-            chargeCheck(state);
+            chargeCheck(mainFlag);
         }
     }
 

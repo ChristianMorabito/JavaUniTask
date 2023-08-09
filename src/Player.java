@@ -48,7 +48,7 @@ public class Player
         return prevPosition;
     }
 
-    public void move(State state, ArrayList<Boolean> freeze, ArrayList<Integer> buildingHeights, int input)
+    public void move(InputFlag inputFlag, ArrayList<Boolean> freeze, ArrayList<Integer> buildingHeights, int input)
     {
         int temp = currentPos;
         switch (input)
@@ -60,14 +60,14 @@ public class Player
                 {
                     if (temp == Values.getEndIndex() && freeze.get(Values.getEndIndex()))
                     {
-                        state.setExitFrozeLoop(true);
+                        inputFlag.setExitFrozeLoop(true);
                         return;
                     }
                     prevPosition = currentPos;
                 }
                 else
                 {
-                    state.setOutOfRange(true);
+                    inputFlag.setOutOfRange(true);
                     return;
                 }
             }
@@ -80,7 +80,7 @@ public class Player
                 }
                 else
                 {
-                    state.setOutOfRange(true);
+                    inputFlag.setOutOfRange(true);
                     return;
                 }
             }
@@ -90,13 +90,13 @@ public class Player
             }
             default ->
             {
-                Print.invalidInput(state);
+                Print.invalidInput(inputFlag);
                 System.exit(-1);
             }
         }
         currentPos = temp;
-        state.setOutOfRange(false);
-        state.setExitFrozeLoop(false);
+        inputFlag.setOutOfRange(false);
+        inputFlag.setExitFrozeLoop(false);
     }
 
 

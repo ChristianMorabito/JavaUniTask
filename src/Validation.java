@@ -24,9 +24,9 @@ public class Validation {
         }
     }
 
-    public static boolean freezeOnExit(State state, int rightPosition)
+    public static boolean freezeOnExit(InputFlag inputFlag, int rightPosition)
     {
-        return state.isFrozenExit() && rightPosition == Values.getEndIndex();
+        return inputFlag.isFrozenExit() && rightPosition == Values.getEndIndex();
     }
     public static int fuelShuffleModulo(int fuelShuffleCount)
     {
@@ -85,10 +85,10 @@ public class Validation {
         return integer < lessThan1 || integer > greaterThan1 && integer < lessThan2 || integer > greaterThan2;
     }
 
-    public static boolean innerLoop(State state)
+    public static boolean innerLoop(InputFlag inputFlag)
     {
-        return state.isOutOfRange() || state.isNumbersLoop() ||
-               state.isExitFrozeLoop() || state.isInvalidInput();
+        return inputFlag.isOutOfRange() || inputFlag.isNumbersLoop() ||
+                inputFlag.isExitFrozeLoop() || inputFlag.isInvalidInput();
     }
 
     public static boolean integerLength(int integer, int lessThan, int greaterThan)

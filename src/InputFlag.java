@@ -1,64 +1,38 @@
 import java.util.ArrayList;
 
-public class State
+public class InputFlag
 {
-
-    private boolean exit;
     private boolean frozenExit;
-    private boolean gameRunning;
     private boolean numbers;
     private boolean numbersLoop;
     private boolean exitFrozeLoop;
     private boolean outOfRange;
     private boolean invalidInput;
-    private boolean wonGame;
 
-    public State()
+    public InputFlag()
     {
-        exit = false;
-        gameRunning = true;
+        frozenExit = false;
         numbers = false;
         numbersLoop = false;
-        outOfRange = false;
-        frozenExit = false;
         exitFrozeLoop = false;
+        outOfRange = false;
         invalidInput = false;
-        wonGame = false;
     }
 
-    public State(boolean outOfRange, boolean gameRunning, boolean exit, boolean numbers,
-                 boolean numbersLoop, boolean frozenExit,
-                 boolean exitFrozeLoop, boolean invalidInput, boolean wonGame)
+    public InputFlag(boolean frozenExit, boolean numbers, boolean numbersLoop,
+                     boolean exitFrozeLoop, boolean outOfRange, boolean invalidInput)
     {
-        this.outOfRange = outOfRange;
-        this.gameRunning = gameRunning;
-        this.exit = exit;
+        this.frozenExit = frozenExit;
         this.numbers = numbers;
         this.numbersLoop = numbersLoop;
-        this.frozenExit = frozenExit;
         this.exitFrozeLoop = exitFrozeLoop;
+        this.outOfRange = outOfRange;
         this.invalidInput = invalidInput;
-        this.wonGame = wonGame;
-    }
-
-    public void wonGameCheck(int currentPos, int charge)
-    {
-        if (Validation.onExit(currentPos) && charge >= Values.MIN_CHARGE - 1)
-        {
-            gameRunning = false;
-            wonGame = true;
-        }
     }
 
     public void freezeOnExitCheck(ArrayList<Boolean> freeze)
     {
         frozenExit = freeze.get(Values.getEndIndex());
-
-    }
-
-    public boolean isExit()
-    {
-        return exit;
     }
 
     public boolean isExitFrozeLoop()
@@ -69,11 +43,6 @@ public class State
     public boolean isFrozenExit()
     {
         return frozenExit;
-    }
-
-    public boolean isGameRunning()
-    {
-        return gameRunning;
     }
 
     public boolean isInvalidInput()
@@ -95,17 +64,6 @@ public class State
     {
         return outOfRange;
     }
-
-    public boolean isWonGame()
-    {
-        return wonGame;
-    }
-
-    public void setExit(boolean exit)
-    {
-        this.exit = exit;
-    }
-
     public void setExitFrozeLoop(boolean exitFrozeLoop)
     {
         this.exitFrozeLoop = exitFrozeLoop;
@@ -114,11 +72,6 @@ public class State
     public void setFrozenExit(boolean frozenExit)
     {
         this.frozenExit = frozenExit;
-    }
-
-    public void setGameRunning(boolean gameRunning)
-    {
-        this.gameRunning = gameRunning;
     }
 
     public void setInvalidInput(boolean invalidInput)
@@ -139,10 +92,5 @@ public class State
     public void setOutOfRange(boolean outOfRange)
     {
         this.outOfRange = outOfRange;
-    }
-
-    public void setWonGame(boolean wonGame)
-    {
-        this.wonGame = wonGame;
     }
 }

@@ -18,10 +18,10 @@ public class Input
         this.action = action;
     }
 
-    public void action(State state, Ice ice, Log log, ArrayList<Boolean> freeze,
+    public void action(MainFlag mainFlag, InputFlag inputFlag, Ice ice, Log log, ArrayList<Boolean> freeze,
                        ArrayList<Integer> buildingHeights, Player player)
     {
-        if (state.isInvalidInput())
+        if (inputFlag.isInvalidInput())
         {
             return;
         }
@@ -29,24 +29,24 @@ public class Input
         {
             case 0 ->
             {
-                state.setNumbers(!state.isNumbers());
-                state.setNumbersLoop(true);
+                inputFlag.setNumbers(!inputFlag.isNumbers());
+                inputFlag.setNumbersLoop(true);
                 return;
             }
             case 4 ->
             {
                 System.out.println("Exiting...");
-                state.setGameRunning(false);
-                state.setExit(true);
+                mainFlag.setGameRunning(false);
+                mainFlag.setExit(true);
             }
             default ->
             {
                 ice.setStatus(false);
-                player.move(state, freeze, buildingHeights, action);
+                player.move(inputFlag, freeze, buildingHeights, action);
             }
         }
 
-        state.setNumbersLoop(false);
+        inputFlag.setNumbersLoop(false);
         if (action != 4)
         {
             log.setTurnCount(log.getTurnCount() + 1);
@@ -63,7 +63,7 @@ public class Input
         return name;
     }
 
-    public void inputAction(boolean isFrozen, State state)
+    public void inputAction(boolean isFrozen, InputFlag inputFlag)
     {
         Scanner scanner = new Scanner(System.in);
         boolean condition = true;
@@ -79,7 +79,7 @@ public class Input
         {
             scanner.next();
         }
-        state.setInvalidInput(condition);
+        inputFlag.setInvalidInput(condition);
 
     }
 

@@ -11,10 +11,11 @@ public class Jumper
      */
     public static void main(String[] args)
     {
+        MainFlag mainFlag = new MainFlag();
+        InputFlag inputFlag = new InputFlag();
         Web web = new Web();
         Ice ice = new Ice();
         Log log = new Log();
-        State state = new State();
         Input input = new Input();
         Player player = new Player();
         Data data = new Data();
@@ -22,33 +23,33 @@ public class Jumper
         data.define(FileIO.read(Values.READ_FILE));
         Print.clearScreen();
         Print.title();
-//        input.usernameInput();
+        input.usernameInput();
 
-        while (state.isGameRunning())
+        while (mainFlag.isGameRunning())
         {
             data.shuffle();
             web.check(data.getWeb(), player.getCurrentPos(), log);
             player.setPotentialPositions(data.getBuildings());
-            charge.passiveCheck(data, web.isStatus(), state, player.getCurrentPos(), log);
+            charge.passiveCheck(data, web.isStatus(), mainFlag, player.getCurrentPos(), log);
             charge.setHeight1(data.getBuildings().get(player.getCurrentPos()));
             ice.check(data.getFreeze(), player.getCurrentPos(), log);
-            state.freezeOnExitCheck(data.getFreeze());
+            inputFlag.freezeOnExitCheck(data.getFreeze());
             do
             {
-                if (state.isGameRunning())
+                if (mainFlag.isGameRunning())
                 {
-                    Print.inGameAll(ice.isStatus(), web.isStatus(), charge, state, data, player);
+                    Print.inGameAll(ice.isStatus(), web.isStatus(), charge, inputFlag, data, player);
                     data.fuelCollect(player.getCurrentPos());
-                    input.inputAction(ice.isStatus(), state);
-                    input.action(state, ice, log, data.getFreeze(), data.getBuildings(), player);
+                    input.inputAction(ice.isStatus(), inputFlag);
+                    input.action(mainFlag, inputFlag, ice, log, data.getFreeze(), data.getBuildings(), player);
                 }
             }
-            while (Validation.innerLoop(state));
+            while (Validation.innerLoop(inputFlag));
             charge.setHeight2(data.getBuildings().get(player.getCurrentPos()));
-            charge.activeCheck(player, data, state, player.getCurrentPos(), data.getFuel(), log);
-            state.wonGameCheck(player.getCurrentPos(), charge.getAmount());
+            charge.activeCheck(player, data, mainFlag, player.getCurrentPos(), data.getFuel(), log);
+            mainFlag.wonGameCheck(player.getCurrentPos(), charge.getAmount());
         }
-        Print.exit(charge.getAmount(), state.isWonGame(), input.getName(), state.isExit(), web.isStatus());
+        Print.exit(charge.getAmount(), mainFlag.isWonGame(), input.getName(), mainFlag.isExit(), web.isStatus());
         FileIO.write(Values.WRITE_FILE, log.display(), input.getName());
     }
 }
