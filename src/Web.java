@@ -5,6 +5,20 @@
  */
 public class Web extends Conflict
 {
+
+    public Web()
+    {
+
+    }
+
+    /**
+     * display method to print the state
+     * of the class fields
+     */
+    public void display()
+    {
+        System.out.println();
+    }
     /**
      * @param log
      */

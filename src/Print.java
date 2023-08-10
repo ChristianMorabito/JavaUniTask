@@ -100,13 +100,14 @@ public class Print
 
     /**
      * @param charge
-     * @param wonGame
+     * @param mainFlag
      * @param name
-     * @param exit
      * @param webbed
      */
-    public static void exit(int charge, boolean wonGame, String name, boolean exit, boolean webbed)
+    public static void exit(int charge, MainFlag mainFlag, String name, boolean webbed)
     {
+        boolean exit = mainFlag.isExit();
+        boolean wonGame = mainFlag.isWonGame();
         if (!exit)
         {
             if (wonGame)

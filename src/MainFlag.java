@@ -32,6 +32,15 @@ public class MainFlag
     }
 
     /**
+     * display method to print the state
+     * of the class fields
+     */
+    public void display()
+    {
+        System.out.println();
+    }
+
+    /**
      * @param currentPos
      * @param charge
      */

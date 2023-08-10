@@ -34,6 +34,15 @@ public final class Values
     }
 
     /**
+     * display method to print the state
+     * of the class fields
+     */
+    public void display()
+    {
+        System.out.println();
+    }
+
+    /**
      * Accessor method to get endIndex
      * @return endIndex: int
      */

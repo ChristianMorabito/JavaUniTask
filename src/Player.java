@@ -1,45 +1,55 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
- * Class which
+ * Class which holds player position values, i.e.
+ * current position, previous position, & the potential
+ * jump positions on the left & right sides.
  * @author Christian Morabito
  * @version ver1.0.0
  */
 public class Player
 {
-
     private int currentPos;
     private int leftPos;
     private int rightPos;
-    private int prevPosition;
+    private int previousPos;
 
     /**
-     *
+     * Default Constructor for Player class
      */
     public Player()
     {
         currentPos = 0;
         leftPos = 0;
         rightPos = 0;
-        prevPosition = 0;
+        previousPos = 0;
     }
 
     /**
-     * @param currentPos
-     * @param leftPos
-     * @param rightPos
-     * @param prevPosition
+     * Non-default constructor for Player class
+     * @param currentPos accepts int for player's current position
      */
-    public Player(int currentPos, int leftPos, int rightPos, int prevPosition)
+    public Player(int currentPos)
     {
         this.currentPos = currentPos;
-        this.leftPos = leftPos;
-        this.rightPos = rightPos;
-        this.prevPosition = prevPosition;
+        leftPos = 0;
+        rightPos = 0;
+        previousPos = 0;
     }
 
     /**
-     * @return
+     * display method to print the state
+     * of the class fields
+     */
+    public void display()
+    {
+        System.out.println();
+    }
+
+    /**
+     * accessor method for int currentPos
+     * @return returns int currentPos
      */
     public int getCurrentPos()
     {
@@ -47,16 +57,17 @@ public class Player
     }
 
     /**
-     * @return
+     * accessor method for int leftPos
+     * @return returns int leftPos
      */
     public int getLeftPos()
     {
-
         return leftPos;
     }
 
     /**
-     * @return
+     * accessor method for int rightPos
+     * @return returns int rightPos
      */
     public int getRightPos()
     {
@@ -69,14 +80,35 @@ public class Player
      */
     public int getPreviousPos()
     {
-        return prevPosition;
+        return previousPos;
+    }
+
+     /**
+     * This main method is only for the test strategy
+     * @param    args    An array of string passed in as command line parameters
+     */
+    public static void main(String[] args)
+    {
+        ArrayList<Integer> buildingHeights = new ArrayList<>();
+        ArrayList<Boolean> freeze = new ArrayList<>();
+        Collections.addAll(buildingHeights, 1, 2, 5, 4, 3, 5, 4, 3, 1, 2);
+        Collections.addAll(freeze, false, true, false, false, false, false, false, false, false, false);
+        InputFlag inputFlag = new InputFlag();
+
+        Player player1 = new Player(); // created with default constructor
+        Player player2 = new Player(-200); // created with non-default constructor
+        player2.move(inputFlag, freeze, buildingHeights, -543253);
+
+
     }
 
     /**
-     * @param inputFlag
-     * @param freeze
-     * @param buildingHeights
-     * @param input
+     * method that increments or decrements currPos, updates previousPos,
+     * and updates input flags if necessary
+     * @param inputFlag accepts InputFlag object
+     * @param freeze accepts freeze arraylist (boolean)
+     * @param buildingHeights accepts buildingHeights arraylist (integer)
+     * @param input accepts input int
      */
     public void move(InputFlag inputFlag, ArrayList<Boolean> freeze, ArrayList<Integer> buildingHeights, int input)
     {
@@ -93,7 +125,7 @@ public class Player
                         inputFlag.setExitFrozeLoop(true);
                         return;
                     }
-                    prevPosition = currentPos;
+                    previousPos = currentPos;
                 }
                 else
                 {
@@ -106,7 +138,7 @@ public class Player
                 temp -= buildingHeights.get(currentPos);
                 if (temp >= Values.START_INDEX)
                 {
-                    prevPosition = currentPos;
+                    previousPos = currentPos;
                 }
                 else
                 {
@@ -116,7 +148,7 @@ public class Player
             }
             case 3 ->
             {
-                prevPosition = currentPos;
+                previousPos = currentPos;
             }
             default ->
             {
@@ -129,12 +161,17 @@ public class Player
         inputFlag.setExitFrozeLoop(false);
     }
 
-
     /**
-     * @param buildingHeights
+     * mutator method to set both leftPos & rightPos together
+     * based on player's current position on the buildingheights arraylist
+     * @param buildingHeights accepts buildingHeights arraylist.
      */
     public void setPotentialPositions(ArrayList<Integer> buildingHeights)
     {
+        if (currentPos > buildingHeights.size() || currentPos < 0)
+        {
+            return;
+        }
         int temp = currentPos;
         temp -= buildingHeights.get(currentPos);
         temp = temp >= Values.START_INDEX ? temp : -1;
@@ -147,7 +184,8 @@ public class Player
     }
 
     /**
-     * @param currentPos
+     * mutator method for currentPos
+     * @param currentPos accepts currentPos int
      */
     public void setCurrentPos(int currentPos)
     {
@@ -155,30 +193,42 @@ public class Player
     }
 
     /**
-     * @param leftHeight
+     * mutator method to set leftPos based on player's
+     * current position on buildingHeights arraylist
+     * @param buildingHeights accepts buildingHeights arraylist
      */
-    public void setLeftPos(ArrayList<Integer> leftHeight)
+    public void setLeftPos(ArrayList<Integer> buildingHeights)
     {
+        if (currentPos > buildingHeights.size() || currentPos < 0)
+        {
+            return;
+        }
         int temp = currentPos;
-        temp -= leftHeight.get(currentPos);
+        temp -= buildingHeights.get(currentPos);
         temp = temp >= Values.START_INDEX ? temp : -1;
         this.leftPos = temp;
     }
 
     /**
      * Mutator method for previousPosition
-     * @param prevPosition used to update the previousPosition: int
+     * @param previousPos used to update the previousPosition: int
      */
-    public void setPrevPosition(int prevPosition)
+    public void setPreviousPos(int previousPos)
     {
-        this.prevPosition = prevPosition;
+        this.previousPos = previousPos;
     }
 
     /**
-     * @param buildingHeights
+     * mutator method to set rightPos based on player's
+     * current position on buildingHeights arraylist
+     * @param buildingHeights accepts buildingHeights arraylist
      */
     public void setRightPos(ArrayList<Integer> buildingHeights)
     {
+        if (currentPos > buildingHeights.size() || currentPos < 0)
+        {
+            return;
+        }
         int temp = currentPos;
         temp += buildingHeights.get(currentPos);
         temp = temp <= Values.getEndIndex() ? temp : -1;

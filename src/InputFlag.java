@@ -47,6 +47,15 @@ public class InputFlag
     }
 
     /**
+     * display method to print the state
+     * of the class fields
+     */
+    public void display()
+    {
+        System.out.println();
+    }
+
+    /**
      * @param freeze
      */
     public void freezeOnExitCheck(ArrayList<Boolean> freeze)

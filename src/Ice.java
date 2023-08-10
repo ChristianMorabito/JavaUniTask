@@ -5,6 +5,18 @@
  */
 public class Ice extends Conflict
 {
+    public Ice()
+    {
+    }
+
+    /**
+     * display method to print the state
+     * of the class fields
+     */
+    public void display()
+    {
+        System.out.println();
+    }
     /**
      * Method that overrides Conflict class' logCount method.
      * It increments the counter for when

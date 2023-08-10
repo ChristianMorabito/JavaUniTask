@@ -28,13 +28,6 @@ public abstract class Conflict
         this.status = status;
     }
 
-
-    /**
-     * Abstract method for polymorphism.
-     * @param log accepts Log object
-     */
-    public abstract void logCount(Log log);
-
     /**
      * @param conflictArray accepts either web or freeze arraylists (boolean)
      * @param currentPos accepts int which represents player's current position
@@ -52,6 +45,23 @@ public abstract class Conflict
             status = false;
         }
     }
+
+    /**
+     * display method to print the state
+     * of the class fields
+     */
+    public void display()
+    {
+        System.out.println();
+    }
+
+
+    /**
+     * Abstract method for polymorphism.
+     * @param log accepts Log object
+     */
+    public abstract void logCount(Log log);
+
 
     /**
      * Accessor method for 'status' boolean

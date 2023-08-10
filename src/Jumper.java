@@ -42,7 +42,7 @@ public class Jumper
                     Print.inGameAll(ice.isStatus(), web.isStatus(), charge, inputFlag, array, player);
                     array.fuelCollect(player.getCurrentPos());
                     input.inputAction(ice.isStatus(), inputFlag);
-                    input.action(mainFlag, inputFlag, ice, log, array.getFreeze(), array.getBuildings(), player);
+                    input.action(mainFlag, inputFlag, ice, log, array, player);
                 }
             }
             while (Validation.innerLoop(inputFlag));
@@ -51,7 +51,7 @@ public class Jumper
             charge.afterTurnCheck(player, array, mainFlag, player.getCurrentPos(), log);
             mainFlag.wonGameCheck(player.getCurrentPos(), charge.getAmount());
         }
-        Print.exit(charge.getAmount(), mainFlag.isWonGame(), input.getName(), mainFlag.isExit(), web.isStatus());
+        Print.exit(charge.getAmount(), mainFlag, input.getName(), web.isStatus());
         FileIO.write(Values.WRITE_FILE, log.display(), input.getName());
     }
 }

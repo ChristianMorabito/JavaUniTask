@@ -50,20 +50,12 @@ public class Array
     }
 
     /**
-     * @param data accepts arraylist (string[]) to parse contents
-     *             into individual arrays
+     * display method to print the state
+     * of the class fields
      */
-    public void parse(ArrayList<String[]> data)
+    public void display()
     {
-        for (String[] datum : data) {
-            Validation.columnLengthCheck(datum.length);
-            this.buildingHeights.add(Integer.parseInt(datum[0]));
-            this.exitPortal.add(Validation.stringToBoolean(datum[1]));
-            this.originalFuel.add(Validation.stringToBoolean(datum[2]));
-            this.web.add(Validation.stringToBoolean(datum[3]));
-            this.freeze.add(Validation.stringToBoolean(datum[4]));
-        }
-        Validation.exitCheck(this.exitPortal);
+        System.out.println();
     }
 
     /**
@@ -151,6 +143,23 @@ public class Array
     public ArrayList<Boolean> getWeb()
     {
         return web;
+    }
+
+    /**
+     * @param data accepts arraylist (string[]) to parse contents
+     *             into individual arrays
+     */
+    public void parse(ArrayList<String[]> data)
+    {
+        for (String[] datum : data) {
+            Validation.columnLengthCheck(datum.length);
+            this.buildingHeights.add(Integer.parseInt(datum[0]));
+            this.exitPortal.add(Validation.stringToBoolean(datum[1]));
+            this.originalFuel.add(Validation.stringToBoolean(datum[2]));
+            this.web.add(Validation.stringToBoolean(datum[3]));
+            this.freeze.add(Validation.stringToBoolean(datum[4]));
+        }
+        Validation.exitCheck(this.exitPortal);
     }
 
     /**

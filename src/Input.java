@@ -34,13 +34,14 @@ public class Input
      * @param inputFlag
      * @param ice
      * @param log
-     * @param freeze
-     * @param buildingHeights
+     * @param array
      * @param player
      */
-    public void action(MainFlag mainFlag, InputFlag inputFlag, Ice ice, Log log, ArrayList<Boolean> freeze,
-                       ArrayList<Integer> buildingHeights, Player player)
+    public void action(MainFlag mainFlag, InputFlag inputFlag, Ice ice, Log log, Array array, Player player)
     {
+        ArrayList<Boolean> freeze = array.getFreeze();
+        ArrayList<Integer> buildingHeights = array.getBuildings();
+
         if (inputFlag.isInvalidInput())
         {
             return;
@@ -71,6 +72,15 @@ public class Input
         {
             log.setTurnCount(log.getTurnCount() + 1);
         }
+    }
+
+    /**
+     * display method to print the state
+     * of the class fields
+     */
+    public void display()
+    {
+        System.out.println();
     }
 
     /**
