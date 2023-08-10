@@ -1,9 +1,17 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Class which
+ * @author Christian Morabito
+ * @version ver1.0.0
+ */
 public class Print
 {
 
+    /**
+     *
+     */
     public static void title()
     {
 
@@ -30,6 +38,11 @@ public class Print
                 """); // reference: https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
     }
 
+    /**
+     * @param isFrozen
+     * @param inputFlag
+     * @param rightPos
+     */
     public static void action(boolean isFrozen, InputFlag inputFlag, int rightPos)
     {
         final String limitedMovement = "LIMITED MOVEMENT!!";
@@ -62,6 +75,10 @@ public class Print
 
     }
 
+    /**
+     * @param amount
+     * @param numbers
+     */
     public static void chargeAmount(int amount, boolean numbers)
     {
         String chargeNumber = numbers ? String.valueOf(amount) : "";
@@ -71,6 +88,9 @@ public class Print
         System.out.println();
     }
 
+    /**
+     *
+     */
     public static void clearScreen()
     {
         // reference: https://stackoverflow.com/questions/2979383/how-to-clear-the-console-using-java
@@ -78,6 +98,13 @@ public class Print
         System.out.flush();
     }
 
+    /**
+     * @param charge
+     * @param wonGame
+     * @param name
+     * @param exit
+     * @param webbed
+     */
     public static void exit(int charge, boolean wonGame, String name, boolean exit, boolean webbed)
     {
         if (!exit)
@@ -99,6 +126,9 @@ public class Print
         System.out.println("--GAME OVER--");
     }
 
+    /**
+     * @param isFrozen
+     */
     public static void ice(boolean isFrozen)
     {
         if (isFrozen)
@@ -106,6 +136,11 @@ public class Print
             System.out.println("\uD83D\uDEA8 YOU ARE FROZEN \uD83D\uDEA8");
         }
     }
+
+    /**
+     * @param inputFlag
+     * @param rightPosition
+     */
     public static void frozenExit(InputFlag inputFlag, int rightPosition)
     {
         if (Validation.freezeOnExit(inputFlag, rightPosition))
@@ -114,6 +149,11 @@ public class Print
         }
     }
 
+    /**
+     * @param fuelArray
+     * @param currentSpot
+     * @param chargeCount
+     */
     public static void fuelCollected(ArrayList<Boolean> fuelArray, int currentSpot, int chargeCount)
     {
         if (fuelArray.get(currentSpot))
@@ -127,6 +167,9 @@ public class Print
         }
     }
 
+    /**
+     * @param fuelShuffleCheck
+     */
     public static void fuelRespawning(boolean fuelShuffleCheck)
     {
         if (fuelShuffleCheck)
@@ -135,10 +178,17 @@ public class Print
         }
     }
 
-    public static void graphic(Data data, int currentPosition, int leftPosition,
+    /**
+     * @param array
+     * @param currentPosition
+     * @param leftPosition
+     * @param rightPosition
+     * @param numbers
+     */
+    public static void graphic(Array array, int currentPosition, int leftPosition,
                                int rightPosition, boolean numbers)
     {
-        StringBuilder[][] buildingString = new Graphic().create(data,
+        StringBuilder[][] buildingString = new Graphic().create(array,
                 currentPosition,leftPosition, rightPosition, numbers);
 
         System.out.println();
@@ -152,7 +202,15 @@ public class Print
         }
     }
 
-    public static void inGameAll(boolean isFrozen, boolean isWebbed, Charge charge, InputFlag inputFlag, Data data, Player player)
+    /**
+     * @param isFrozen
+     * @param isWebbed
+     * @param charge
+     * @param inputFlag
+     * @param array
+     * @param player
+     */
+    public static void inGameAll(boolean isFrozen, boolean isWebbed, Charge charge, InputFlag inputFlag, Array array, Player player)
     {
         clearScreen();
         chargeAmount(charge.getAmount(), inputFlag.isNumbers());
@@ -161,12 +219,16 @@ public class Print
         web(isWebbed);
         frozenExit(inputFlag, player.getRightPos());
         outOfRange(inputFlag);
-        fuelRespawning(data.fuelShuffleCheck());
-        fuelCollected(data.getFuel(), player.getCurrentPos(), charge.getAmount());
-        graphic(data, player.getCurrentPos(), player.getLeftPos(),
+        fuelRespawning(array.fuelShuffleCheck());
+        fuelCollected(array.getTempFuel(), player.getCurrentPos(), charge.getAmount());
+        graphic(array, player.getCurrentPos(), player.getLeftPos(),
                 player.getRightPos(), inputFlag.isNumbers());
         action(isFrozen, inputFlag, player.getRightPos());
     }
+
+    /**
+     * @param inputFlag
+     */
     public static void invalidInput(InputFlag inputFlag)
     {
         if (inputFlag.isInvalidInput() || inputFlag.isExitFrozeLoop())
@@ -176,6 +238,9 @@ public class Print
     }
 
 
+    /**
+     * @param inputFlag
+     */
     public static void outOfRange(InputFlag inputFlag)
     {
         if (inputFlag.isOutOfRange()) {
@@ -183,6 +248,9 @@ public class Print
         }
     }
 
+    /**
+     * @param isWebbed
+     */
     public static void web(boolean isWebbed)
     {
         if (isWebbed) {

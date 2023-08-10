@@ -1,3 +1,8 @@
+/**
+ * Class which
+ * @author Christian Morabito
+ * @version ver1.0.0
+ */
 public class Log
 {
     private int turnCount;
@@ -5,6 +10,9 @@ public class Log
     private int webCount;
     private int freezeCount;
 
+    /**
+     *
+     */
     public Log()
     {
         turnCount = 0;
@@ -13,6 +21,12 @@ public class Log
         freezeCount = 0;
     }
 
+    /**
+     * @param turnCount
+     * @param fuelCount
+     * @param webCount
+     * @param freezeCount
+     */
     public Log(int turnCount, int fuelCount, int webCount, int freezeCount)
     {
         this.turnCount = turnCount;
@@ -21,6 +35,9 @@ public class Log
         this.freezeCount = freezeCount;
     }
 
+    /**
+     * @return
+     */
     public String display()
     {
         return "Turn count: " + turnCount + "\n" +
@@ -29,41 +46,65 @@ public class Log
                 "Freeze count: " + freezeCount;
     }
 
+    /**
+     * @return
+     */
     public int getFreezeCount()
     {
         return freezeCount;
     }
 
+    /**
+     * @return
+     */
     public int getFuelCount()
     {
         return fuelCount;
     }
 
+    /**
+     * @return
+     */
     public int getTurnCount()
     {
         return turnCount;
     }
 
+    /**
+     * @return
+     */
     public int getWebCount()
     {
         return webCount;
     }
 
+    /**
+     * @param freezeCount
+     */
     public void setFreezeCount(int freezeCount)
     {
         this.freezeCount = freezeCount;
     }
 
+    /**
+     * @param fuelCount
+     */
     public void setFuelCount(int fuelCount)
     {
         this.fuelCount = fuelCount;
     }
 
+    /**
+     * @param turnCount
+     */
     public void setTurnCount(int turnCount)
     {
         this.turnCount = turnCount;
     }
 
+    /**
+     * @param webCount
+     */
     public void setWebCount(int webCount)
     {
         this.webCount = webCount;

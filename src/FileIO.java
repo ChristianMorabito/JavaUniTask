@@ -12,8 +12,8 @@ public class FileIO
 {
 
     /**
-     * Reads file, parses data to 2d arraylist (string)
-     * & sets Data fields: maxHeight & rowLength
+     * Static method that reads file, parses data to 2d arraylist (string).
+     * & sets Values fields: maxHeight & rowLength. Also, validates row lengths.
      * @return returns the data arraylist (2d String)
      */
     public static ArrayList<String[]> read(String fileName)
@@ -59,6 +59,12 @@ public class FileIO
         return data;
     }
 
+    /**
+     * Static method that writes text file.
+     * @param fileName accepts string representing the file's name
+     * @param writeData accepts string data that is to be written to file
+     * @param username accepts string data, username, which is also be to written in file.
+     */
     public static void write(String fileName, String writeData, String username)
     {
         try

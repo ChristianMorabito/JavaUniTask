@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Graphic
 {
-    final private int SIDES_AND_GAP = 3; // 3 = 2 building sides + 1 gap (between buildings)
+    final private int SIDES_AND_GAP = 3; // 3 = x2 building sides + x1 gap (between buildings)
     final private int INNER_BUILDING_SPACE = Values.BUILDING_WIDTH - SIDES_AND_GAP;
     final private char SINGLE_SPACE = ' ';
     final private String JUMPER_WINDOW = "‡".repeat(INNER_BUILDING_SPACE);
@@ -39,22 +39,22 @@ public class Graphic
 
     /**
      * Method to iterate over 2d string-builder array to parse graphic string
-     * @param data Accepts Parse object
+     * @param array Accepts Parse object
      * @param currentPos Accepts int which represents current position player is on
      * @param leftPos Accepts int which represents position if player potentially jumps left
      * @param rightPos Accepts int which represents position if player potentially jumps right
      * @param numbers Accepts int which represents if numbers bool is true (from State class)
      **/
-    public StringBuilder[][] create(Data data, int currentPos, int leftPos,
+    public StringBuilder[][] create(Array array, int currentPos, int leftPos,
                                     int rightPos, boolean numbers)
     {
 
-        ArrayList<Integer> heights = data.getBuildings();
+        ArrayList<Integer> heights = array.getBuildings();
 
         for (int i = 0; i < Values.getRowLength(); i++)
         {
             int currentHeight = heights.get(i);
-            createRoof(data, i, currentHeight, currentPos);
+            createRoof(array, i, currentHeight, currentPos);
             createBase(i, currentPos, leftPos, rightPos, numbers, heights);
 
             for (int j = 0; j < Values.getMaxHeight() - 1; j++)
@@ -105,19 +105,19 @@ public class Graphic
     /**
      * Method to create roof graphic. It deals with symbols on the roof, such as
      * portal, jumper, fuel cell, web & freeze.
-     * @param data Accepts Parse object
+     * @param array Accepts Parse object
      * @param i Accepts int iterator from 1st for loop
      * @param currentHeight Accepts int which represents the building height the player currently is on
      * @param currentPos Accepts int which represents current position player is on
      **/
-    private void createRoof(Data data, int i, int currentHeight, int currentPos)
+    private void createRoof(Array array, int i, int currentHeight, int currentPos)
     {
         String TOP_LEFT_ROOF = "┎";
         String TOP_RIGHT_ROOF = "┒";
         String ROOF = "─";
         final String WHOLE_ROOF = TOP_LEFT_ROOF + ROOF.repeat(INNER_BUILDING_SPACE) + TOP_RIGHT_ROOF;
-        final boolean[] CONDITIONS = {i == currentPos, data.getFuel().get(i),
-                data.getFreeze().get(i), data.getWeb().get(i), data.getExitPortal().get(i)};
+        final boolean[] CONDITIONS = {i == currentPos, array.getTempFuel().get(i),
+                array.getFreeze().get(i), array.getWeb().get(i), array.getExitPortal().get(i)};
         final int HEIGHT_FORMULA = Values.getMaxHeight() - currentHeight;
         final String[] SYMBOLS_ARRAY = new String[] {Values.JUMPER, Values.FUEL_CELL, Values.FREEZE, Values.WEB, Values.PORTAL};
         buildingString[Values.getMaxHeight() - currentHeight][i] = new StringBuilder(WHOLE_ROOF);

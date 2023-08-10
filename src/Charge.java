@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 /**
- * Class which stores, increments & decrements the jumper's fuel charge.
+ * Class which stores, increments & decrements the jumper's fuel charge,
+ * as well as holds the x2 building height values to calculate jump cost
  * @author Christian Morabito
  * @version ver1.0.0
  */
@@ -24,7 +25,7 @@ public class Charge
 
     /**
      * Non-Default constructor which creates the object of the class Charge.
-     * @param amount                Accepts an int for beginning charge amount.
+     * @param amount               Accepts an int for beginning charge amount.
      * @param height1              Accepts an int for first building height
      * @param height2              Accepts an int for previous building height
      */
@@ -37,37 +38,46 @@ public class Charge
     }
 
     /**
-     * Depletes fuel if user jumped/skipped turn, or increases fuel if user's move landed them on fuel.
-     *
-     * @param currentPos    Accepts the user's current position as an int
-     * @param fuelCells          Accepts the fuel cell array as an arraylist (Boolean)
-     * @param log                Accepts the Log object
+     * Method for directly after player input, which:
+     * (1) always depletes charge (based on either jump or skip-turn) & increases charge
+     * (if player jumped onto an already present fuel cell).
+     * (2) checks has depleted to below 1, which prompts exit game, & (3) logs if fuel is collected
+     * @param player accepts Player object to get player current & prev positions (to determine if player
+     *               jumped or skipped turn)
+     * @param array accepts Array object for tempFuel array & fuelShuffleCount.
+     * @param mainFlag accepts MainFlag object to potentially flag game exit.
+     * @param currentPos accepts int which represents current index player is on
+     * @param log accepts Log object to potentially log fuel collection
      */
-
-    public void activeCheck(Player player, Data data, MainFlag mainFlag, int currentPos, ArrayList<Boolean> fuelCells, Log log)
+    public void afterTurnCheck(Player player, Array array, MainFlag mainFlag, int currentPos, Log log)
     {
+        ArrayList<Boolean> fuelCells = array.getTempFuel();
+
         if (!mainFlag.isGameRunning())
         {
             return;
         }
         if (player.getPreviousPos() == currentPos)
         {
-            amount -= 1;
+            amount--;
         }
         else
         {
             jumpDeplete(height2, height1);
         }
-        if (amount >= 0 && !data.fuelShuffleCheck() && fuelCells.get(currentPos))
+        if (!array.fuelShuffleCheck() && fuelCells.get(currentPos))
         {
-            fuelCharge(log);
+            fuelCharge();
+            log.setFuelCount(log.getFuelCount() + 1);
         }
         chargeCheck(mainFlag);
     }
 
+
     /**
-     * Checks if charge is above 1. If charge is not above 1, then 'gameRunning' (in State class)
-     * is set to false.
+     * checks if charge is below < 1; if so, then mainFlag boolean is set to false,
+     * ending main game loop
+     * @param mainFlag accepts mainFlag object
      */
     private void chargeCheck(MainFlag mainFlag)
     {
@@ -77,27 +87,30 @@ public class Charge
         }
     }
 
+
     /**
-     * Accessor method to get amount descriptor
-     * @return amount as int
+     * Accessor method to get 'amount' int.
+     * @return returns 'amount' int
      */
     public int getAmount()
     {
         return amount;
     }
 
+
     /**
-     * Accessor method for height_1
-     * @return returns height_1: int
+     * Accessor method to get int 'height1'
+     * @return returns int 'height1'
      */
     public int getHeight1()
     {
         return height1;
     }
 
+
     /**
-     * Accessor method for height_2
-     * @return returns height_2: int
+     * Accessor method to get int 'height2'
+     * @return returns int 'height2'
      */
     public int getHeight2()
     {
@@ -105,21 +118,30 @@ public class Charge
     }
 
     /**
-     * Increases charge, ensuring that refueling doesn't go above MAX_CHARGE.
-     *
-     * @param log                Accepts the Log object
+     * method to increment charge & ensure that the charge does not go above max amount.
      */
-    private void fuelCharge(Log log)
+    private void fuelCharge()
     {
-        amount = Math.min(amount + 5, Values.MAX_CHARGE);
-        log.setFuelCount(log.getFuelCount() + 1);
+        amount = Math.min(amount + Values.CHARGE_INCREMENT, Values.MAX_CHARGE);
     }
 
-    public void passiveCheck(Data data, boolean isWebbed, MainFlag mainFlag, int currentPos, Log log)
+    /**
+     * Method for directly after arrays are shuffled, but before player turn, which:
+     * (1) increments player charge if player coincidentally is standing on new spawned fuel.
+     * (2a) decrements charge if player coincidentally is standing on a web that shuffled into player position.
+     * (2b) checks if charge is < 1, to flag potential game exit.
+     * @param array accepts Array object
+     * @param isWebbed accepts boolean which determines if player is standing on a web or not.
+     * @param mainFlag accepts Mainflag object to potentially flag game exit.
+     * @param currentPos accepts int which represents player's current position
+     * @param log accepts log object for logging if player collected fuel
+     */
+    public void beforeTurnCheck(Array array, boolean isWebbed, MainFlag mainFlag, int currentPos, Log log)
     {
-        if (Validation.fuelShuffleModulo(data.getFuelMove()) == 1 && data.getFuel().get(currentPos))
+        if (Validation.fuelShuffleModulo(array.getFuelMove()) == 1 && array.getTempFuel().get(currentPos))
         {
-            fuelCharge(log);
+            fuelCharge();
+            log.setFuelCount(log.getFuelCount() + 1);
         }
 
         if (isWebbed)

@@ -1,23 +1,43 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class which
+ * @author Christian Morabito
+ * @version ver1.0.0
+ */
 public class Input
 {
     private String name;
     private int action;
 
+    /**
+     *
+     */
     public Input()
     {
         name = "Unfilled";
         action = 0;
     }
 
+    /**
+     * @param action
+     */
     public Input(int action)
     {
         this.name = "Unfilled";
         this.action = action;
     }
 
+    /**
+     * @param mainFlag
+     * @param inputFlag
+     * @param ice
+     * @param log
+     * @param freeze
+     * @param buildingHeights
+     * @param player
+     */
     public void action(MainFlag mainFlag, InputFlag inputFlag, Ice ice, Log log, ArrayList<Boolean> freeze,
                        ArrayList<Integer> buildingHeights, Player player)
     {
@@ -53,16 +73,26 @@ public class Input
         }
     }
 
+    /**
+     * @return
+     */
     public int getAction()
     {
         return action;
     }
 
+    /**
+     * @return
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     * @param isFrozen
+     * @param inputFlag
+     */
     public void inputAction(boolean isFrozen, InputFlag inputFlag)
     {
         Scanner scanner = new Scanner(System.in);
@@ -83,11 +113,17 @@ public class Input
 
     }
 
+    /**
+     * @param name
+     */
     public void setName(String name)
     {
         this.name = name;
     }
 
+    /**
+     *
+     */
     public void usernameInput()
     {
         Scanner scanner = new Scanner(System.in);
@@ -101,6 +137,9 @@ public class Input
         while (Validation.stringLength(name.trim(), 3, 12));
     }
 
+    /**
+     * @param action
+     */
     public void setAction(int action)
     {
         this.action = action;

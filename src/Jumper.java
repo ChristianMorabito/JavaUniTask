@@ -18,37 +18,37 @@ public class Jumper
         Log log = new Log();
         Input input = new Input();
         Player player = new Player();
-        Data data = new Data();
+        Array array = new Array();
         Charge charge = new Charge();
-        data.define(FileIO.read(Values.READ_FILE));
+        array.parse(FileIO.read(Values.READ_FILE));
         Print.clearScreen();
         Print.title();
         input.usernameInput();
 
         while (mainFlag.isGameRunning())
         {
-            data.shuffle();
-            web.check(data.getWeb(), player.getCurrentPos(), log);
-            player.setPotentialPositions(data.getBuildings());
-            charge.passiveCheck(data, web.isStatus(), mainFlag, player.getCurrentPos(), log);
-            charge.setHeight1(data.getBuildings().get(player.getCurrentPos()));
-            ice.check(data.getFreeze(), player.getCurrentPos(), log);
-            inputFlag.freezeOnExitCheck(data.getFreeze());
+            array.shuffle();
+            web.check(array.getWeb(), player.getCurrentPos(), log);
+            player.setPotentialPositions(array.getBuildings());
+            charge.beforeTurnCheck(array, web.isStatus(), mainFlag, player.getCurrentPos(), log);
+            charge.setHeight1(array.getBuildings().get(player.getCurrentPos()));
+            ice.check(array.getFreeze(), player.getCurrentPos(), log);
+            inputFlag.freezeOnExitCheck(array.getFreeze());
 
             do
             {
                 if (mainFlag.isGameRunning())
                 {
-                    Print.inGameAll(ice.isStatus(), web.isStatus(), charge, inputFlag, data, player);
-                    data.fuelCollect(player.getCurrentPos());
+                    Print.inGameAll(ice.isStatus(), web.isStatus(), charge, inputFlag, array, player);
+                    array.fuelCollect(player.getCurrentPos());
                     input.inputAction(ice.isStatus(), inputFlag);
-                    input.action(mainFlag, inputFlag, ice, log, data.getFreeze(), data.getBuildings(), player);
+                    input.action(mainFlag, inputFlag, ice, log, array.getFreeze(), array.getBuildings(), player);
                 }
             }
             while (Validation.innerLoop(inputFlag));
 
-            charge.setHeight2(data.getBuildings().get(player.getCurrentPos()));
-            charge.activeCheck(player, data, mainFlag, player.getCurrentPos(), data.getFuel(), log);
+            charge.setHeight2(array.getBuildings().get(player.getCurrentPos()));
+            charge.afterTurnCheck(player, array, mainFlag, player.getCurrentPos(), log);
             mainFlag.wonGameCheck(player.getCurrentPos(), charge.getAmount());
         }
         Print.exit(charge.getAmount(), mainFlag.isWonGame(), input.getName(), mainFlag.isExit(), web.isStatus());

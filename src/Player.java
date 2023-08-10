@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+/**
+ * Class which
+ * @author Christian Morabito
+ * @version ver1.0.0
+ */
 public class Player
 {
 
@@ -8,6 +13,9 @@ public class Player
     private int rightPos;
     private int prevPosition;
 
+    /**
+     *
+     */
     public Player()
     {
         currentPos = 0;
@@ -16,6 +24,12 @@ public class Player
         prevPosition = 0;
     }
 
+    /**
+     * @param currentPos
+     * @param leftPos
+     * @param rightPos
+     * @param prevPosition
+     */
     public Player(int currentPos, int leftPos, int rightPos, int prevPosition)
     {
         this.currentPos = currentPos;
@@ -23,17 +37,27 @@ public class Player
         this.rightPos = rightPos;
         this.prevPosition = prevPosition;
     }
+
+    /**
+     * @return
+     */
     public int getCurrentPos()
     {
         return currentPos;
     }
 
+    /**
+     * @return
+     */
     public int getLeftPos()
     {
 
         return leftPos;
     }
 
+    /**
+     * @return
+     */
     public int getRightPos()
     {
         return rightPos;
@@ -48,6 +72,12 @@ public class Player
         return prevPosition;
     }
 
+    /**
+     * @param inputFlag
+     * @param freeze
+     * @param buildingHeights
+     * @param input
+     */
     public void move(InputFlag inputFlag, ArrayList<Boolean> freeze, ArrayList<Integer> buildingHeights, int input)
     {
         int temp = currentPos;
@@ -100,7 +130,9 @@ public class Player
     }
 
 
-
+    /**
+     * @param buildingHeights
+     */
     public void setPotentialPositions(ArrayList<Integer> buildingHeights)
     {
         int temp = currentPos;
@@ -114,11 +146,17 @@ public class Player
         this.rightPos = temp;
     }
 
+    /**
+     * @param currentPos
+     */
     public void setCurrentPos(int currentPos)
     {
         this.currentPos = currentPos;
     }
 
+    /**
+     * @param leftHeight
+     */
     public void setLeftPos(ArrayList<Integer> leftHeight)
     {
         int temp = currentPos;
@@ -136,6 +174,9 @@ public class Player
         this.prevPosition = prevPosition;
     }
 
+    /**
+     * @param buildingHeights
+     */
     public void setRightPos(ArrayList<Integer> buildingHeights)
     {
         int temp = currentPos;
