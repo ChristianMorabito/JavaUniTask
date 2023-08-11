@@ -11,7 +11,7 @@ public class MainFlag
     private boolean firstTurn;
 
     /**
-     *
+     * default constructor for MainFlag class
      */
     public MainFlag()
     {
@@ -22,9 +22,11 @@ public class MainFlag
     }
 
     /**
-     * @param exit
-     * @param wonGame
-     * @param gameRunning
+     * Non-default constructor for MainFlag class
+     * @param exit accepts boolean for exit
+     * @param wonGame accepts boolean for wonGame
+     * @param gameRunning accepts boolean for gameRunning
+     * @param firstTurn accepts boolean for firstTurn
      */
     public MainFlag(boolean exit, boolean wonGame, boolean gameRunning, boolean firstTurn)
     {
@@ -40,12 +42,17 @@ public class MainFlag
      */
     public void display()
     {
-        System.out.println();
+        System.out.println("Exit: " + exit + "\n" +
+                           "WonGame " + wonGame + "\n" +
+                           "GameRunning " + gameRunning + "\n" +
+                           "FirstTurn " + firstTurn);
     }
 
-
     /**
-     * @return
+     * Accessor method which returns true/false
+     * dependent if player has opted to exit game, lost
+     * the game or won the game
+     * @return returns boolean exit
      */
     public boolean isExit()
     {
@@ -53,7 +60,9 @@ public class MainFlag
     }
 
     /**
-     * @return
+     * Accessor method which returns
+     * true/false dependent if it's players first turn or not.
+     * @return returns boolean
      */
     public boolean isFirstTurn()
     {
@@ -61,7 +70,9 @@ public class MainFlag
     }
 
     /**
-     * @return
+     * Accessor method which returns
+     * true/false dependent if game is running
+     * @return returns boolean
      */
     public boolean isGameRunning()
     {
@@ -69,7 +80,9 @@ public class MainFlag
     }
 
     /**
-     * @return
+     * Accessor method which returns
+     * true/false dependent on whether player won game or not
+     * @return returns boolean
      */
     public boolean isWonGame()
     {
@@ -77,7 +90,9 @@ public class MainFlag
     }
 
     /**
-     * @param exit
+     * Mutator method that sets boolean
+     * which determines if player exited game or not
+     * @param exit accepts exit boolean
      */
     public void setExit(boolean exit)
     {
@@ -85,7 +100,9 @@ public class MainFlag
     }
 
     /**
-     * @param gameRunning
+     * Mutator method that sets boolean
+     * which determines if game is running or not
+     * @param gameRunning accepts gameRunning boolean
      */
     public void setGameRunning(boolean gameRunning)
     {
@@ -93,8 +110,9 @@ public class MainFlag
     }
 
     /**
-     *
-     * @param firstTurn
+     * Mutator method that sets boolean
+     * which determines if it's player's first turn or not
+     * @param firstTurn accepts firstTurn boolean
      */
     public void setFirstTurn(boolean firstTurn)
     {
@@ -102,7 +120,9 @@ public class MainFlag
     }
 
     /**
-     * @param wonGame
+     * Mutator method that sets boolean which
+     * determines if player won the game or not
+     * @param wonGame accepts wonGame boolean
      */
     public void setWonGame(boolean wonGame)
     {
@@ -110,8 +130,10 @@ public class MainFlag
     }
 
     /**
-     * @param currentPos
-     * @param charge
+     * method that updates boolean fields 'gameRunning' & 'wonGame' as true
+     * if player has reached exit portal on charge >= 0
+     * @param currentPos accepts int for player's current position
+     * @param charge accepts int for current charge amount
      */
     public void wonGameCheck(int currentPos, int charge)
     {

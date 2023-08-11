@@ -15,7 +15,7 @@ public class InputFlag
     private boolean invalidInput;
 
     /**
-     *
+     * Default constructor for class inputFlag
      */
     public InputFlag()
     {
@@ -28,12 +28,13 @@ public class InputFlag
     }
 
     /**
-     * @param frozenExit
-     * @param numbers
-     * @param numbersLoop
-     * @param exitFrozeLoop
-     * @param outOfRange
-     * @param invalidInput
+     * Non-default constructor for inputFlag
+     * @param frozenExit accepts boolean
+     * @param numbers accepts boolean for numbers
+     * @param numbersLoop accepts boolean for numbersLoop
+     * @param exitFrozeLoop accepts boolean for exitFrozeLoop
+     * @param outOfRange accepts boolean for outOfRange
+     * @param invalidInput accepts boolean for invalidInput
      */
     public InputFlag(boolean frozenExit, boolean numbers, boolean numbersLoop,
                      boolean exitFrozeLoop, boolean outOfRange, boolean invalidInput)
@@ -52,11 +53,17 @@ public class InputFlag
      */
     public void display()
     {
-        System.out.println();
+        System.out.println("FrozenExit: " + frozenExit + "\n" +
+                           "Numbers " + numbers + "\n" +
+                           "NumbersLoop " + numbersLoop + "\n" +
+                           "ExitFrozeLoop " + exitFrozeLoop + "\n" +
+                           "OutOfRange " + outOfRange + "\n" +
+                           "InvalidInput " + invalidInput);
     }
 
     /**
-     * @param freeze
+     * Method which updates boolean field 'frozenExit'
+     * @param freeze accepts boolean arraylist
      */
     public void freezeOnExitCheck(ArrayList<Boolean> freeze)
     {
@@ -64,7 +71,8 @@ public class InputFlag
     }
 
     /**
-     * @return
+     * Accessor method to get exitFrozeLoop boolean
+     * @return returns exitFrozeLoop boolean
      */
     public boolean isExitFrozeLoop()
     {
@@ -72,7 +80,8 @@ public class InputFlag
     }
 
     /**
-     * @return
+     * Accessor method to get frozenExit boolean
+     * @return returns frozenExit boolean
      */
     public boolean isFrozenExit()
     {
@@ -80,7 +89,8 @@ public class InputFlag
     }
 
     /**
-     * @return
+     * Accessor method to get invalidInput boolean
+     * @return returns invalidInput boolean
      */
     public boolean isInvalidInput()
     {
@@ -88,6 +98,7 @@ public class InputFlag
     }
 
     /**
+     * Accessor method to get
      * @return
      */
     public boolean isNumbers()
@@ -96,6 +107,7 @@ public class InputFlag
     }
 
     /**
+     * Accessor method to get
      * @return
      */
     public boolean isNumbersLoop()
@@ -104,6 +116,7 @@ public class InputFlag
     }
 
     /**
+     * Accessor method to get
      * @return
      */
     public boolean isOutOfRange()
@@ -112,6 +125,7 @@ public class InputFlag
     }
 
     /**
+     * Mutator method to set
      * @param exitFrozeLoop
      */
     public void setExitFrozeLoop(boolean exitFrozeLoop)
@@ -120,6 +134,7 @@ public class InputFlag
     }
 
     /**
+     * Mutator method to set
      * @param frozenExit
      */
     public void setFrozenExit(boolean frozenExit)
@@ -128,6 +143,7 @@ public class InputFlag
     }
 
     /**
+     * Mutator method to set
      * @param invalidInput
      */
     public void setInvalidInput(boolean invalidInput)
@@ -136,6 +152,7 @@ public class InputFlag
     }
 
     /**
+     * Mutator method to set
      * @param numbers
      */
     public void setNumbers(boolean numbers)
@@ -144,6 +161,7 @@ public class InputFlag
     }
 
     /**
+     * Mutator method to set
      * @param numbersLoop
      */
     public void setNumbersLoop(boolean numbersLoop)
@@ -152,6 +170,7 @@ public class InputFlag
     }
 
     /**
+     * Mutator method to set
      * @param outOfRange
      */
     public void setOutOfRange(boolean outOfRange)

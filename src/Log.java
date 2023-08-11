@@ -1,5 +1,6 @@
 /**
- * Class which
+ * Class which holds fields for logging player's
+ * turn count, fuel count, web count & freeze count
  * @author Christian Morabito
  * @version ver1.0.0
  */
@@ -11,7 +12,7 @@ public class Log
     private int freezeCount;
 
     /**
-     *
+     * Default constructor for Log class
      */
     public Log()
     {
@@ -22,10 +23,11 @@ public class Log
     }
 
     /**
-     * @param turnCount
-     * @param fuelCount
-     * @param webCount
-     * @param freezeCount
+     * Non-default constructor for Log class
+     * @param turnCount accepts int for turnCount
+     * @param fuelCount accepts int for fuelCount
+     * @param webCount accepts int for webCount
+     * @param freezeCount accepts int for freezeCount
      */
     public Log(int turnCount, int fuelCount, int webCount, int freezeCount)
     {
@@ -36,7 +38,8 @@ public class Log
     }
 
     /**
-     * @return
+     * method which returns string of field states
+     * @return returns string of field states
      */
     public String display()
     {
@@ -47,7 +50,8 @@ public class Log
     }
 
     /**
-     * @return
+     * Accessor method to get freeze count
+     * @return returns int freeze count
      */
     public int getFreezeCount()
     {
@@ -55,7 +59,8 @@ public class Log
     }
 
     /**
-     * @return
+     * Accessor method to get fuel count
+     * @return returns int fuel count
      */
     public int getFuelCount()
     {
@@ -63,7 +68,8 @@ public class Log
     }
 
     /**
-     * @return
+     * Accessor method to get turn count
+     * @return returns int turn count
      */
     public int getTurnCount()
     {
@@ -71,7 +77,8 @@ public class Log
     }
 
     /**
-     * @return
+     * Accessor method to get web count
+     * @return returns int web count
      */
     public int getWebCount()
     {
@@ -79,7 +86,8 @@ public class Log
     }
 
     /**
-     * @param freezeCount
+     * Mutator method to set freeze count
+     * @param freezeCount accepts freeze count int
      */
     public void setFreezeCount(int freezeCount)
     {
@@ -87,7 +95,8 @@ public class Log
     }
 
     /**
-     * @param fuelCount
+     * Mutator method to set fuel count
+     * @param fuelCount accepts fuel count int
      */
     public void setFuelCount(int fuelCount)
     {
@@ -95,7 +104,8 @@ public class Log
     }
 
     /**
-     * @param turnCount
+     * Mutator method to set turn count
+     * @param turnCount accepts turn count int
      */
     public void setTurnCount(int turnCount)
     {
@@ -103,7 +113,8 @@ public class Log
     }
 
     /**
-     * @param webCount
+     * Mutator method to set web count
+     * @param webCount accepts web count int
      */
     public void setWebCount(int webCount)
     {
