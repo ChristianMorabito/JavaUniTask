@@ -49,7 +49,7 @@ public class Charge
      * @param currentPos accepts int which represents current index player is on
      * @param log accepts Log object to potentially log fuel collection
      */
-    public void afterTurnCheck(Player player, Array array, MainFlag mainFlag, int currentPos, Log log)
+    public void afterChargeCheck(Player player, Array array, MainFlag mainFlag, int currentPos, Log log)
     {
         ArrayList<Boolean> fuelCells = array.getTempFuel();
 
@@ -63,7 +63,7 @@ public class Charge
         {
             jumpDeplete(height2, height1);
         }
-        if (afterTurnCheck(mainFlag)) return;
+        if (afterChargeCheck(mainFlag)) return;
 
         if (!array.fuelShuffleCheck() && fuelCells.get(currentPos))
         {
@@ -79,7 +79,7 @@ public class Charge
      * ending main game loop
      * @param mainFlag accepts mainFlag object
      */
-    private boolean afterTurnCheck(MainFlag mainFlag)
+    private boolean afterChargeCheck(MainFlag mainFlag)
     {
         if (amount < Values.MIN_CHARGE - 1)
         {
@@ -94,14 +94,10 @@ public class Charge
      * ending main game loop
      * @param mainFlag accepts mainFlag object
      */
-    private boolean beforeTurnCheck(MainFlag mainFlag)
+    private void beforeTurnCheck(MainFlag mainFlag)
     {
-        if (amount < Values.MIN_CHARGE)
-        {
-            mainFlag.setGameRunning(false);
-            return true;
-        }
-        return false;
+        if (amount < Values.MIN_CHARGE) mainFlag.setGameRunning(false);
+
     }
 
     /**

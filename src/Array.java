@@ -100,12 +100,12 @@ public class Array
     }
 
     /**
-     * accessor method for tempFuel arraylist (boolean)
-     * @return returns 'tempFuel' arraylist (boolean)
+     * accessor method for fuelMove (int)
+     * @return returns int fuelMove
      */
-    public ArrayList<Boolean> getTempFuel()
+    public ArrayList<Boolean> getFreeze()
     {
-        return tempFuel;
+        return freeze;
     }
 
     /**
@@ -118,21 +118,21 @@ public class Array
     }
 
     /**
-     * accessor method for fuelMove (int)
-     * @return returns int fuelMove
-     */
-    public ArrayList<Boolean> getFreeze()
-    {
-        return freeze;
-    }
-
-    /**
      * accessor method for 'freeze' arraylist (boolean)
      * @return returns 'freeze' arraylist (boolean)
      */
     public ArrayList<Boolean> getOriginalFuel()
     {
         return originalFuel;
+    }
+
+    /**
+     * accessor method for tempFuel arraylist (boolean)
+     * @return returns 'tempFuel' arraylist (boolean)
+     */
+    public ArrayList<Boolean> getTempFuel()
+    {
+        return tempFuel;
     }
 
     /**
@@ -173,21 +173,21 @@ public class Array
     }
 
     /**
-     * Mutator method for 'fuel' arraylist (boolean)
-     * @param tempFuel accepts 'fuel' arraylist (boolean)
-     */
-    public void setTempFuel(ArrayList<Boolean> tempFuel)
-    {
-        this.tempFuel = tempFuel;
-    }
-
-    /**
      * Mutator method for fuelShuffleCount
      * @param fuelMove accepts fuelShuffleCount: int.
      */
     public void setFuelMove(int fuelMove)
     {
         this.fuelMove = fuelMove;
+    }
+
+    /**
+     * Mutator method for 'fuel' arraylist (boolean)
+     * @param tempFuel accepts 'fuel' arraylist (boolean)
+     */
+    public void setTempFuel(ArrayList<Boolean> tempFuel)
+    {
+        this.tempFuel = tempFuel;
     }
 
     /**

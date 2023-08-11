@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Class which holds player position values, i.e.
@@ -152,26 +151,6 @@ public class Player
     }
 
     /**
-     * mutator method to set both leftPos & rightPos together
-     * based on player's current position on the buildingheights arraylist
-     * @param buildingHeights accepts buildingHeights arraylist.
-     */
-    public void setPotentialPositions(ArrayList<Integer> buildingHeights)
-    {
-        if (Validation.positionInput(currentPos)) return;
-
-        int temp = currentPos;
-        temp -= buildingHeights.get(currentPos);
-        temp = temp >= Values.START_INDEX ? temp : -1;
-        this.leftPos = temp;
-
-        temp = currentPos;
-        temp += buildingHeights.get(currentPos);
-        temp = temp <= Values.getEndIndex() ? temp : -1;
-        this.rightPos = temp;
-    }
-
-    /**
      * mutator method for currentPos
      * @param currentPos accepts currentPos int
      */
@@ -193,6 +172,26 @@ public class Player
         temp -= buildingHeights.get(currentPos);
         temp = temp >= Values.START_INDEX ? temp : -1;
         this.leftPos = temp;
+    }
+
+    /**
+     * mutator method to set both leftPos & rightPos together
+     * based on player's current position on the buildingheights arraylist
+     * @param buildingHeights accepts buildingHeights arraylist.
+     */
+    public void setPotentialPos(ArrayList<Integer> buildingHeights)
+    {
+        if (Validation.positionInput(currentPos)) return;
+
+        int temp = currentPos;
+        temp -= buildingHeights.get(currentPos);
+        temp = temp >= Values.START_INDEX ? temp : -1;
+        this.leftPos = temp;
+
+        temp = currentPos;
+        temp += buildingHeights.get(currentPos);
+        temp = temp <= Values.getEndIndex() ? temp : -1;
+        this.rightPos = temp;
     }
 
     /**

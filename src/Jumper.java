@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /**
  * This class is the main driver class which holds the main method.
  * @author Christian Morabito
@@ -26,7 +24,7 @@ public class Jumper
         array.parse(FileIO.read(Values.READ_FILE));
         Print.clearScreen();
         Print.title();
-//        input.usernameInput();
+        input.usernameInput();
 
         while (mainFlag.isGameRunning())
         {
@@ -34,7 +32,7 @@ public class Jumper
             if (mainFlag.isFirstTurn())
             {
                 web.check(array.getWeb(), player.getCurrentPos(), log);
-                player.setPotentialPositions(array.getBuildings());
+                player.setPotentialPos(array.getBuildings());
                 charge.beforeTurnCheck(array, web.isStatus(), mainFlag, player.getCurrentPos(), log);
                 charge.setHeight1(array.getBuildings().get(player.getCurrentPos()));
                 ice.check(array.getFreeze(), player.getCurrentPos(), log);
@@ -57,7 +55,7 @@ public class Jumper
             while (Validation.innerLoop(inputFlag));
 
             charge.setHeight2(array.getBuildings().get(player.getCurrentPos()));
-            charge.afterTurnCheck(player, array, mainFlag, player.getCurrentPos(), log);
+            charge.afterChargeCheck(player, array, mainFlag, player.getCurrentPos(), log);
             mainFlag.wonGameCheck(player.getCurrentPos(), charge.getAmount());
         }
         Print.exit(charge.getAmount(), mainFlag, input.getName(), web.isStatus());

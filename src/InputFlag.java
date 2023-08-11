@@ -98,8 +98,8 @@ public class InputFlag
     }
 
     /**
-     * Accessor method to get
-     * @return
+     * Accessor method to get numbers boolean
+     * @return returns numbers boolean
      */
     public boolean isNumbers()
     {
@@ -107,8 +107,8 @@ public class InputFlag
     }
 
     /**
-     * Accessor method to get
-     * @return
+     * Accessor method to get numbersLoop boolean
+     * @return returns numbersLoop boolean
      */
     public boolean isNumbersLoop()
     {
@@ -116,8 +116,8 @@ public class InputFlag
     }
 
     /**
-     * Accessor method to get
-     * @return
+     * Accessor method to get outOfRange loop
+     * @return returns outOfRange loop
      */
     public boolean isOutOfRange()
     {
@@ -125,8 +125,8 @@ public class InputFlag
     }
 
     /**
-     * Mutator method to set
-     * @param exitFrozeLoop
+     * Mutator method to set exitFrozeLoop
+     * @param exitFrozeLoop accepts boolean for exitFrozeLoop
      */
     public void setExitFrozeLoop(boolean exitFrozeLoop)
     {
@@ -134,8 +134,8 @@ public class InputFlag
     }
 
     /**
-     * Mutator method to set
-     * @param frozenExit
+     * Mutator method to set frozenExit boolean
+     * @param frozenExit accepts frozenExit boolean
      */
     public void setFrozenExit(boolean frozenExit)
     {
@@ -143,8 +143,8 @@ public class InputFlag
     }
 
     /**
-     * Mutator method to set
-     * @param invalidInput
+     * Mutator method to set invalidInput boolean
+     * @param invalidInput accepts invalidInput boolean
      */
     public void setInvalidInput(boolean invalidInput)
     {
@@ -152,8 +152,8 @@ public class InputFlag
     }
 
     /**
-     * Mutator method to set
-     * @param numbers
+     * Mutator method to set numbers boolean
+     * @param numbers accepts numbers boolean
      */
     public void setNumbers(boolean numbers)
     {
@@ -161,8 +161,8 @@ public class InputFlag
     }
 
     /**
-     * Mutator method to set
-     * @param numbersLoop
+     * Mutator method to set numbersLoop boolean
+     * @param numbersLoop accepts numbersLoops boolean
      */
     public void setNumbersLoop(boolean numbersLoop)
     {
@@ -170,8 +170,8 @@ public class InputFlag
     }
 
     /**
-     * Mutator method to set
-     * @param outOfRange
+     * Mutator method to set outOfRange boolean
+     * @param outOfRange accepts outOfRange boolean
      */
     public void setOutOfRange(boolean outOfRange)
     {

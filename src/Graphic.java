@@ -103,39 +103,6 @@ public class Graphic
     }
 
     /**
-     * Method to create roof graphic. It deals with symbols on the roof, such as
-     * portal, jumper, fuel cell, web & freeze.
-     * @param array Accepts Parse object
-     * @param i Accepts int iterator from 1st for loop
-     * @param currentHeight Accepts int which represents the building height the player currently is on
-     * @param currentPos Accepts int which represents current position player is on
-     **/
-    private void createRoof(Array array, int i, int currentHeight, int currentPos)
-    {
-        String TOP_LEFT_ROOF = "┎";
-        String TOP_RIGHT_ROOF = "┒";
-        String ROOF = "─";
-        final String WHOLE_ROOF = TOP_LEFT_ROOF + ROOF.repeat(INNER_BUILDING_SPACE) + TOP_RIGHT_ROOF;
-        final boolean[] CONDITIONS = {i == currentPos, array.getTempFuel().get(i),
-                array.getFreeze().get(i), array.getWeb().get(i), array.getExitPortal().get(i)};
-        final int HEIGHT_FORMULA = Values.getMaxHeight() - currentHeight;
-        final String[] SYMBOLS_ARRAY = new String[] {Values.JUMPER, Values.FUEL_CELL, Values.FREEZE, Values.WEB, Values.PORTAL};
-        buildingString[Values.getMaxHeight() - currentHeight][i] = new StringBuilder(WHOLE_ROOF);
-
-        int nextPosition = 1;
-        for (int x = 0; x < CONDITIONS.length; x++)
-        {
-            int startPosition = nextPosition;
-            nextPosition += SYMBOLS_ARRAY[x].length();
-            if (CONDITIONS[x])
-            {
-                buildingString[HEIGHT_FORMULA][i] =
-                buildingString[HEIGHT_FORMULA][i].replace(startPosition, nextPosition, SYMBOLS_ARRAY[x]);
-            }
-        }
-    }
-
-    /**
      * Method to graphically fill above & between (building roof & base) in the 2d stringbuilder array
      * @param currentPos Accepts int which represents current position player is on.
      * @param currentHeight Accepts int which represents the building height the player currently is on
@@ -175,6 +142,39 @@ public class Graphic
         else
         {
             buildingString[(underBuilding - currentHeight) - Values.getMaxHeight()][i] = new StringBuilder(EMPTY_SPACE);
+        }
+    }
+
+    /**
+     * Method to create roof graphic. It deals with symbols on the roof, such as
+     * portal, jumper, fuel cell, web & freeze.
+     * @param array Accepts array object
+     * @param i Accepts int iterator from 1st for loop
+     * @param currentHeight Accepts int which represents the building height the player currently is on
+     * @param currentPos Accepts int which represents current position player is on
+     **/
+    private void createRoof(Array array, int i, int currentHeight, int currentPos)
+    {
+        String TOP_LEFT_ROOF = "┎";
+        String TOP_RIGHT_ROOF = "┒";
+        String ROOF = "─";
+        final String WHOLE_ROOF = TOP_LEFT_ROOF + ROOF.repeat(INNER_BUILDING_SPACE) + TOP_RIGHT_ROOF;
+        final boolean[] CONDITIONS = {i == currentPos, array.getTempFuel().get(i),
+                array.getFreeze().get(i), array.getWeb().get(i), array.getExitPortal().get(i)};
+        final int HEIGHT_FORMULA = Values.getMaxHeight() - currentHeight;
+        final String[] SYMBOLS_ARRAY = new String[] {Values.JUMPER, Values.FUEL_CELL, Values.FREEZE, Values.WEB, Values.PORTAL};
+        buildingString[Values.getMaxHeight() - currentHeight][i] = new StringBuilder(WHOLE_ROOF);
+
+        int nextPosition = 1;
+        for (int x = 0; x < CONDITIONS.length; x++)
+        {
+            int startPosition = nextPosition;
+            nextPosition += SYMBOLS_ARRAY[x].length();
+            if (CONDITIONS[x])
+            {
+                buildingString[HEIGHT_FORMULA][i] =
+                buildingString[HEIGHT_FORMULA][i].replace(startPosition, nextPosition, SYMBOLS_ARRAY[x]);
+            }
         }
     }
 

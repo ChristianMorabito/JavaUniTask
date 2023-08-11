@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Class which
+ * Class which accepts game input, i.e.
+ * player's name & player's play choice.
  * @author Christian Morabito
  * @version ver1.0.0
  */
@@ -12,7 +13,7 @@ public class Input
     private int action;
 
     /**
-     *
+     * Default Constructor for Player class
      */
     public Input()
     {
@@ -21,7 +22,8 @@ public class Input
     }
 
     /**
-     * @param action
+     * Non-default constructor for Player class
+     * @param action accepts int for player's action
      */
     public Input(int action)
     {
@@ -30,12 +32,14 @@ public class Input
     }
 
     /**
-     * @param mainFlag
-     * @param inputFlag
-     * @param ice
-     * @param log
-     * @param array
-     * @param player
+     * method that receives player's input and computes the
+     * appropriate action
+     * @param mainFlag accepts mainFlag object
+     * @param inputFlag accepts inputFlag object
+     * @param ice  accepts ice object
+     * @param log accepts log object
+     * @param array accepts array object
+     * @param player accepts player object
      */
     public void action(MainFlag mainFlag, InputFlag inputFlag, Ice ice, Log log, Array array, Player player)
     {
@@ -80,11 +84,13 @@ public class Input
      */
     public void display()
     {
-        System.out.println();
+        System.out.println("Name: " + name + "\n" +
+                           "Action: " + action);
     }
 
     /**
-     * @return
+     * Accessor method to get action int
+     * @return returns action int
      */
     public int getAction()
     {
@@ -92,7 +98,8 @@ public class Input
     }
 
     /**
-     * @return
+     * Accessor method to get name String
+     * @return returns name String
      */
     public String getName()
     {
@@ -100,8 +107,9 @@ public class Input
     }
 
     /**
-     * @param isFrozen
-     * @param inputFlag
+     * method that accepts player int input & validates input
+     * @param isFrozen accepts boolean which determines if player is on frozen building
+     * @param inputFlag accepts inputFlag object
      */
     public void inputAction(boolean isFrozen, InputFlag inputFlag)
     {
@@ -124,7 +132,17 @@ public class Input
     }
 
     /**
-     * @param name
+     * Mutator method that sets action int
+     * @param action accepts int for player action
+     */
+    public void setAction(int action)
+    {
+        this.action = action;
+    }
+
+    /**
+     * Mutator method that sets name string
+     * @param name accepts name string
      */
     public void setName(String name)
     {
@@ -132,7 +150,7 @@ public class Input
     }
 
     /**
-     *
+     * method that accepts input which validates & sets name string field
      */
     public void usernameInput()
     {
@@ -145,13 +163,5 @@ public class Input
             this.name = scanner.nextLine();
         }
         while (Validation.stringRange(name.trim(), 3, 12));
-    }
-
-    /**
-     * @param action
-     */
-    public void setAction(int action)
-    {
-        this.action = action;
     }
 }

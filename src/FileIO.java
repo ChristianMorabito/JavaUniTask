@@ -10,6 +10,12 @@ import java.util.Scanner;
 
 public class FileIO
 {
+    /**
+     * Default constructor for FileIO class
+     */
+    public FileIO()
+    {
+    }
 
     /**
      * Static method that reads file, parses data to 2d arraylist (string).

@@ -8,36 +8,6 @@ import java.util.Arrays;
  */
 public class Print
 {
-
-    /**
-     * method prints the title & text.
-     */
-    public static void title()
-    {
-
-        System.out.println("""
-                     
-                     ██╗ █████╗ ██╗   ██╗ █████╗          ██╗██╗   ██╗███╗   ███╗██████╗ ███████╗██████╗
-                     ██║██╔══██╗██║   ██║██╔══██╗         ██║██║   ██║████╗ ████║██╔══██╗██╔════╝██╔══██╗
-                     ██║███████║██║   ██║███████║         ██║██║   ██║██╔████╔██║██████╔╝█████╗  ██████╔╝
-                ██   ██║██╔══██║╚██╗ ██╔╝██╔══██║    ██   ██║██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══╝  ██╔══██╗
-                ╚█████╔╝██║  ██║ ╚████╔╝ ██║  ██║    ╚█████╔╝╚██████╔╝██║ ╚═╝ ██║██║     ███████╗██║  ██║
-                 ╚════╝ ╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝     ╚════╝  ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝
-              ┎───────────────────────────────────────────────────────────────────────────────────────────┒
-              ┃                                   WELCOME TO NOWHERE                                      ┃                 
-              ┃                                ...where no one escapes!                                   ┃     
-              ┃    □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □    ┃   
-              ┃     You are quested to try & escape using the only jumper device available in Nowhere     ┃                                     
-              ┃                       Remember the following to ensure you survive:                       ┃ 
-              ┃                      - the device allows for jumping short distances                      ┃                 
-              ┃                      - building heights change frequently.                                ┃     
-              ┃                      - fuel cells can refuel the device.                                  ┃                     
-              ┃                      - stay far away from ice buildings.                                  ┃     
-              ┃                      - look out from the Nowhere police webs.                             ┃         
-              ┖───────────────────────────────────────────────────────────────────────────────────────────┚                 
-                """); // reference: https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
-    }
-
     /**
      * Method prints legend & action options
      * the print dynamically changes based on if player is frozen or exit is frozen
@@ -135,18 +105,6 @@ public class Print
     }
 
     /**
-     * Method that prints msg if player is frozen
-     * @param isFrozen accepts boolean isFrozen
-     */
-    public static void ice(boolean isFrozen)
-    {
-        if (isFrozen)
-        {
-            System.out.println("\uD83D\uDEA8 YOU ARE FROZEN \uD83D\uDEA8");
-        }
-    }
-
-    /**
      * method that prints msg that player cannot make exit jump because portal
      * is frozen
      * @param inputFlag accepts inputFlag object
@@ -219,6 +177,18 @@ public class Print
     }
 
     /**
+     * Method that prints msg if player is frozen
+     * @param isFrozen accepts boolean isFrozen
+     */
+    public static void ice(boolean isFrozen)
+    {
+        if (isFrozen)
+        {
+            System.out.println("\uD83D\uDEA8 YOU ARE FROZEN \uD83D\uDEA8");
+        }
+    }
+
+    /**
      * Method that conveniently prints all in-game print methods in one
      * @param isFrozen accepts boolean which determines if player is frozen
      * @param isWebbed accepts boolean which determines if player is webbed
@@ -256,6 +226,8 @@ public class Print
     }
 
 
+
+
     /**
      * method that prints only if player is out of range
      * @param inputFlag accepts inputFlag object
@@ -266,6 +238,36 @@ public class Print
             System.out.println("\uD83D\uDEA8 BEYOND RANGE! Retry \uD83D\uDEA8");
         }
     }
+
+    /**
+     * method prints the title & text.
+     */
+    public static void title()
+    {
+
+        System.out.println("""
+                     
+                     ██╗ █████╗ ██╗   ██╗ █████╗          ██╗██╗   ██╗███╗   ███╗██████╗ ███████╗██████╗
+                     ██║██╔══██╗██║   ██║██╔══██╗         ██║██║   ██║████╗ ████║██╔══██╗██╔════╝██╔══██╗
+                     ██║███████║██║   ██║███████║         ██║██║   ██║██╔████╔██║██████╔╝█████╗  ██████╔╝
+                ██   ██║██╔══██║╚██╗ ██╔╝██╔══██║    ██   ██║██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══╝  ██╔══██╗
+                ╚█████╔╝██║  ██║ ╚████╔╝ ██║  ██║    ╚█████╔╝╚██████╔╝██║ ╚═╝ ██║██║     ███████╗██║  ██║
+                 ╚════╝ ╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝     ╚════╝  ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝
+              ┎───────────────────────────────────────────────────────────────────────────────────────────┒
+              ┃                                   WELCOME TO NOWHERE                                      ┃                 
+              ┃                                ...where no one escapes!                                   ┃     
+              ┃    □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □ □    ┃   
+              ┃     You are quested to try & escape using the only jumper device available in Nowhere     ┃                                     
+              ┃                       Remember the following to ensure you survive:                       ┃ 
+              ┃                      - the device allows for jumping short distances                      ┃                 
+              ┃                      - building heights change frequently.                                ┃     
+              ┃                      - fuel cells can refuel the device.                                  ┃                     
+              ┃                      - stay far away from ice buildings.                                  ┃     
+              ┃                      - look out from the Nowhere police webs.                             ┃         
+              ┖───────────────────────────────────────────────────────────────────────────────────────────┚                 
+                """); // reference: https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+    }
+
 
     /**
      * method that only prints if player is webbed

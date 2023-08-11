@@ -101,22 +101,22 @@ public class MainFlag
 
     /**
      * Mutator method that sets boolean
-     * which determines if game is running or not
-     * @param gameRunning accepts gameRunning boolean
-     */
-    public void setGameRunning(boolean gameRunning)
-    {
-        this.gameRunning = gameRunning;
-    }
-
-    /**
-     * Mutator method that sets boolean
      * which determines if it's player's first turn or not
      * @param firstTurn accepts firstTurn boolean
      */
     public void setFirstTurn(boolean firstTurn)
     {
         this.firstTurn = firstTurn;
+    }
+
+    /**
+     * Mutator method that sets boolean
+     * which determines if game is running or not
+     * @param gameRunning accepts gameRunning boolean
+     */
+    public void setGameRunning(boolean gameRunning)
+    {
+        this.gameRunning = gameRunning;
     }
 
     /**

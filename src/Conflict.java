@@ -57,13 +57,6 @@ public abstract class Conflict
 
 
     /**
-     * Abstract method for polymorphism.
-     * @param log accepts Log object
-     */
-    public abstract void logCount(Log log);
-
-
-    /**
      * Accessor method for 'status' boolean
      * @return returns 'status' boolean
      */
@@ -71,6 +64,13 @@ public abstract class Conflict
     {
         return status;
     }
+
+    /**
+     * Abstract method for polymorphism.
+     * @param log accepts Log object
+     */
+    public abstract void logCount(Log log);
+
 
     /**
      * Mutator method for 'status' boolean

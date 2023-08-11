@@ -7,6 +7,19 @@ import java.util.ArrayList;
  */
 public class Validation
 {
+    /**
+     * validates int length based on two ranges
+     * @param integer accepts the int to be validated
+     * @param lessThan1 accepts lessThan1 int parameter
+     * @param greaterThan1 accepts greaterThan1 int parameter
+     * @param lessThan2 accepts lessThan2 int parameter
+     * @param greaterThan2 accepts greaterThan2 int parameter
+     * @return returns boolean
+     */
+    public static boolean betweenRanges(int integer, int lessThan1, int greaterThan1, int lessThan2, int greaterThan2)
+    {
+        return integer < lessThan1 || integer > greaterThan1 && integer < lessThan2 || integer > greaterThan2;
+    }
 
     /**
      * method checks that all columns are the same length
@@ -66,27 +79,26 @@ public class Validation
     }
 
     /**
-     * Method that checks if player is on exit building
-     * @param currentPos accepts int that represents player's current position
+     * checks the state of all inputFlag fields
+     * @param inputFlag accepts all inputFlag fields
      * @return returns boolean
      */
-    public static boolean onExit(int currentPos)
+    public static boolean innerLoop(InputFlag inputFlag)
     {
-        return currentPos == Values.getEndIndex();
+        return inputFlag.isOutOfRange() || inputFlag.isNumbersLoop() ||
+                inputFlag.isExitFrozeLoop() || inputFlag.isInvalidInput();
     }
 
     /**
-     * method that validates if there are
-     * enough rows in the text file
+     * validates int length based on range
+     * @param integer accepts the int to be validated
+     * @param lessThan accepts lessThan int parameter
+     * @param greaterThan accepts greaterThan int parameter
+     * @return returns boolean
      */
-    public static void rowLengthCheck()
+    public static boolean integerLength(int integer, int lessThan, int greaterThan)
     {
-        if (Values.getRowsAmount() < Values.MIN_ROW_LENGTH)
-        {
-            System.out.println("Not enough rows in " + Values.READ_FILE);
-            System.out.println("Exiting...");
-            System.exit(-1);
-        }
+        return integer < lessThan || integer > greaterThan;
     }
 
     /**
@@ -104,12 +116,58 @@ public class Validation
     }
 
     /**
+     * Method that checks if player is on exit building
+     * @param currentPos accepts int that represents player's current position
+     * @return returns boolean
+     */
+    public static boolean onExit(int currentPos)
+    {
+        return currentPos == Values.getEndIndex();
+    }
+
+    /**
      * method that checks if player's position is in valid range
      * @return returns boolean
      */
     public static boolean positionInput(int currentPos)
     {
         return currentPos > Values.getRowsAmount() || currentPos < 0;
+    }
+
+    /**
+     * method that validates if there are
+     * enough rows in the text file
+     */
+    public static void rowLengthCheck()
+    {
+        if (Values.getRowsAmount() < Values.MIN_ROW_LENGTH)
+        {
+            System.out.println("Not enough rows in " + Values.READ_FILE);
+            System.out.println("Exiting...");
+            System.exit(-1);
+        }
+    }
+
+    /**
+     * Checks if string is in valid range
+     * @param name accepts string input
+     * @param lessThan accepts int representing lessThan
+     * @param greaterThan accepts int representing greaterThan
+     * @return returns boolean
+     */
+    public static boolean stringRange(String name, int lessThan, int greaterThan)
+    {
+        if (name.length() < lessThan)
+        {
+            System.out.println("Input too SHORT. Please try again.");
+            return true;
+        }
+        else if (name.length() > greaterThan)
+        {
+            System.out.println("Input too LONG. Please try again.");
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -149,63 +207,6 @@ public class Validation
         return integer;
     }
 
-    /**
-     * Checks if string is in valid range
-     * @param name accepts string input
-     * @param lessThan accepts int representing lessThan
-     * @param greaterThan accepts int representing greaterThan
-     * @return returns boolean
-     */
-    public static boolean stringRange(String name, int lessThan, int greaterThan)
-    {
-        if (name.length() < lessThan)
-        {
-            System.out.println("Input too SHORT. Please try again.");
-            return true;
-        }
-        else if (name.length() > greaterThan)
-        {
-            System.out.println("Input too LONG. Please try again.");
-            return true;
-        }
-        return false;
-    }
 
-    /**
-     * validates int length based on two ranges
-     * @param integer accepts the int to be validated
-     * @param lessThan1 accepts lessThan1 int parameter
-     * @param greaterThan1 accepts greaterThan1 int parameter
-     * @param lessThan2 accepts lessThan2 int parameter
-     * @param greaterThan2 accepts greaterThan2 int parameter
-     * @return returns boolean
-     */
-    public static boolean betweenRanges(int integer, int lessThan1, int greaterThan1, int lessThan2, int greaterThan2)
-    {
-        return integer < lessThan1 || integer > greaterThan1 && integer < lessThan2 || integer > greaterThan2;
-    }
-
-    /**
-     * checks the state of all inputFlag fields
-     * @param inputFlag accepts all inputFlag fields
-     * @return returns boolean
-     */
-    public static boolean innerLoop(InputFlag inputFlag)
-    {
-        return inputFlag.isOutOfRange() || inputFlag.isNumbersLoop() ||
-                inputFlag.isExitFrozeLoop() || inputFlag.isInvalidInput();
-    }
-
-    /**
-     * validates int length based on range
-     * @param integer accepts the int to be validated
-     * @param lessThan accepts lessThan int parameter
-     * @param greaterThan accepts greaterThan int parameter
-     * @return returns boolean
-     */
-    public static boolean integerLength(int integer, int lessThan, int greaterThan)
-    {
-        return integer < lessThan || integer > greaterThan;
-    }
 
 }
