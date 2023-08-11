@@ -89,16 +89,6 @@ public class Player
      */
     public static void main(String[] args)
     {
-        ArrayList<Integer> buildingHeights = new ArrayList<>();
-        ArrayList<Boolean> freeze = new ArrayList<>();
-        Collections.addAll(buildingHeights, 1, 2, 5, 4, 3, 5, 4, 3, 1, 2);
-        Collections.addAll(freeze, false, true, false, false, false, false, false, false, false, false);
-        InputFlag inputFlag = new InputFlag();
-
-        Player player1 = new Player(); // created with default constructor
-        Player player2 = new Player(-200); // created with non-default constructor
-        player2.move(inputFlag, freeze, buildingHeights, -543253);
-
 
     }
 
@@ -168,10 +158,8 @@ public class Player
      */
     public void setPotentialPositions(ArrayList<Integer> buildingHeights)
     {
-        if (currentPos > buildingHeights.size() || currentPos < 0)
-        {
-            return;
-        }
+        if (Validation.positionInput(currentPos)) return;
+
         int temp = currentPos;
         temp -= buildingHeights.get(currentPos);
         temp = temp >= Values.START_INDEX ? temp : -1;
@@ -187,7 +175,7 @@ public class Player
      * mutator method for currentPos
      * @param currentPos accepts currentPos int
      */
-    public void setCurrentPos(int currentPos)
+    public void setCurrentPos(int currentPos) throws Exception
     {
         this.currentPos = currentPos;
     }
@@ -199,10 +187,8 @@ public class Player
      */
     public void setLeftPos(ArrayList<Integer> buildingHeights)
     {
-        if (currentPos > buildingHeights.size() || currentPos < 0)
-        {
-            return;
-        }
+        if (Validation.positionInput(currentPos)) return;
+
         int temp = currentPos;
         temp -= buildingHeights.get(currentPos);
         temp = temp >= Values.START_INDEX ? temp : -1;

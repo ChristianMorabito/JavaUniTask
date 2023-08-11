@@ -78,8 +78,7 @@ public class Array
      */
     public boolean fuelShuffleCheck()
     {
-        return fuelMove >= 0 &&
-                Validation.fuelShuffleModulo(fuelMove) == 0;
+        return Validation.fuelShuffleModulo(fuelMove) == 0;
     }
 
     /**
@@ -146,19 +145,30 @@ public class Array
     }
 
     /**
+     * method to parse & validate data to ensure it's acceptable
+     * for Jumper game
      * @param data accepts arraylist (string[]) to parse contents
      *             into individual arrays
      */
     public void parse(ArrayList<String[]> data)
     {
-        for (String[] datum : data) {
+        int maxHeight = Values.MIN_HEIGHT;
+
+        Values.setRowsAmount(data.size());
+        Validation.rowLengthCheck();
+
+        for (String[] datum : data)
+        {
             Validation.columnLengthCheck(datum.length);
-            this.buildingHeights.add(Integer.parseInt(datum[0]));
+            this.buildingHeights.add(Validation.stringToInteger(datum[0]));
+            maxHeight = Math.max(buildingHeights.get(buildingHeights.size()-1), maxHeight);
+            Validation.minHeightCheck(buildingHeights.get(buildingHeights.size()-1));
             this.exitPortal.add(Validation.stringToBoolean(datum[1]));
             this.originalFuel.add(Validation.stringToBoolean(datum[2]));
             this.web.add(Validation.stringToBoolean(datum[3]));
             this.freeze.add(Validation.stringToBoolean(datum[4]));
         }
+        Values.setMaxHeight(maxHeight);
         Validation.exitCheck(this.exitPortal);
     }
 
@@ -209,8 +219,8 @@ public class Array
     {
         int safeStartIndex = fuelMove > 0 ? 0 : 1;
         Collections.shuffle(buildingHeights);
-        Collections.shuffle(web.subList(safeStartIndex, Values.getRowLength() - 1)); // web cannot land on exit
-        Collections.shuffle(freeze.subList(safeStartIndex, Values.getRowLength()));
+        Collections.shuffle(web.subList(safeStartIndex, Values.getRowsAmount() - 1)); // web cannot land on exit
+        Collections.shuffle(freeze.subList(safeStartIndex, Values.getRowsAmount()));
         if (web.indexOf(true) == freeze.indexOf(true) && web.contains(true))
         {
             shift(web.indexOf(true));
@@ -219,7 +229,7 @@ public class Array
         if (fuelShuffleCheck())
         {
             tempFuel = new ArrayList<>(originalFuel);
-            Collections.shuffle(tempFuel.subList(safeStartIndex, Values.getEndIndex()));
+            Collections.shuffle(tempFuel.subList(safeStartIndex, Values.getRowsAmount()));
         }
         fuelMove++;
     }

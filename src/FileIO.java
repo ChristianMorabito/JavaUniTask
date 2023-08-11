@@ -19,8 +19,6 @@ public class FileIO
     public static ArrayList<String[]> read(String fileName)
     {
         ArrayList<String[]> data = new ArrayList<>();
-        int maxHeight = 0;
-        int i = 0;
         try
         {
             FileReader reader = new FileReader(fileName);
@@ -30,8 +28,6 @@ public class FileIO
                 while (fileInput.hasNextLine())
                 {
                     data.add(fileInput.next().split(","));
-                    maxHeight = Math.max(Validation.stringToInteger(data.get(i)[0]), maxHeight);
-                    i++;
                 }
             }
             finally
@@ -53,9 +49,6 @@ public class FileIO
             System.exit(-1);
         }
 
-        Values.setMaxHeight(maxHeight);
-        Values.setRowLength(data.size());
-        Validation.rowLengthCheck();
         return data;
     }
 

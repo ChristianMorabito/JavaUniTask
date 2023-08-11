@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Class which
+ * Utility class which provides print methods
  * @author Christian Morabito
  * @version ver1.0.0
  */
@@ -10,7 +10,7 @@ public class Print
 {
 
     /**
-     *
+     * method prints the title & text.
      */
     public static void title()
     {
@@ -39,9 +39,12 @@ public class Print
     }
 
     /**
-     * @param isFrozen
-     * @param inputFlag
-     * @param rightPos
+     * Method prints legend & action options
+     * the print dynamically changes based on if player is frozen or exit is frozen
+     * froz
+     * @param isFrozen accepts boolean which determines if player is frozen or not
+     * @param inputFlag accepts inputflag object
+     * @param rightPos accepts int which represents potential rightPosition
      */
     public static void action(boolean isFrozen, InputFlag inputFlag, int rightPos)
     {
@@ -56,9 +59,9 @@ public class Print
         final String standard = "Enter a number between 0 & 4:";
         final String input_0 = "0) Numbers";
         final String input_1 = "1) Jump RIGHT ✅";
-        final String froze_1 = "1) Jump RIGHT ❌";
+        final String froze_1 = "1̶)̶ ̶J̶u̶m̶p̶ ̶R̶I̶G̶H̶T̶ ❌";
         final String input_2 = "2) Jump LEFT  ✅";
-        final String froze_2 = "2) Jump LEFT  ❌";
+        final String froze_2 = "2̶)̶ ̶J̶u̶m̶p̶ ̶L̶E̶F̶T̶  ❌";
         final String input_3 = "3) Skip Turn  ✅";
         final String input_4 = "4) Exit";
 
@@ -76,8 +79,9 @@ public class Print
     }
 
     /**
-     * @param amount
-     * @param numbers
+     * Method to print player charge amount in charge blocks
+     * @param amount accepts int for charge amount
+     * @param numbers accepts boolean which determines if numbers option is on/off.
      */
     public static void chargeAmount(int amount, boolean numbers)
     {
@@ -89,7 +93,7 @@ public class Print
     }
 
     /**
-     *
+     * method to clear screen.
      */
     public static void clearScreen()
     {
@@ -99,10 +103,12 @@ public class Print
     }
 
     /**
-     * @param charge
-     * @param mainFlag
-     * @param name
-     * @param webbed
+     * Method to print exit msg after game ends.
+     * Msg varies based on whether player won or lost
+     * @param charge accepts charge int, so player knows if they won on minimal charge
+     * @param mainFlag accepts mainflag object
+     * @param name accepts player name string
+     * @param webbed accepts boolean determining if player lost whilst webbed
      */
     public static void exit(int charge, MainFlag mainFlag, String name, boolean webbed)
     {
@@ -112,10 +118,11 @@ public class Print
         {
             if (wonGame)
             {
-                int chargePercentage = charge / Values.MAX_CHARGE;
+                float percentage = (float) charge / Values.MAX_CHARGE * 100;
+                String percentageString = String.format("%.00f", percentage);
                 String emphasis = charge < 2 ? "ONLY " : "";
                 System.out.println("Congratulations, " + name + "! You have escaped the Nowhere Dimension with "
-                        + emphasis + charge + "% charge remaining!!");
+                        + emphasis + percentageString + "% charge remaining!!");
             }
             else
             {
@@ -128,7 +135,8 @@ public class Print
     }
 
     /**
-     * @param isFrozen
+     * Method that prints msg if player is frozen
+     * @param isFrozen accepts boolean isFrozen
      */
     public static void ice(boolean isFrozen)
     {
@@ -139,8 +147,10 @@ public class Print
     }
 
     /**
-     * @param inputFlag
-     * @param rightPosition
+     * method that prints msg that player cannot make exit jump because portal
+     * is frozen
+     * @param inputFlag accepts inputFlag object
+     * @param rightPosition accepts rightPosition int
      */
     public static void frozenExit(InputFlag inputFlag, int rightPosition)
     {
@@ -151,13 +161,15 @@ public class Print
     }
 
     /**
-     * @param fuelArray
-     * @param currentSpot
-     * @param chargeCount
+     * method that prints if fuel has been collected. It will also print if max fuel amount has been
+     * received
+     * @param fuelArray accepts arraylist (boolean) that holds fuelArray
+     * @param currentPos accepts int which represents current position
+     * @param chargeCount accept int which represents charge amount
      */
-    public static void fuelCollected(ArrayList<Boolean> fuelArray, int currentSpot, int chargeCount)
+    public static void fuelCollected(ArrayList<Boolean> fuelArray, int currentPos, int chargeCount)
     {
-        if (fuelArray.get(currentSpot))
+        if (fuelArray.get(currentPos))
         {
             if (chargeCount == Values.MAX_CHARGE)
             {
@@ -169,7 +181,8 @@ public class Print
     }
 
     /**
-     * @param fuelShuffleCheck
+     * Method that prints if fuel is respawning next turn
+     * @param fuelShuffleCheck accepts boolean fuelShuffleCheck
      */
     public static void fuelRespawning(boolean fuelShuffleCheck)
     {
@@ -180,11 +193,13 @@ public class Print
     }
 
     /**
-     * @param array
-     * @param currentPosition
-     * @param leftPosition
-     * @param rightPosition
-     * @param numbers
+     * Method which implicitly creates temporary graphic object,
+     * then formats & prints it.
+     * @param array accepts array object
+     * @param currentPosition accepts current position int
+     * @param leftPosition accepts potential left position int
+     * @param rightPosition accepts potential right position int
+     * @param numbers accepts boolean that determines if numbers is on/off
      */
     public static void graphic(Array array, int currentPosition, int leftPosition,
                                int rightPosition, boolean numbers)
@@ -195,21 +210,22 @@ public class Print
         System.out.println();
         for (int i = 0; i < Values.getMaxHeight() + 1; i++)
         {
-            String formattedString = Arrays.toString(buildingString[i])
+            String arrayToString = Arrays.toString(buildingString[i])
                     .replace(",", "")
                     .replace("[", "")
                     .replace("]", "");
-            System.out.println(formattedString);
+            System.out.println(arrayToString);
         }
     }
 
     /**
-     * @param isFrozen
-     * @param isWebbed
-     * @param charge
-     * @param inputFlag
-     * @param array
-     * @param player
+     * Method that conveniently prints all in-game print methods in one
+     * @param isFrozen accepts boolean which determines if player is frozen
+     * @param isWebbed accepts boolean which determines if player is webbed
+     * @param charge accepts charge object
+     * @param inputFlag accepts inputFlag object
+     * @param array accepts array object
+     * @param player accepts player object
      */
     public static void inGameAll(boolean isFrozen, boolean isWebbed, Charge charge, InputFlag inputFlag, Array array, Player player)
     {
@@ -228,7 +244,8 @@ public class Print
     }
 
     /**
-     * @param inputFlag
+     * method that prints only if player enters an invalid input
+     * @param inputFlag accepts inputFlag object
      */
     public static void invalidInput(InputFlag inputFlag)
     {
@@ -240,7 +257,8 @@ public class Print
 
 
     /**
-     * @param inputFlag
+     * method that prints only if player is out of range
+     * @param inputFlag accepts inputFlag object
      */
     public static void outOfRange(InputFlag inputFlag)
     {
@@ -250,7 +268,8 @@ public class Print
     }
 
     /**
-     * @param isWebbed
+     * method that only prints if player is webbed
+     * @param isWebbed accepts boolean
      */
     public static void web(boolean isWebbed)
     {

@@ -1,5 +1,5 @@
 /**
- * Class which
+ * Class which holds flags for the main game loop
  * @author Christian Morabito
  * @version ver1.0.0
  */
@@ -8,6 +8,7 @@ public class MainFlag
     private boolean exit;
     private boolean wonGame;
     private boolean gameRunning;
+    private boolean firstTurn;
 
     /**
      *
@@ -17,6 +18,7 @@ public class MainFlag
         exit = false;
         wonGame = false;
         gameRunning = true;
+        firstTurn = true;
     }
 
     /**
@@ -24,11 +26,12 @@ public class MainFlag
      * @param wonGame
      * @param gameRunning
      */
-    public MainFlag(boolean exit, boolean wonGame, boolean gameRunning)
+    public MainFlag(boolean exit, boolean wonGame, boolean gameRunning, boolean firstTurn)
     {
         this.exit = exit;
         this.wonGame = wonGame;
         this.gameRunning = gameRunning;
+        this.firstTurn = firstTurn;
     }
 
     /**
@@ -40,18 +43,6 @@ public class MainFlag
         System.out.println();
     }
 
-    /**
-     * @param currentPos
-     * @param charge
-     */
-    public void wonGameCheck(int currentPos, int charge)
-    {
-        if (Validation.onExit(currentPos) && charge >= Values.MIN_CHARGE - 1)
-        {
-            gameRunning = false;
-            wonGame = true;
-        }
-    }
 
     /**
      * @return
@@ -59,6 +50,14 @@ public class MainFlag
     public boolean isExit()
     {
         return exit;
+    }
+
+    /**
+     * @return
+     */
+    public boolean isFirstTurn()
+    {
+        return firstTurn;
     }
 
     /**
@@ -94,11 +93,33 @@ public class MainFlag
     }
 
     /**
+     *
+     * @param firstTurn
+     */
+    public void setFirstTurn(boolean firstTurn)
+    {
+        this.firstTurn = firstTurn;
+    }
+
+    /**
      * @param wonGame
      */
     public void setWonGame(boolean wonGame)
     {
         this.wonGame = wonGame;
+    }
+
+    /**
+     * @param currentPos
+     * @param charge
+     */
+    public void wonGameCheck(int currentPos, int charge)
+    {
+        if (Validation.onExit(currentPos) && charge >= Values.MIN_CHARGE - 1)
+        {
+            gameRunning = false;
+            wonGame = true;
+        }
     }
 
 }

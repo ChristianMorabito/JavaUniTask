@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * This class is the main driver class which holds the main method.
  * @author Christian Morabito
@@ -5,6 +7,7 @@
  */
 public class Jumper
 {
+
     /**
      * This is the main method which begins the program execution
      * @param    args    An array of string passed in as command line parameters
@@ -23,18 +26,24 @@ public class Jumper
         array.parse(FileIO.read(Values.READ_FILE));
         Print.clearScreen();
         Print.title();
-        input.usernameInput();
+//        input.usernameInput();
 
         while (mainFlag.isGameRunning())
         {
             array.shuffle();
-            web.check(array.getWeb(), player.getCurrentPos(), log);
-            player.setPotentialPositions(array.getBuildings());
-            charge.beforeTurnCheck(array, web.isStatus(), mainFlag, player.getCurrentPos(), log);
-            charge.setHeight1(array.getBuildings().get(player.getCurrentPos()));
-            ice.check(array.getFreeze(), player.getCurrentPos(), log);
-            inputFlag.freezeOnExitCheck(array.getFreeze());
-
+            if (mainFlag.isFirstTurn())
+            {
+                web.check(array.getWeb(), player.getCurrentPos(), log);
+                player.setPotentialPositions(array.getBuildings());
+                charge.beforeTurnCheck(array, web.isStatus(), mainFlag, player.getCurrentPos(), log);
+                charge.setHeight1(array.getBuildings().get(player.getCurrentPos()));
+                ice.check(array.getFreeze(), player.getCurrentPos(), log);
+                inputFlag.freezeOnExitCheck(array.getFreeze());
+            }
+            else
+            {
+                mainFlag.setFirstTurn(false);
+            }
             do
             {
                 if (mainFlag.isGameRunning())

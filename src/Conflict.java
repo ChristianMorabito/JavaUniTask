@@ -52,7 +52,7 @@ public abstract class Conflict
      */
     public void display()
     {
-        System.out.println();
+        System.out.println("status is " + status);
     }
 
 

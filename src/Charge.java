@@ -53,10 +53,8 @@ public class Charge
     {
         ArrayList<Boolean> fuelCells = array.getTempFuel();
 
-        if (!mainFlag.isGameRunning())
-        {
-            return;
-        }
+        if (!mainFlag.isGameRunning()) return;
+
         if (player.getPreviousPos() == currentPos)
         {
             amount--;
@@ -65,26 +63,45 @@ public class Charge
         {
             jumpDeplete(height2, height1);
         }
+        if (afterTurnCheck(mainFlag)) return;
+
         if (!array.fuelShuffleCheck() && fuelCells.get(currentPos))
         {
             fuelCharge();
             log.setFuelCount(log.getFuelCount() + 1);
         }
-        chargeCheck(mainFlag);
+        beforeTurnCheck(mainFlag);
     }
 
+
+    /**
+     * checks if charge is below < 0; if so, then mainFlag boolean is set to false,
+     * ending main game loop
+     * @param mainFlag accepts mainFlag object
+     */
+    private boolean afterTurnCheck(MainFlag mainFlag)
+    {
+        if (amount < Values.MIN_CHARGE - 1)
+        {
+            mainFlag.setGameRunning(false);
+            return true;
+        }
+        return false;
+    }
 
     /**
      * checks if charge is below < 1; if so, then mainFlag boolean is set to false,
      * ending main game loop
      * @param mainFlag accepts mainFlag object
      */
-    private void chargeCheck(MainFlag mainFlag)
+    private boolean beforeTurnCheck(MainFlag mainFlag)
     {
         if (amount < Values.MIN_CHARGE)
         {
             mainFlag.setGameRunning(false);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -155,7 +172,7 @@ public class Charge
         if (isWebbed)
         {
             amount -= 5;
-            chargeCheck(mainFlag);
+            beforeTurnCheck(mainFlag);
         }
     }
 

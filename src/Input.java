@@ -144,7 +144,7 @@ public class Input
             System.out.print("Name: ");
             this.name = scanner.nextLine();
         }
-        while (Validation.stringLength(name.trim(), 3, 12));
+        while (Validation.stringRange(name.trim(), 3, 12));
     }
 
     /**

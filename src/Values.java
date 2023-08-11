@@ -13,24 +13,27 @@ public final class Values
     public static final int FUEL_UPDATE_COUNT = 3;
     public static final int COLUMN_LENGTH = 5;
     public static final int START_INDEX = 0;
-    public static final int MIN_ROW_LENGTH = 6;
+    public static final int MIN_ROW_LENGTH = 5;
     public static final int STARTING_CHARGE = 10;
     public static final int MAX_CHARGE = 20;
     public static final int MIN_CHARGE = 1;
+    public static final int MIN_HEIGHT = 1;
     private static int maxHeight = -1;
-    private static int rowLength = -1;
+    private static int rowsAmount = -1;
     private static int endIndex = -1;
 
-    final public static int BUILDING_WIDTH = 8; // should not be less than 7
-    final public static String PORTAL =    "@";
-    final public static String JUMPER =    "█";
-    final public static String FUEL_CELL = "$";
-    final public static String WEB =       "#";
-    final public static String FREEZE =    "^";
+    public static final int BUILDING_WIDTH = 8; // should not be less than 7
+    public static final String PORTAL =    "@";
+    public static final String JUMPER =    "█";
+    public static final String FUEL_CELL = "$";
+    public static final String WEB =       "#";
+    public static final String FREEZE =    "^";
 
+    /**
+     * Private constructor. Cannot instantiate
+     */
     private Values()
     {
-        // no need to instantiate
     }
 
     /**
@@ -48,7 +51,7 @@ public final class Values
      */
     public static int getEndIndex()
     {
-        return rowLength - 1;
+        return rowsAmount - 1;
     }
 
     /**
@@ -64,9 +67,9 @@ public final class Values
      * Accessor method to get rowLength
      * @return rowLength: int
      */
-    public static int getRowLength()
+    public static int getRowsAmount()
     {
-        return rowLength;
+        return rowsAmount;
     }
 
     /**
@@ -91,8 +94,8 @@ public final class Values
      * Mutator method to set rowLength: int.
      * After the rowLength has been set once, it cannot be overridden.
      */
-    public static void setRowLength(int rowLength)
+    public static void setRowsAmount(int rowsAmount)
     {
-        Values.rowLength = Values.rowLength == -1 ? rowLength : Values.rowLength;
+        Values.rowsAmount = Values.rowsAmount == -1 ? rowsAmount : Values.rowsAmount;
     }
 }

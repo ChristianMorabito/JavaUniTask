@@ -25,7 +25,7 @@ public class Graphic
      **/
     public Graphic()
     {
-        this.buildingString = new StringBuilder[Values.getMaxHeight() + 1][Values.getRowLength()];
+        this.buildingString = new StringBuilder[Values.getMaxHeight() + 1][Values.getRowsAmount()];
     }
 
     /**
@@ -51,7 +51,7 @@ public class Graphic
 
         ArrayList<Integer> heights = array.getBuildings();
 
-        for (int i = 0; i < Values.getRowLength(); i++)
+        for (int i = 0; i < Values.getRowsAmount(); i++)
         {
             int currentHeight = heights.get(i);
             createRoof(array, i, currentHeight, currentPos);
