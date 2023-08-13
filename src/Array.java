@@ -218,9 +218,9 @@ public class Array
     public void shuffle()
     {
         int safeStartIndex = fuelMove > 0 ? 0 : 1;
-        Collections.shuffle(buildingHeights);
-        Collections.shuffle(web.subList(safeStartIndex, Values.getRowsAmount() - 1)); // web cannot land on exit
-        Collections.shuffle(freeze.subList(safeStartIndex, Values.getRowsAmount()));
+//        Collections.shuffle(buildingHeights);
+//        Collections.shuffle(web.subList(safeStartIndex, Values.getRowsAmount() - 1)); // web cannot land on exit
+//        Collections.shuffle(freeze.subList(safeStartIndex, Values.getRowsAmount()));
         if (web.indexOf(true) == freeze.indexOf(true) && web.contains(true))
         {
             shift(web.indexOf(true));

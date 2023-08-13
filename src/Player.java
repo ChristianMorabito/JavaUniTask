@@ -43,7 +43,10 @@ public class Player
      */
     public void display()
     {
-        System.out.println();
+        System.out.println("current position: " + currentPos + "\n" +
+                "left position: " + leftPos + "\n" +
+                "right position: " + rightPos + "\n" +
+                "previous position: " + previousPos);
     }
 
     /**
@@ -82,13 +85,21 @@ public class Player
         return previousPos;
     }
 
-     /**
+    /**
      * This main method is only for the test strategy
      * @param    args    An array of string passed in as command line parameters
      */
     public static void main(String[] args)
     {
-
+        Player player = new Player();
+        player.setCurrentPos(5);
+        player.setLeftPos(4);
+        player.setRightPos(3);
+        player.setPreviousPos(2);
+        System.out.println(("Current position: " + player.getCurrentPos()));
+        System.out.println(("Previous position: " + player.getPreviousPos()));
+        System.out.println(("Left Position: " + player.getLeftPos()));
+        System.out.println(("Right position: " + player.getRightPos()));
     }
 
     /**
@@ -96,102 +107,104 @@ public class Player
      * and updates input flags if necessary
      * @param inputFlag accepts InputFlag object
      * @param freeze accepts freeze arraylist (boolean)
-     * @param buildingHeights accepts buildingHeights arraylist (integer)
+     * @param heights accepts heights arraylist (integer)
      * @param input accepts input int
      */
-    public void move(InputFlag inputFlag, ArrayList<Boolean> freeze, ArrayList<Integer> buildingHeights, int input)
+    public void move(InputFlag inputFlag, ArrayList<Boolean> freeze, ArrayList<Integer> heights, int input)
     {
-        int temp = currentPos;
-        switch (input)
+        try
         {
-            case 1 ->
+            int temp = currentPos;
+            switch (input)
             {
-                temp += buildingHeights.get(currentPos);
-                if (temp <= Values.getEndIndex())
+                case 1 ->
                 {
-                    if (temp == Values.getEndIndex() && freeze.get(Values.getEndIndex()))
+                    temp += heights.get(currentPos);
+                    if (temp <= Values.getEndIndex())
                     {
-                        inputFlag.setExitFrozeLoop(true);
+                        if (temp == Values.getEndIndex() && freeze.get(Values.getEndIndex()))
+                        {
+                            inputFlag.setExitFrozeLoop(true);
+                            return;
+                        }
+                        previousPos = currentPos;
+                    }
+                    else
+                    {
+                        inputFlag.setOutOfRange(true);
                         return;
                     }
+                }
+                case 2 ->
+                {
+                    temp -= heights.get(currentPos);
+                    if (temp >= Values.START_INDEX)
+                    {
+                        previousPos = currentPos;
+                    }
+                    else
+                    {
+                        inputFlag.setOutOfRange(true);
+                        return;
+                    }
+                }
+                case 3 ->
+                {
                     previousPos = currentPos;
                 }
-                else
+                default ->
                 {
-                    inputFlag.setOutOfRange(true);
-                    return;
+                    Print.invalidInput(inputFlag);
+                    System.exit(-1);
                 }
             }
-            case 2 ->
-            {
-                temp -= buildingHeights.get(currentPos);
-                if (temp >= Values.START_INDEX)
-                {
-                    previousPos = currentPos;
-                }
-                else
-                {
-                    inputFlag.setOutOfRange(true);
-                    return;
-                }
-            }
-            case 3 ->
-            {
-                previousPos = currentPos;
-            }
-            default ->
-            {
-                Print.invalidInput(inputFlag);
-                System.exit(-1);
-            }
+            currentPos = temp;
+            inputFlag.setOutOfRange(false);
+            inputFlag.setExitFrozeLoop(false);
         }
-        currentPos = temp;
-        inputFlag.setOutOfRange(false);
-        inputFlag.setExitFrozeLoop(false);
+        catch (NullPointerException nullPointerException)
+        {
+            System.out.println(nullPointerException.getMessage());
+        }
+
+    }
+
+    /**
+     * mutator method to set both leftPos & rightPos together
+     * based on player's current position on the buildingheights arraylist
+     * @param heights accepts heights arraylist.
+     */
+    public void potentialPos(ArrayList<Integer> heights)
+    {
+        if (Validation.positionInput(currentPos)) return;
+
+        int temp = currentPos;
+        temp -= heights.get(currentPos);
+        temp = temp >= Values.START_INDEX ? temp : -1;
+        this.leftPos = temp;
+
+        temp = currentPos;
+        temp += heights.get(currentPos);
+        temp = temp <= Values.getEndIndex() ? temp : -1;
+        this.rightPos = temp;
     }
 
     /**
      * mutator method for currentPos
      * @param currentPos accepts currentPos int
      */
-    public void setCurrentPos(int currentPos) throws Exception
+    public void setCurrentPos(int currentPos)
     {
         this.currentPos = currentPos;
     }
 
     /**
-     * mutator method to set leftPos based on player's
-     * current position on buildingHeights arraylist
-     * @param buildingHeights accepts buildingHeights arraylist
+     * mutator method to set left position int
+     * @param leftPos accepts int leftPos
      */
-    public void setLeftPos(ArrayList<Integer> buildingHeights)
+    public void setLeftPos(int leftPos)
     {
-        if (Validation.positionInput(currentPos)) return;
-
-        int temp = currentPos;
-        temp -= buildingHeights.get(currentPos);
-        temp = temp >= Values.START_INDEX ? temp : -1;
-        this.leftPos = temp;
-    }
-
-    /**
-     * mutator method to set both leftPos & rightPos together
-     * based on player's current position on the buildingheights arraylist
-     * @param buildingHeights accepts buildingHeights arraylist.
-     */
-    public void setPotentialPos(ArrayList<Integer> buildingHeights)
-    {
-        if (Validation.positionInput(currentPos)) return;
-
-        int temp = currentPos;
-        temp -= buildingHeights.get(currentPos);
-        temp = temp >= Values.START_INDEX ? temp : -1;
-        this.leftPos = temp;
-
-        temp = currentPos;
-        temp += buildingHeights.get(currentPos);
-        temp = temp <= Values.getEndIndex() ? temp : -1;
-        this.rightPos = temp;
+        this.leftPos = leftPos;
     }
 
     /**
@@ -204,20 +217,12 @@ public class Player
     }
 
     /**
-     * mutator method to set rightPos based on player's
-     * current position on buildingHeights arraylist
-     * @param buildingHeights accepts buildingHeights arraylist
+     * mutator method to set rightPos int
+     * @param rightPos accepts int rightPos
      */
-    public void setRightPos(ArrayList<Integer> buildingHeights)
+    public void setRightPos(int rightPos)
     {
-        if (currentPos > buildingHeights.size() || currentPos < 0)
-        {
-            return;
-        }
-        int temp = currentPos;
-        temp += buildingHeights.get(currentPos);
-        temp = temp <= Values.getEndIndex() ? temp : -1;
-        this.rightPos = temp;
+        this.rightPos = rightPos;
     }
 }
 

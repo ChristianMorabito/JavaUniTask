@@ -63,7 +63,7 @@ public class Charge
         {
             jumpDeplete(height2, height1);
         }
-        if (afterChargeCheck(mainFlag)) return;
+        if (afterCharge(mainFlag)) return;
 
         if (!array.fuelShuffleCheck() && fuelCells.get(currentPos))
         {
@@ -79,7 +79,7 @@ public class Charge
      * ending main game loop
      * @param mainFlag accepts mainFlag object
      */
-    private boolean afterChargeCheck(MainFlag mainFlag)
+    private boolean afterCharge(MainFlag mainFlag)
     {
         if (amount < Values.MIN_CHARGE - 1)
         {

@@ -13,8 +13,8 @@ public final class Values
     public static final int FUEL_UPDATE_COUNT = 3;
     public static final int COLUMN_LENGTH = 5;
     public static final int START_INDEX = 0;
-    public static final int MIN_ROW_LENGTH = 5;
-    public static final int STARTING_CHARGE = 10;
+    public static final int MIN_ROW_LENGTH = 3;
+    public static final int STARTING_CHARGE = 5;
     public static final int MAX_CHARGE = 20;
     public static final int MIN_CHARGE = 1;
     public static final int MIN_HEIGHT = 1;

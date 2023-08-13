@@ -24,7 +24,7 @@ public class Jumper
         array.parse(FileIO.read(Values.READ_FILE));
         Print.clearScreen();
         Print.title();
-        input.usernameInput();
+//        input.usernameInput();
 
         while (mainFlag.isGameRunning())
         {
@@ -32,7 +32,7 @@ public class Jumper
             if (mainFlag.isFirstTurn())
             {
                 web.check(array.getWeb(), player.getCurrentPos(), log);
-                player.setPotentialPos(array.getBuildings());
+                player.potentialPos(array.getBuildings());
                 charge.beforeTurnCheck(array, web.isStatus(), mainFlag, player.getCurrentPos(), log);
                 charge.setHeight1(array.getBuildings().get(player.getCurrentPos()));
                 ice.check(array.getFreeze(), player.getCurrentPos(), log);
